@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>コリジョン設定用</title>
+    <style>
+    	.fff{
+    		border:solid 2px gray;
+    		position:absolute;
+    		left:0px;
+    		top:0px;
+    		padding:4px;
+    	}
+    	
+    	.canvas1{
+    		border:solid 2px black;
+    		position:absolute;
+    		left:10px;
+    		top:50px;
+    		opacity:0.5;
+    		user-select: none;
+    		-webkit-user-drag: none;
+    	}
+    	.maplist{
+    		border:solid 2px gray;
+    		position:absolute;
+    		left:10px;
+    		top:220px;
+    		background-color:azure;
+    		padding:5px;
+    	}
+    	
+    	.ttt{
+    		width:50px;
+    	}
+    	
+    	.outputtext{
+    		position:absolute;
+    		right: 100px;
+    		top:10px;
+    		width:200px;
+    		height:100px;
+    	}
+    	
+    	.inputtext{
+    		position:absolute;
+    		right: 100px;
+    		top:120px;
+    		width:200px;
+    		height:100px;
+    	}
+    	
+    	.loadbutton{
+    		position:absolute;
+    		right: 10px;
+    		top:150px;
+    		padding:10px;
+    	}
+    	.toolbox{
+    		border:solid 2px gray;
+    		position:absolute;
+    		left:330px;
+    		top:0px;
+    		padding:4px;
+    		background-color:azure;
+    	}
+    </style>
+    <script>
+    gogo	= function(){
+    	numnum		= -1;
+    	cv			= document.getElementById("cv");
+    	startX		= null;
+    	startY		= null;
+    	mode		= "四角";
+    	nowdraw		= [];
+		chip		= false;
+		chipMap		= {};
+    	cv.addEventListener("mousedown",function(event){
+    		if(mode == "四角"){
+    			nowdraw	= [];
+    			startX	= event.offsetX;
+    			startY	= event.offsetY;
+    		}
+    	});
+    	cv.addEventListener("mouseup",function(event){
+    		cv			= document.getElementById("cv");
+    		var ctx	= cv.getContext("2d");
+    		
+    		if(mode == "四角"){
+    			nowdraw	= [];
+    			ctx.beginPath();
+    			ctx.rect(startX,startY,event.offsetX-startX,event.offsetY-startY);
+    			ctx.fill();
+    			
+    			numnum++;
+    			
+    			map["col"+numnum] = [startX,startY,startX,event.offsetY,event.offsetX,event.offsetY,event.offsetX,startY];
+    			
+    			startX	= null;
+    			startY	= null;
+    			
+    			refresh();
+    		}
+    		if(mode == "点設置"){
+    			ctx.beginPath();
+    			ctx.rect(event.offsetX,event.offsetY,5,5);
+    			ctx.fill();
+    			
+    			nowdraw.push(event.offsetX);
+    			nowdraw.push(event.offsetY);
+    		}
+    	});
+    	
+    	cv.addEventListener("mousemove",function(event){
+    		if(startX != null && mode == "四角"){
+    			cv			= document.getElementById("cv");
+    			var ctx	= cv.getContext("2d");
+    			ctx.beginPath();
+    			ctx.rect(startX,startY,event.offsetX-startX,event.offsetY-startY);
+    			ctx.fill();
+    		}
+    	});
+    	
+    	map	= {};
+    	
+    	savetext = document.getElementById("savetext");
+    	savetext.addEventListener("click",function(event){
+    		savetext.focus();
+    		savetext.select();
+    	});
+    	
+    	loadtext = document.getElementById("loadtext");
+    	loadtext.addEventListener("click",function(event){
+    		loadtext.focus();
+    		loadtext.select();
+    	});
+    	
+    	nowtool	= document.getElementById("nowtool");
+    	nowtool.onchange	= function(event){
+    		mode	= nowtool.value;
+    		if(mode	== "点閉じる"){
+    			if(nowdraw.length!=0){
+    				cv			= document.getElementById("cv");
+    				ctx			= cv.getContext("2d");
+    				ctx.beginPath();
+    				ctx.clearRect(0,0,cv.width,cv.height);
+    				ctx.moveTo(nowdraw[0],nowdraw[1]);
+    				for(var k=2; k<nowdraw.length; k++){
+    					if(k%2 == 0){
+    						ctx.lineTo(nowdraw[k],nowdraw[k+1]);
+    					}
+    				}
+    				ctx.fill();
+    				numnum++;
+    				map["col"+numnum] = nowdraw;
+    				nowdraw=[];
+    				refresh();
+    			}
+    		}
+    	}
+    }
+    
+    view	= function(){
+    	cv			= document.getElementById("cv");
+    	ctx			= cv.getContext("2d");
+    	ctx.clearRect(0,0,cv.width,cv.height);
+		ctx.drawImage(image,0,0);
+    	for(var i in map){
+    		ctx.beginPath();
+    		ctx.moveTo(map[i][0],map[i][1]);
+    		for(var k=2; k<map[i].length; k++){
+    			if(k%2 == 0){
+    				ctx.lineTo(map[i][k],map[i][k+1]);
+    			}
+    		}
+    		ctx.fill();
+    	}
+		
+    }
+    
+    list	= function(){
+    	maplist		= document.getElementById("mapli");
+    	var html	= "";
+    	for(var i in map){
+    		html	+= "" + i + "：";
+    		for(var k in map[i]){
+    			html	+= "<input type='text' id='map" + i + "x" + k +"' value='" + map[i][k] + "' class='ttt'>"
+    		}
+    		var ooo	= 'map_ch("' + i + '")';
+    		html	+= "<input type='button' onclick='" + ooo + "' value='変更'>";
+    		var ooo	= 'map_del("' + i + '")';
+    		html	+= "<input type='button' onclick='" + ooo + "' value='削除'><br>";
+    	}
+    	maplist.innerHTML	= html;
+		
+		if(chip){
+			var html2	= "<hr>■チップ適用<br>";
+			for(var i in chipMap){
+				html2	+= i + ":" + JSON.stringify(chipMap[i]) + "<br>";
+			}
+			maplist.innerHTML += html2;
+		}
+		
+    }
+    
+    map_ch	= function(num){
+    	for(var i=0; i<map[num].length; i++){
+    		newmap = document.getElementById("map" + num + "x" + i );
+    		map[num][i]	= newmap.value;
+    	}
+    	
+    	refresh();
+    }
+    
+    map_del	= function(num){
+    	delete map[num];
+    	
+    	refresh();
+    }
+    
+    map_save	= function(){
+    	savetext = document.getElementById("savetext");
+    	savetext.value	= JSON.stringify(map);
+    }
+    
+    map_load	= function(){
+    	loadtext	= document.getElementById("loadtext");
+    	map			= JSON.parse(loadtext.value);
+    	refresh();
+    }
+    
+    refresh		= function(){
+    	view();
+    	list();
+    	map_save();
+    }
+	
+	fireReadGo	= function(){
+		fileInput	= document.getElementById("fileInput");
+    	
+    	var file	= fileInput.files[0];
+    	if(!file){
+    		return;
+    	}
+    	
+    	var fileReader		= new FileReader();
+    	
+    	fileReader.onload	= function(event){
+			image	= new Image();
+			image.src	= fileReader.result;
+			cv.width	= image.width;
+			cv.height	= image.height;
+			
+			var ctx		= cv.getContext("2d");
+			ctx.clearRect(0,0,cv.width,cv.height);
+			ctx.drawImage(image,0,0);
+			
+			var maplist	= document.getElementsByClassName("maplist");
+			maplist[0].style.top	= cv.height + 60 + "px";
+    	};
+    	
+    	fileReader.readAsDataURL(file);
+    }
+	
+	chipSet	= function(){
+		var chipW	= document.getElementById("chipW");
+		var chipH	= document.getElementById("chipH");
+		if(Object.keys(map).length<=0){
+			alert("コリジョンが設定されていません。");
+			return;
+		}
+		if(!chipW.value || !chipH.value){
+			alert("チップの数値が設定されていません。")
+			return;
+		}
+		
+		for(var i in map){
+			chipMap[i]	= [];
+			for(var j in map[i]){
+				if(j == 0){
+					//x
+					chipMap[i][j]	= parseInt(map[i][j]);
+					while(chipMap[i][j] > chipW.value){
+						chipMap[i][j] -= chipW.value
+					}
+				}else if(j == 1){
+					//y
+					chipMap[i][j]	= parseInt(map[i][j]);
+					while(chipMap[i][j] > chipH.value){
+						chipMap[i][j] -= chipH.value
+					}
+				}else if(j%2 == 0){
+					//x
+					chipMap[i][j]	= parseInt(map[i][j]);
+					while(chipMap[i][j] > chipW.value){
+						chipMap[i][j] -= chipW.value
+					}
+				}else{
+					//y
+					chipMap[i][j]	= parseInt(map[i][j]);
+					while(chipMap[i][j] > chipH.value){
+						chipMap[i][j] -= chipH.value
+					}
+				}
+			}
+		}
+		chip	= true;
+		refresh();
+	}
+	
+    </script>
+</head>
+
+<body onload="gogo();">
+	<div class="maplist" id="mapli"></div>
+	<div class="fff"><input id="fileInput" type="file"><input type="button" value="読込" onclick="fireReadGo()"></div>
+	
+	<textarea class="outputtext" id="savetext"></textarea>
+	<textarea class="inputtext" id="loadtext"></textarea>
+	<div class="toolbox">
+		ツール：
+		<select id="nowtool">
+			<option value="四角">四角</option>
+			<option value="点設置">点設置</option>
+			<option value="点閉じる">点閉じる</option>
+		</select>
+		　チップ：<input type="number" style="width: 50px" id="chipW">×<input type="number" style="width: 50px" id="chipH"> <input type="button" value="適用" onclick="chipSet();">
+	</div>
+	<input type="button" value="読み込み" class="loadbutton" onclick="map_load();">
+	<canvas id="cv" class="canvas1"></canvas>
+</body>
+</html>

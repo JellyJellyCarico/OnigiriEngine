@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.0
+OnigiriEngine Ver1.0.1
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -333,16 +333,19 @@ function OnigiriEngine(w,h){
 				if(sW > sH){
 					//横長
 					scale	= sH/cH;
+					//onien.canvas.style.maxWidth			= "auto";
+					//onien.canvas.style.maxHeight		= "100%";
 				}else{
 					//縦長
 					scale	= sW/cW;
+					//onien.canvas.style.maxWidth			= "100%";
+					//onien.canvas.style.maxHeight		= "auto";
 				}
 				
-				onien.canvas.style.transform 		= "scale("+scale+","+scale+")";
-				onien.canvas.style.transformOrigin	= "left top";
+				onien.canvas.style.width			= scale * onien.w + "px";
+				onien.canvas.style.height			= scale * onien.h + "px";
 				
-				onien.canvas.style.maxWidth			= "100%";
-				onien.canvas.style.maxHeight		= "100%";
+				
 				
 				
 			}
@@ -573,8 +576,16 @@ function OnigiriEngine(w,h){
 			//clickイベント追加
 			onien.canvas.addEventListener("click",function(e){
 				var e		= e;
-				var clickX	= e.offsetX;
-				var clickY	= e.offsetY;
+				var clickX	= e.pageX;
+				var clickY	= e.pageY;
+				var r		= e.target.getBoundingClientRect();
+				var rx		= r.left;
+				var ry		= r.top;
+				clickX		= clickX - rx;
+				clickY		= clickY - ry;
+				
+				clickX		= Math.floor((onien.w/r.width)*clickX);
+				clickY		= Math.floor((onien.h/r.height)*clickY);
 				
 				onien.eventClickCheck(e,clickX,clickY,"click");
 			});
@@ -582,8 +593,16 @@ function OnigiriEngine(w,h){
 			//mousedownイベント追加
 			onien.canvas.addEventListener("mousedown",function(e){
 				var e		= e;
-				var clickX	= e.offsetX;
-				var clickY	= e.offsetY;
+				var clickX	= e.pageX;
+				var clickY	= e.pageY;
+				var r		= e.target.getBoundingClientRect();
+				var rx		= r.left;
+				var ry		= r.top;
+				clickX		= clickX - rx;
+				clickY		= clickY - ry;
+				
+				clickX		= Math.floor((onien.w/r.width)*clickX);
+				clickY		= Math.floor((onien.h/r.height)*clickY);
 				
 				onien.eventClickCheck(e,clickX,clickY,"mousedown");
 			});
@@ -591,8 +610,16 @@ function OnigiriEngine(w,h){
 			//mouseupイベント追加
 			onien.canvas.addEventListener("mouseup",function(e){
 				var e		= e;
-				var clickX	= e.offsetX;
-				var clickY	= e.offsetY;
+				var clickX	= e.pageX;
+				var clickY	= e.pageY;
+				var r		= e.target.getBoundingClientRect();
+				var rx		= r.left;
+				var ry		= r.top;
+				clickX		= clickX - rx;
+				clickY		= clickY - ry;
+				
+				clickX		= Math.floor((onien.w/r.width)*clickX);
+				clickY		= Math.floor((onien.h/r.height)*clickY);
 				
 				onien.eventClickCheck(e,clickX,clickY,"mouseup");
 			});
@@ -600,8 +627,16 @@ function OnigiriEngine(w,h){
 			//mousemoveイベント追加
 			onien.canvas.addEventListener("mousemove",function(e){
 				var e		= e;
-				var clickX	= e.offsetX;
-				var clickY	= e.offsetY;
+				var clickX	= e.pageX;
+				var clickY	= e.pageY;
+				var r		= e.target.getBoundingClientRect();
+				var rx		= r.left;
+				var ry		= r.top;
+				clickX		= clickX - rx;
+				clickY		= clickY - ry;
+				
+				clickX		= Math.floor((onien.w/r.width)*clickX);
+				clickY		= Math.floor((onien.h/r.height)*clickY);
 				
 				onien.eventClickCheck(e,clickX,clickY,"mousemove");
 				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave");
@@ -610,8 +645,16 @@ function OnigiriEngine(w,h){
 			//mouseleaveイベント追加
 			onien.canvas.addEventListener("mouseleave",function(e){
 				var e		= e;
-				var clickX	= e.offsetX;
-				var clickY	= e.offsetY;
+				var clickX	= e.pageX;
+				var clickY	= e.pageY;
+				var r		= e.target.getBoundingClientRect();
+				var rx		= r.left;
+				var ry		= r.top;
+				clickX		= clickX - rx;
+				clickY		= clickY - ry;
+				
+				clickX		= Math.floor((onien.w/r.width)*clickX);
+				clickY		= Math.floor((onien.h/r.height)*clickY);
 				
 				onien.eventClickCheck(e,clickX,clickY,"mouseleave","trueleave");
 			});

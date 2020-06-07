@@ -29,4 +29,5 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
+・ver.1.0.1(2020/6/7)　キャンバスの自動拡縮方法とイベント座標の取得方法の変更
 ・ver.1.0.0(2020/6/5)　公開開始

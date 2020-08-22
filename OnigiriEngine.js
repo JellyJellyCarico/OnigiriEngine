@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.1
+OnigiriEngine Ver1.0.2（編集中）
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -492,6 +492,11 @@ function OnigiriEngine(w,h){
 							if(img.visible==true){
 								//オブジェクトがスプライトなら描画処理
 								if(img.type	== "sprite"){
+									if(typeof(img.src) == "object"){
+									}else{
+										img.src		= onien.asset[img.src];
+									}
+									
 									var dx		= img.x + onien.layer[i].x;
 									var dy		= img.y + onien.layer[i].y;
 									var countX	= Math.floor(img.src.width/img.w);
@@ -524,11 +529,25 @@ function OnigiriEngine(w,h){
 									var dx		= img.x + onien.layer[i].x;
 									var dy		= img.y + onien.layer[i].y;
 									onien.ctx.save();
+									
+									if(img.back != null){
+										onien.ctx.fillStyle		= img.back;
+										onien.ctx.fillRect(dx,dy,img.w,img.h);
+									}
+									
+									if(img.src != null){
+										if(typeof(img.src) == "object"){
+										}else{
+											img.src		= onien.asset[img.src];
+										}
+										onien.ctx.drawImage(img.src,dx,dy,img.w,img.h);
+									}
+									
 									onien.ctx.fillStyle		= img.color;
 									onien.ctx.font			= img.size + " " + img.family;
 									onien.ctx.textAlign		= "left";
 									onien.ctx.textBaseline	= "top";
-									onien.ctx.fillText(img.text,dx,dy);
+									onien.ctx.fillText(img.text,dx+img.paddingLeft,dy+img.paddingTop);
 									onien.ctx.restore();
 								}
 								
@@ -780,7 +799,7 @@ function OnigiriEngine(w,h){
 					//イベントをつける場合は発火確認
 					if(obj.nonEvent == false){
 						//スプライト・ぷりアニの場合
-						if(obj.type != "text" && obj.type != "html" && obj.visible == true){
+						if(obj.type != "html" && obj.visible == true){
 							var objX	= obj.x + onien.layer[obj.layer].x;
 							var objY	= obj.y + onien.layer[obj.layer].y;
 							
@@ -1233,8 +1252,8 @@ class OeText{
 		this.text		= text;
 		this.x			= x?x:0;
 		this.y			= y?y:0;
-		this.w			= 10;
-		this.h			= 10;
+		this.w			= 100;
+		this.h			= 100;
 		this.visible	= true;
 		this.type		= "text";
 		this.nonEvent	= false;
@@ -1242,6 +1261,11 @@ class OeText{
 		this.size		= "24px";
 		this.color		= "black";
 		this.family		= "sans-serif";
+		
+		this.back		= null;
+		this.src		= null;
+		this.paddingLeft	= 0;
+		this.paddingTop		= 0;
 		
 	}
 	

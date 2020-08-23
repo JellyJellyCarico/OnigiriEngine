@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.2
+OnigiriEngine Ver1.0.3(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -47,6 +47,9 @@ function OnigiriEngine(w,h){
 	
 	//自動キャンバスサイズ拡縮調整をするかしないか
 	onien.autoScale	= true;
+	
+	//キャンバスをセンター寄せにするかしないか
+	onien.setCenter	= false;
 	
 	//アセット用の準備
 	//assetListに入れたものをload関数で読み込む
@@ -321,6 +324,13 @@ function OnigiriEngine(w,h){
 		onien.canvas.width	= onien.w;
 		onien.canvas.height	= onien.h;
 		
+		//センター寄せがオンの場合
+		if(onien.setCenter){
+			var left	= (window.innerWidth - (onien.w))/2;
+			onien.canvas.style.position	= "absolute";
+			onien.canvas.style.left		= left + "px";
+		}
+		
 		//自動キャンバス調整がオンの場合
 		if(onien.autoScale){
 			//キャンバスサイズを自動調整する関数を作る
@@ -344,6 +354,12 @@ function OnigiriEngine(w,h){
 				
 				onien.canvas.style.width			= scale * onien.w + "px";
 				onien.canvas.style.height			= scale * onien.h + "px";
+				
+				if(onien.setCenter){
+					var left	= (sW - (scale*onien.w))/2;
+					onien.canvas.style.position	= "absolute";
+					onien.canvas.style.left		= left + "px";
+				}
 				
 			}
 			

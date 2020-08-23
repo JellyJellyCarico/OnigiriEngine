@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.2（編集中）
+OnigiriEngine Ver1.0.2
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -345,9 +345,6 @@ function OnigiriEngine(w,h){
 				onien.canvas.style.width			= scale * onien.w + "px";
 				onien.canvas.style.height			= scale * onien.h + "px";
 				
-				
-				
-				
 			}
 			
 			onien.setScreen();
@@ -519,6 +516,26 @@ function OnigiriEngine(w,h){
 								//オブジェクトがHTMLタグなら
 								if(img.type == "html"){
 									img.obj.style.visibility = "visible";
+									
+									if(img.x != null || img.y != null){
+										img.obj.style.position = "absolute";
+									}
+									if(img.x != null){
+										if(img.autoPosition == true){
+											img.positionSet();
+											img.obj.style.left		= img.autoX+"px";
+										}else{
+											img.obj.style.left		= img.x+"px";
+										}
+									}
+									if(img.y != null){
+										if(img.autoPosition == true){
+											img.positionSet();
+											img.obj.style.top		= img.autoY+"px";
+										}else{
+											img.obj.style.top		= img.y+"px";
+										}
+									}
 								}
 								//オブジェクトがぷりアニなら
 								if(img.type == "priani"){
@@ -1108,8 +1125,11 @@ class OeHtmlTag{
 		this.obj.style.visibility = "visible";
 		this.buttonOn	= on?on:null;
 		this.buttonOff	= off?off:null;
-		this.x			= 99999;
-		this.y			= 99999;
+		this.x			= null;
+		this.y			= null;
+		this.autoPosition	= false;
+		this.autoX		= null;
+		this.autoY		= null;
 		
 		var that	= this;
 		
@@ -1123,31 +1143,39 @@ class OeHtmlTag{
 				}
 				
 				try{
-					that.mousedown();
+					that.mousedown(e);
 				}catch(e){
 					
 				}
 			});
 								  
 			this.obj.addEventListener("mouseup",function(e){
-				if(that.buttonOn){
+				if(that.buttonOff){
 					that.obj.src	= onien.asset[that.buttonOff].src;
 				}
 				
 				try{
-					that.mouseup();
+					that.mouseup(e);
 				}catch(e){
 					
 				}
 			});
 			
 			this.obj.addEventListener("mouseleave",function(e){
-				if(that.buttonOn){
+				if(that.buttonOff){
 					that.obj.src	= onien.asset[that.buttonOff].src;
 				}
 				
 				try{
-					that.mouseup();
+					that.mouseleave(e);
+				}catch(e){
+					
+				}
+			});
+			
+			this.obj.addEventListener("mousemove",function(e){
+				try{
+					that.mousemove(e);
 				}catch(e){
 					
 				}
@@ -1163,7 +1191,7 @@ class OeHtmlTag{
 				
 				
 				try{
-					that.mousedown();
+					that.mousedown(e);
 				}catch(e){
 					
 				}
@@ -1172,12 +1200,36 @@ class OeHtmlTag{
 			this.obj.addEventListener("touchend",function(e){
 				e.preventDefault();
 				
-				if(that.buttonOn){
+				if(that.buttonOff){
 					that.obj.src	= onien.asset[that.buttonOff].src;
 				}
 				
 				try{
-					that.mouseup();
+					that.mouseup(e);
+				}catch(e){
+					
+				}
+			});
+			
+			this.obj.addEventListener("touchcancel",function(e){
+				e.preventDefault();
+				
+				if(that.buttonOff){
+					that.obj.src	= onien.asset[that.buttonOff].src;
+				}
+				
+				try{
+					that.mouseleave(e);
+				}catch(e){
+					
+				}
+			});
+			
+			this.obj.addEventListener("touchmove",function(e){
+				e.preventDefault();
+				
+				try{
+					that.mousemove(e);
 				}catch(e){
 					
 				}
@@ -1193,6 +1245,25 @@ class OeHtmlTag{
 	//自分を削除
 	del(){
 		onien.delObj(this);
+	}
+	
+	//位置自動調整
+	positionSet(){
+		var sW		= innerWidth;
+		var sH		= innerHeight;
+		var cW		= onien.w;
+		var cH		= onien.h;
+		var scale	= 1;
+		if(sW > sH){
+			//横長
+			scale	= sH/cH;
+		}else{
+			//縦長
+			scale	= sW/cW;
+		}
+		
+		this.autoX	= scale * this.x;
+		this.autoY	= scale * this.y;
 	}
 }
 

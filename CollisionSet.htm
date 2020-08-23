@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-    <title>コリジョン設定用</title>
+    <title>コリジョン設定作成ツール</title>
     <style>
     	.fff{
     		border:solid 2px gray;
@@ -225,6 +225,15 @@
     map_load	= function(){
     	loadtext	= document.getElementById("loadtext");
     	map			= JSON.parse(loadtext.value);
+		
+		for(var i in map){
+			var num	= i.replace(/col/g,"");
+			num		= Math.floor(num);
+			if(num > numnum){
+				numnum = num;
+			}
+		}
+		
     	refresh();
     }
     

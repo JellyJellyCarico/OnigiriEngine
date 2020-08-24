@@ -735,8 +735,31 @@ function OnigiriEngine(w,h){
 					
 				}
 				
+				var clickX2	= -999;
+				var clickY2	= -999;
+				try{
+					var ob		= e.changedTouches[1];
+					var x		= ob.pageX;
+					var y		= ob.pageY;
+					var r		= ob.target.getBoundingClientRect();
+					var rx		= r.left;
+					var ry		= r.top;
+					x			= x - rx;
+					y			= y - ry;
+					clickX2		= (onien.w/r.width)*x;
+					clickY2		= (onien.h/r.height)*y;
+				}catch(error){
+					
+				}
+				
 				onien.eventClickCheck(e,clickX,clickY,"click");
 				onien.eventClickCheck(e,clickX,clickY,"mouseup");
+				
+				if(clickX2 != -999 && clickY2 != -999){
+					onien.eventClickCheck(e,clickX2,clickY2,"click");
+					onien.eventClickCheck(e,clickX2,clickY2,"mouseup");
+				}
+				
 			});
 			
 			//touchstartイベント追加
@@ -760,7 +783,29 @@ function OnigiriEngine(w,h){
 					
 				}
 				
+				var clickX2	= -999;
+				var clickY2	= -999;
+				try{
+					var ob		= e.changedTouches[1];
+					var x		= ob.pageX;
+					var y		= ob.pageY;
+					var r		= ob.target.getBoundingClientRect();
+					var rx		= r.left;
+					var ry		= r.top;
+					x			= x - rx;
+					y			= y - ry;
+					clickX2		= (onien.w/r.width)*x;
+					clickY2		= (onien.h/r.height)*y;
+				}catch(error){
+					
+				}
+				
 				onien.eventClickCheck(e,clickX,clickY,"mousedown");
+				
+				if(clickX2 != -999 && clickY2 != -999){
+					onien.eventClickCheck(e,clickX2,clickY2,"mousedown");
+				}
+				
 			});
 			
 			//touchmoveイベント追加
@@ -784,8 +829,30 @@ function OnigiriEngine(w,h){
 					
 				}
 				
+				var clickX2	= -999;
+				var clickY2	= -999;
+				try{
+					var ob		= e.changedTouches[1];
+					var x		= ob.pageX;
+					var y		= ob.pageY;
+					var r		= ob.target.getBoundingClientRect();
+					var rx		= r.left;
+					var ry		= r.top;
+					x			= x - rx;
+					y			= y - ry;
+					clickX2		= (onien.w/r.width)*x;
+					clickY2		= (onien.h/r.height)*y;
+				}catch(error){
+					
+				}
+				
 				onien.eventClickCheck(e,clickX,clickY,"mousemove");
 				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave");
+				
+				if(clickX2 != -999 && clickY2 != -999){
+					onien.eventClickCheck(e,clickX2,clickY2,"mousemove");
+					onien.eventClickCheck(e,clickX2,clickY2,"mouseleave","canvasleave");
+				}
 			});
 			
 		}

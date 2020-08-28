@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.3(編集中)
+OnigiriEngine Ver1.0.4(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -550,6 +550,30 @@ function OnigiriEngine(w,h){
 											img.obj.style.top		= img.autoY+"px";
 										}else{
 											img.obj.style.top		= img.y+"px";
+										}
+									}
+									if(img.w != null || img.autoScale == true){
+										if(img.autoScale == true){
+											img.scaleSet();
+											img.obj.style.width		= img.autoW+"px";
+										}else{
+											img.obj.style.width		= img.w+"px";
+										}
+									}
+									if(img.h != null || img.autoScale == true){
+										if(img.autoScale == true){
+											img.scaleSet();
+											img.obj.style.height	= img.autoH+"px";
+										}else{
+											img.obj.style.height	= img.h+"px";
+										}
+									}
+									if(img.fontsize != null || img.autoScale == true){
+										if(img.autoScale == true){
+											img.scaleSet();
+											img.obj.style.fontSize	= img.autoF+"px";
+										}else{
+											img.obj.style.fontSize	= img.fontsize+"px";
 										}
 									}
 								}
@@ -1210,9 +1234,16 @@ class OeHtmlTag{
 		this.buttonOff	= off?off:null;
 		this.x			= null;
 		this.y			= null;
+		this.w			= null;
+		this.h			= null;
+		this.fontsize	= null;
 		this.autoPosition	= false;
+		this.autoScale		= false;
 		this.autoX		= null;
 		this.autoY		= null;
+		this.autoW		= null;
+		this.autoH		= null;
+		this.autoF		= null;
 		
 		var that	= this;
 		
@@ -1345,8 +1376,43 @@ class OeHtmlTag{
 			scale	= sW/cW;
 		}
 		
-		this.autoX	= scale * this.x;
+		if(onien.setCenter){
+			var left	= (sW - (scale*onien.w))/2;
+			this.autoX	= scale * this.x + left;
+		}else{
+			this.autoX	= scale * this.x;
+		}
 		this.autoY	= scale * this.y;
+	}
+	
+	//サイズ自動調整
+	scaleSet(){
+		if(this.w	== null){
+			this.w = this.obj.scrollWidth?this.obj.scrollWidth:100;
+		}
+		if(this.h	== null){
+			this.h = this.obj.scrollHeight?this.obj.scrollHeight:100;
+		}
+		if(this.fontsize == null){
+			this.fontsize = this.obj.style.fontSize?this.obj.style.fontSize:20;
+		}
+		
+		var sW		= innerWidth;
+		var sH		= innerHeight;
+		var cW		= onien.w;
+		var cH		= onien.h;
+		var scale	= 1;
+		if(sW > sH){
+			//横長
+			scale	= sH/cH;
+		}else{
+			//縦長
+			scale	= sW/cW;
+		}
+		
+		this.autoW	= scale * this.w;
+		this.autoH	= scale * this.h;
+		this.autoF	= scale * this.fontsize;
 	}
 }
 

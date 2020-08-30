@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.5
+OnigiriEngine Ver1.0.6
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -385,7 +385,7 @@ function OnigiriEngine(w,h){
 			//1つずつ読み込んでいく
 			for(var i in onien.assetList){
 				//画像ファイルの読み込み処理
-				if(onien.assetList[i].indexOf(".png")!=-1 || onien.assetList[i].indexOf(".jpg")!=-1){
+				if(onien.assetList[i].indexOf(".png")!=-1 || onien.assetList[i].indexOf(".jpg")!=-1 || onien.assetList[i].indexOf(".gif")!=-1){
 					onien.asset[onien.assetList[i]]	= new Image;
 					onien.asset[onien.assetList[i]].src	= onien.assetList[i];
 					onien.asset[onien.assetList[i]].onload	= function(){
@@ -789,12 +789,12 @@ function OnigiriEngine(w,h){
 					
 				}
 				
-				onien.eventClickCheck(e,clickX,clickY,"click");
-				onien.eventClickCheck(e,clickX,clickY,"mouseup");
+				onien.eventClickCheck(e,clickX,clickY,"click",null,0);
+				onien.eventClickCheck(e,clickX,clickY,"mouseup",null,0);
 				
 				if(clickX2 != -999 && clickY2 != -999){
-					onien.eventClickCheck(e,clickX2,clickY2,"click");
-					onien.eventClickCheck(e,clickX2,clickY2,"mouseup");
+					onien.eventClickCheck(e,clickX2,clickY2,"click",null,1);
+					onien.eventClickCheck(e,clickX2,clickY2,"mouseup",null,1);
 				}
 				
 			});
@@ -837,10 +837,10 @@ function OnigiriEngine(w,h){
 					
 				}
 				
-				onien.eventClickCheck(e,clickX,clickY,"mousedown");
+				onien.eventClickCheck(e,clickX,clickY,"mousedown",null,0);
 				
 				if(clickX2 != -999 && clickY2 != -999){
-					onien.eventClickCheck(e,clickX2,clickY2,"mousedown");
+					onien.eventClickCheck(e,clickX2,clickY2,"mousedown",null,1);
 				}
 				
 			});
@@ -883,12 +883,12 @@ function OnigiriEngine(w,h){
 					
 				}
 				
-				onien.eventClickCheck(e,clickX,clickY,"mousemove");
-				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave");
+				onien.eventClickCheck(e,clickX,clickY,"mousemove",null,0);
+				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave",0);
 				
 				if(clickX2 != -999 && clickY2 != -999){
-					onien.eventClickCheck(e,clickX2,clickY2,"mousemove");
-					onien.eventClickCheck(e,clickX2,clickY2,"mouseleave","canvasleave");
+					onien.eventClickCheck(e,clickX2,clickY2,"mousemove",null,1);
+					onien.eventClickCheck(e,clickX2,clickY2,"mouseleave","canvasleave",1);
 				}
 			});
 			
@@ -917,7 +917,8 @@ function OnigiriEngine(w,h){
 	}
 	
 	//★クリック系のイベント処理
-	onien.eventClickCheck	= function(e,clickX,clickY,mode,mouseleaveMode){
+	onien.eventClickCheck	= function(e,clickX,clickY,mode,mouseleaveMode,touchnum){
+		
 		//各レイヤーの処理
 		for(var i in onien.layer){
 			//イベントをつける場合は各オブジェクトの発火確認
@@ -946,7 +947,7 @@ function OnigiriEngine(w,h){
 							//クリック位置に該当オブジェクトがあれば発火
 							if(obj[mode] && objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2 && mode != "mouseleave"){
 								try{
-									obj[mode](e,clickX,clickY);
+									obj[mode](e,clickX,clickY,touchnum);
 									break;
 								}catch(e){
 									
@@ -956,7 +957,7 @@ function OnigiriEngine(w,h){
 							//mouseleaveの場合は該当オブジェクトが無ければ発火
 							if(obj[mode] && mode == "mouseleave" && mouseleaveMode == "trueleave"){
 								try{
-									obj[mode](e,clickX,clickY);
+									obj[mode](e,clickX,clickY,touchnum);
 								}catch(e){
 									
 								}
@@ -964,7 +965,7 @@ function OnigiriEngine(w,h){
 							if(!(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2) && obj[mode] && mode == "mouseleave" && mouseleaveMode == "canvasleave"){
 								try{
 									console.log("leave")
-									obj[mode](e,clickX,clickY);
+									obj[mode](e,clickX,clickY,touchnum);
 								}catch(e){
 									
 								}
@@ -982,7 +983,7 @@ function OnigiriEngine(w,h){
 				//クリック位置に該当レイヤーがあれば発火
 				if(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2 && onien.layer[i].visible == true){
 					try{
-						onien.layer[i][mode](e,clickX,clickY);
+						onien.layer[i][mode](e,clickX,clickY,touchnum);
 					}catch(e){
 						
 					}
@@ -1242,7 +1243,7 @@ class OeHtmlTag{
 		this.obj		= document.getElementById(id);
 		this.visible	= true;
 		this.type		= "html";
-		this.obj.style.visibility = "visible";
+		//this.obj.style.visibility = "visible";
 		this.buttonOn	= on?on:null;
 		this.buttonOff	= off?off:null;
 		this.x			= null;
@@ -1260,6 +1261,7 @@ class OeHtmlTag{
 		
 		var that	= this;
 		
+			
 		//イベントセット
 		
 		if(onien.platform != "i" && onien.platform != "android"){

@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.5（編集中）
+OnigiriEngine Ver1.0.5
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -1510,6 +1510,27 @@ class OeText{
 	//自分を削除
 	del(){
 		onien.delObj(this);
+	}
+}
+
+//一時キャンバスクラス
+class OeTmpCanvas{
+	constructor(w,h){
+		var canvas		= document.createElement('canvas');
+		canvas.width	= w?w:100;
+		canvas.height	= h?h:100;
+		this.canvas		= canvas;
+		this.context	= this.canvas.getContext('2d');
+	}
+	
+	draw(src,cutx,cuty,cutw,cuth,putx,puty){
+		if(typeof(src) != "object"){
+			src		= onien.asset[src];
+		}
+		
+		this.context.save();
+		this.context.drawImage(src,cutx,cuty,cutw,cuth,putx,puty,cutw,cuth);
+		this.context.restore();
 	}
 }
 

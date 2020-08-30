@@ -1,4 +1,4 @@
-﻿おにぎりエンジン(OnigiriEngine)  ver.1.0.3  (C) かりこ(Carico)
+﻿おにぎりエンジン(OnigiriEngine)  ver.1.0.5  (C) かりこ(Carico)
 https://jellyjelly.site/onien/
 
 ■概要
@@ -28,6 +28,8 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
+・ver.1.0.5(2020/8/30) キャンバス自動拡縮機能修正、文字クラス修正、一時キャンバスクラス追加
+・ver.1.0.4(2020/8/30) HTMLタグクラスの修正と機能追加、キャンバスの自動拡縮機能修正
 ・ver.1.0.3(2020/8/24) キャンバスセンター寄せ機能追加、タッチイベント修正、CollisionSet.htm修正
 ・ver.1.0.2(2020/8/23) 文字クラス・HTMLタグクラスの機能追加、利用条件改訂
 ・ver.1.0.1(2020/6/7)　キャンバスの自動拡縮方法とイベント座標の取得方法の変更

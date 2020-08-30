@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.1
+OnigiriEngine Ver1.0.5
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -47,6 +47,9 @@ function OnigiriEngine(w,h){
 	
 	//自動キャンバスサイズ拡縮調整をするかしないか
 	onien.autoScale	= true;
+	
+	//キャンバスをセンター寄せにするかしないか
+	onien.setCenter	= false;
 	
 	//アセット用の準備
 	//assetListに入れたものをload関数で読み込む
@@ -321,6 +324,13 @@ function OnigiriEngine(w,h){
 		onien.canvas.width	= onien.w;
 		onien.canvas.height	= onien.h;
 		
+		//センター寄せがオンの場合
+		if(onien.setCenter){
+			var left	= (window.innerWidth - (onien.w))/2;
+			onien.canvas.style.position	= "absolute";
+			onien.canvas.style.left		= left + "px";
+		}
+		
 		//自動キャンバス調整がオンの場合
 		if(onien.autoScale){
 			//キャンバスサイズを自動調整する関数を作る
@@ -345,8 +355,11 @@ function OnigiriEngine(w,h){
 				onien.canvas.style.width			= scale * onien.w + "px";
 				onien.canvas.style.height			= scale * onien.h + "px";
 				
-				
-				
+				if(onien.setCenter){
+					var left	= (sW - (scale*onien.w))/2;
+					onien.canvas.style.position	= "absolute";
+					onien.canvas.style.left		= left + "px";
+				}
 				
 			}
 			
@@ -354,7 +367,16 @@ function OnigiriEngine(w,h){
 			
 			//ウィンドウサイズが変わったらそれに合わせる
 			window.addEventListener("resize",function(){
-				onien.setScreen();
+				if(onien.autoScale == true){
+					onien.setScreen();
+				}
+			});
+			
+			//オリエンテーションが変わったらそれに合わせる
+			window.addEventListener("orientationchange",function(){
+				if(onien.autoScale == true){
+					onien.setScreen();
+				}
 			});
 		}
 		
@@ -492,6 +514,11 @@ function OnigiriEngine(w,h){
 							if(img.visible==true){
 								//オブジェクトがスプライトなら描画処理
 								if(img.type	== "sprite"){
+									if(typeof(img.src) == "object"){
+									}else{
+										img.src		= onien.asset[img.src];
+									}
+									
 									var dx		= img.x + onien.layer[i].x;
 									var dy		= img.y + onien.layer[i].y;
 									var countX	= Math.floor(img.src.width/img.w);
@@ -514,6 +541,50 @@ function OnigiriEngine(w,h){
 								//オブジェクトがHTMLタグなら
 								if(img.type == "html"){
 									img.obj.style.visibility = "visible";
+									
+									if(img.x != null || img.y != null){
+										img.obj.style.position = "absolute";
+									}
+									if(img.x != null){
+										if(img.autoPosition == true){
+											img.positionSet();
+											img.obj.style.left		= img.autoX+"px";
+										}else{
+											img.obj.style.left		= img.x+"px";
+										}
+									}
+									if(img.y != null){
+										if(img.autoPosition == true){
+											img.positionSet();
+											img.obj.style.top		= img.autoY+"px";
+										}else{
+											img.obj.style.top		= img.y+"px";
+										}
+									}
+									if(img.w != null || img.autoScale == true){
+										if(img.autoScale == true){
+											img.scaleSet();
+											img.obj.style.width		= img.autoW+"px";
+										}else{
+											img.obj.style.width		= img.w+"px";
+										}
+									}
+									if(img.h != null || img.autoScale == true){
+										if(img.autoScale == true){
+											img.scaleSet();
+											img.obj.style.height	= img.autoH+"px";
+										}else{
+											img.obj.style.height	= img.h+"px";
+										}
+									}
+									if(img.fontsize != null || img.autoScale == true){
+										if(img.autoScale == true){
+											img.scaleSet();
+											img.obj.style.fontSize	= img.autoF+"px";
+										}else{
+											img.obj.style.fontSize	= img.fontsize+"px";
+										}
+									}
 								}
 								//オブジェクトがぷりアニなら
 								if(img.type == "priani"){
@@ -524,11 +595,29 @@ function OnigiriEngine(w,h){
 									var dx		= img.x + onien.layer[i].x;
 									var dy		= img.y + onien.layer[i].y;
 									onien.ctx.save();
+									
+									if(img.back != null){
+										onien.ctx.fillStyle		= img.back;
+										onien.ctx.fillRect(dx,dy,img.w,img.h);
+									}
+									
+									if(img.src != null){
+										if(typeof(img.src) == "object"){
+										}else{
+											img.src		= onien.asset[img.src];
+										}
+										onien.ctx.drawImage(img.src,dx,dy,img.w,img.h);
+									}
+									
+									if(isNaN(img.size) == false){
+										img.size	= img.size + "px";
+									}
+									
 									onien.ctx.fillStyle		= img.color;
 									onien.ctx.font			= img.size + " " + img.family;
 									onien.ctx.textAlign		= "left";
 									onien.ctx.textBaseline	= "top";
-									onien.ctx.fillText(img.text,dx,dy);
+									onien.ctx.fillText(img.text,dx+img.paddingLeft,dy+img.paddingTop);
 									onien.ctx.restore();
 								}
 								
@@ -683,8 +772,31 @@ function OnigiriEngine(w,h){
 					
 				}
 				
+				var clickX2	= -999;
+				var clickY2	= -999;
+				try{
+					var ob		= e.changedTouches[1];
+					var x		= ob.pageX;
+					var y		= ob.pageY;
+					var r		= ob.target.getBoundingClientRect();
+					var rx		= r.left;
+					var ry		= r.top;
+					x			= x - rx;
+					y			= y - ry;
+					clickX2		= (onien.w/r.width)*x;
+					clickY2		= (onien.h/r.height)*y;
+				}catch(error){
+					
+				}
+				
 				onien.eventClickCheck(e,clickX,clickY,"click");
 				onien.eventClickCheck(e,clickX,clickY,"mouseup");
+				
+				if(clickX2 != -999 && clickY2 != -999){
+					onien.eventClickCheck(e,clickX2,clickY2,"click");
+					onien.eventClickCheck(e,clickX2,clickY2,"mouseup");
+				}
+				
 			});
 			
 			//touchstartイベント追加
@@ -708,7 +820,29 @@ function OnigiriEngine(w,h){
 					
 				}
 				
+				var clickX2	= -999;
+				var clickY2	= -999;
+				try{
+					var ob		= e.changedTouches[1];
+					var x		= ob.pageX;
+					var y		= ob.pageY;
+					var r		= ob.target.getBoundingClientRect();
+					var rx		= r.left;
+					var ry		= r.top;
+					x			= x - rx;
+					y			= y - ry;
+					clickX2		= (onien.w/r.width)*x;
+					clickY2		= (onien.h/r.height)*y;
+				}catch(error){
+					
+				}
+				
 				onien.eventClickCheck(e,clickX,clickY,"mousedown");
+				
+				if(clickX2 != -999 && clickY2 != -999){
+					onien.eventClickCheck(e,clickX2,clickY2,"mousedown");
+				}
+				
 			});
 			
 			//touchmoveイベント追加
@@ -732,8 +866,30 @@ function OnigiriEngine(w,h){
 					
 				}
 				
+				var clickX2	= -999;
+				var clickY2	= -999;
+				try{
+					var ob		= e.changedTouches[1];
+					var x		= ob.pageX;
+					var y		= ob.pageY;
+					var r		= ob.target.getBoundingClientRect();
+					var rx		= r.left;
+					var ry		= r.top;
+					x			= x - rx;
+					y			= y - ry;
+					clickX2		= (onien.w/r.width)*x;
+					clickY2		= (onien.h/r.height)*y;
+				}catch(error){
+					
+				}
+				
 				onien.eventClickCheck(e,clickX,clickY,"mousemove");
 				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave");
+				
+				if(clickX2 != -999 && clickY2 != -999){
+					onien.eventClickCheck(e,clickX2,clickY2,"mousemove");
+					onien.eventClickCheck(e,clickX2,clickY2,"mouseleave","canvasleave");
+				}
 			});
 			
 		}
@@ -780,7 +936,7 @@ function OnigiriEngine(w,h){
 					//イベントをつける場合は発火確認
 					if(obj.nonEvent == false){
 						//スプライト・ぷりアニの場合
-						if(obj.type != "text" && obj.type != "html" && obj.visible == true){
+						if(obj.type != "html" && obj.visible == true){
 							var objX	= obj.x + onien.layer[obj.layer].x;
 							var objY	= obj.y + onien.layer[obj.layer].y;
 							
@@ -1089,8 +1245,18 @@ class OeHtmlTag{
 		this.obj.style.visibility = "visible";
 		this.buttonOn	= on?on:null;
 		this.buttonOff	= off?off:null;
-		this.x			= 99999;
-		this.y			= 99999;
+		this.x			= null;
+		this.y			= null;
+		this.w			= null;
+		this.h			= null;
+		this.fontsize	= null;
+		this.autoPosition	= false;
+		this.autoScale		= false;
+		this.autoX		= null;
+		this.autoY		= null;
+		this.autoW		= null;
+		this.autoH		= null;
+		this.autoF		= null;
 		
 		var that	= this;
 		
@@ -1104,31 +1270,39 @@ class OeHtmlTag{
 				}
 				
 				try{
-					that.mousedown();
+					that.mousedown(e);
 				}catch(e){
 					
 				}
 			});
 								  
 			this.obj.addEventListener("mouseup",function(e){
-				if(that.buttonOn){
+				if(that.buttonOff){
 					that.obj.src	= onien.asset[that.buttonOff].src;
 				}
 				
 				try{
-					that.mouseup();
+					that.mouseup(e);
 				}catch(e){
 					
 				}
 			});
 			
 			this.obj.addEventListener("mouseleave",function(e){
-				if(that.buttonOn){
+				if(that.buttonOff){
 					that.obj.src	= onien.asset[that.buttonOff].src;
 				}
 				
 				try{
-					that.mouseup();
+					that.mouseleave(e);
+				}catch(e){
+					
+				}
+			});
+			
+			this.obj.addEventListener("mousemove",function(e){
+				try{
+					that.mousemove(e);
 				}catch(e){
 					
 				}
@@ -1144,7 +1318,7 @@ class OeHtmlTag{
 				
 				
 				try{
-					that.mousedown();
+					that.mousedown(e);
 				}catch(e){
 					
 				}
@@ -1153,12 +1327,36 @@ class OeHtmlTag{
 			this.obj.addEventListener("touchend",function(e){
 				e.preventDefault();
 				
-				if(that.buttonOn){
+				if(that.buttonOff){
 					that.obj.src	= onien.asset[that.buttonOff].src;
 				}
 				
 				try{
-					that.mouseup();
+					that.mouseup(e);
+				}catch(e){
+					
+				}
+			});
+			
+			this.obj.addEventListener("touchcancel",function(e){
+				e.preventDefault();
+				
+				if(that.buttonOff){
+					that.obj.src	= onien.asset[that.buttonOff].src;
+				}
+				
+				try{
+					that.mouseleave(e);
+				}catch(e){
+					
+				}
+			});
+			
+			this.obj.addEventListener("touchmove",function(e){
+				e.preventDefault();
+				
+				try{
+					that.mousemove(e);
 				}catch(e){
 					
 				}
@@ -1174,6 +1372,60 @@ class OeHtmlTag{
 	//自分を削除
 	del(){
 		onien.delObj(this);
+	}
+	
+	//位置自動調整
+	positionSet(){
+		var sW		= innerWidth;
+		var sH		= innerHeight;
+		var cW		= onien.w;
+		var cH		= onien.h;
+		var scale	= 1;
+		if(sW > sH){
+			//横長
+			scale	= sH/cH;
+		}else{
+			//縦長
+			scale	= sW/cW;
+		}
+		
+		if(onien.setCenter){
+			var left	= (sW - (scale*onien.w))/2;
+			this.autoX	= scale * this.x + left;
+		}else{
+			this.autoX	= scale * this.x;
+		}
+		this.autoY	= scale * this.y;
+	}
+	
+	//サイズ自動調整
+	scaleSet(){
+		if(this.w	== null){
+			this.w = this.obj.scrollWidth?this.obj.scrollWidth:100;
+		}
+		if(this.h	== null){
+			this.h = this.obj.scrollHeight?this.obj.scrollHeight:100;
+		}
+		if(this.fontsize == null){
+			this.fontsize = this.obj.style.fontSize?this.obj.style.fontSize:20;
+		}
+		
+		var sW		= innerWidth;
+		var sH		= innerHeight;
+		var cW		= onien.w;
+		var cH		= onien.h;
+		var scale	= 1;
+		if(sW > sH){
+			//横長
+			scale	= sH/cH;
+		}else{
+			//縦長
+			scale	= sW/cW;
+		}
+		
+		this.autoW	= scale * this.w;
+		this.autoH	= scale * this.h;
+		this.autoF	= scale * this.fontsize;
 	}
 }
 
@@ -1233,8 +1485,8 @@ class OeText{
 		this.text		= text;
 		this.x			= x?x:0;
 		this.y			= y?y:0;
-		this.w			= 10;
-		this.h			= 10;
+		this.w			= 100;
+		this.h			= 100;
 		this.visible	= true;
 		this.type		= "text";
 		this.nonEvent	= false;
@@ -1242,6 +1494,11 @@ class OeText{
 		this.size		= "24px";
 		this.color		= "black";
 		this.family		= "sans-serif";
+		
+		this.back		= null;
+		this.src		= null;
+		this.paddingLeft	= 0;
+		this.paddingTop		= 0;
 		
 	}
 	
@@ -1253,6 +1510,27 @@ class OeText{
 	//自分を削除
 	del(){
 		onien.delObj(this);
+	}
+}
+
+//一時キャンバスクラス
+class OeTmpCanvas{
+	constructor(w,h){
+		var canvas		= document.createElement('canvas');
+		canvas.width	= w?w:100;
+		canvas.height	= h?h:100;
+		this.canvas		= canvas;
+		this.context	= this.canvas.getContext('2d');
+	}
+	
+	draw(src,cutx,cuty,cutw,cuth,putx,puty){
+		if(typeof(src) != "object"){
+			src		= onien.asset[src];
+		}
+		
+		this.context.save();
+		this.context.drawImage(src,cutx,cuty,cutw,cuth,putx,puty,cutw,cuth);
+		this.context.restore();
 	}
 }
 

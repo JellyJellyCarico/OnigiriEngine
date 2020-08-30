@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.4(編集中)
+OnigiriEngine Ver1.0.4
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -367,7 +367,9 @@ function OnigiriEngine(w,h){
 			
 			//ウィンドウサイズが変わったらそれに合わせる
 			window.addEventListener("resize",function(){
-				onien.setScreen();
+				if(onien.autoScale == true){
+					onien.setScreen();
+				}
 			});
 		}
 		

@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.6
+OnigiriEngine Ver1.0.7(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -325,11 +325,17 @@ function OnigiriEngine(w,h){
 		onien.canvas.height	= onien.h;
 		
 		//センター寄せがオンの場合
+		/*
 		if(onien.setCenter){
-			var left	= (window.innerWidth - (onien.w))/2;
+			var left=0;
+			if(window.innerWidth>onien.w){
+				left	= (window.innerWidth - (onien.w))/2;
+			}
 			onien.canvas.style.position	= "absolute";
 			onien.canvas.style.left		= left + "px";
 		}
+		*/
+		
 		
 		//自動キャンバス調整がオンの場合
 		if(onien.autoScale){
@@ -356,7 +362,11 @@ function OnigiriEngine(w,h){
 				onien.canvas.style.height			= scale * onien.h + "px";
 				
 				if(onien.setCenter){
-					var left	= (sW - (scale*onien.w))/2;
+					var left = 0;
+					if(sW - scale*onien.w > 0){
+						left	= (sW - (scale*onien.w))/2;
+					}
+					
 					onien.canvas.style.position	= "absolute";
 					onien.canvas.style.left		= left + "px";
 				}
@@ -698,7 +708,7 @@ function OnigiriEngine(w,h){
 											img.waitCount++;
 											if(img.waitCount>3){img.waitCount = 0;}
 										}
-										onien.ctx.drawImage(img.waitCanvas,img.waitCount*16,0,16,16,dx+img.waitX,dy+img.waitY,16,16);
+										onien.ctx.drawImage(img.waitCanvas,img.waitCount*img.waitCanvas.height,0,img.waitCanvas.height,img.waitCanvas.height,dx+img.waitX,dy+img.waitY,img.waitCanvas.height,img.waitCanvas.height);
 									}
 									
 									onien.ctx.restore();
@@ -1626,7 +1636,7 @@ class OeTmpCanvas{
 
 //メッセージクラス
 class OeMessage{
-	constructor(x,y,w,h,waitcolor,waitmark){
+	constructor(x,y,w,h,waitcolor,waitmark,waitsize){
 		this.x			= x?x:0;
 		this.y			= y?y:0;
 		this.w			= w?w:500;
@@ -1666,26 +1676,60 @@ class OeMessage{
 		this.textstart	= false;
 		this.closecount	= 0;
 		
+		this.end		= function(){};
+		this.endcount	= 2;
+		
 		//クリック待ち画像を生成
+		var big			= waitsize?waitsize:"small";
 		var canvas		= document.createElement('canvas');
-		canvas.width	= 64;
-		canvas.height	= 16;
+		if(big == "small"){
+			canvas.width	= 64;
+			canvas.height	= 16;
+		}else if(big == "big"){
+			canvas.width	= 128;
+			canvas.height	= 32;
+		}else{
+			canvas.width	= 256;
+			canvas.height	= 64;
+		}
 		this.waitCanvas	= canvas;
 		this.waitCtx	= this.waitCanvas.getContext('2d');
 		
 		var mark = waitmark?waitmark:"●";
 		
 		this.waitCtx.fillStyle	= waitcolor?waitcolor:"white";
-		this.waitCtx.font		= "6px sans-serif";
+		
 		this.waitCtx.textAlign		= "left";
 		this.waitCtx.textBaseline	= "top";
-		this.waitCtx.fillText(mark,5,5);
-		this.waitCtx.font		= "8px sans-serif";
-		this.waitCtx.fillText(mark,16+4,4);
-		this.waitCtx.font		= "10px sans-serif";
-		this.waitCtx.fillText(mark,32+3,3);
-		this.waitCtx.font		= "8px sans-serif";
-		this.waitCtx.fillText(mark,48+4,4);
+		if(big == "small"){
+			this.waitCtx.font		= "6px sans-serif";
+			this.waitCtx.fillText(mark,5,5);
+			this.waitCtx.font		= "8px sans-serif";
+			this.waitCtx.fillText(mark,16+4,4);
+			this.waitCtx.font		= "10px sans-serif";
+			this.waitCtx.fillText(mark,32+3,3);
+			this.waitCtx.font		= "8px sans-serif";
+			this.waitCtx.fillText(mark,48+4,4);
+		}else if(big == "big"){
+			this.waitCtx.font		= "16px sans-serif";
+			this.waitCtx.fillText(mark,5,5);
+			this.waitCtx.font		= "18px sans-serif";
+			this.waitCtx.fillText(mark,32+4,4);
+			this.waitCtx.font		= "20px sans-serif";
+			this.waitCtx.fillText(mark,64+3,3);
+			this.waitCtx.font		= "18px sans-serif";
+			this.waitCtx.fillText(mark,96+4,4);
+		}else{
+			this.waitCtx.font		= "32px sans-serif";
+			this.waitCtx.fillText(mark,5,5);
+			this.waitCtx.font		= "34px sans-serif";
+			this.waitCtx.fillText(mark,64+4,4);
+			this.waitCtx.font		= "36px sans-serif";
+			this.waitCtx.fillText(mark,128+3,3);
+			this.waitCtx.font		= "34px sans-serif";
+			this.waitCtx.fillText(mark,192+4,4);
+		}
+		
 	}
 	
 	//メッセージを表示する
@@ -1715,6 +1759,11 @@ class OeMessage{
 						this.mouseup = function(){
 							if(this.page+1 >= this.textlist.length){
 								this.visible	= false;
+								try{
+									this.end();
+								}catch(e){
+									
+								}
 							}else{
 								this.page		+= 1;
 								this.text		= "";
@@ -1731,6 +1780,11 @@ class OeMessage{
 						onien.layer[this.layer].mouseup = function(){
 							if(that.page+1 >= that.textlist.length){
 								that.visible	= false;
+								try{
+									that.end();
+								}catch(e){
+									
+								}
 							}else{
 								that.page		+= 1;
 								that.text		= "";
@@ -1770,6 +1824,12 @@ class OeMessage{
 								that.mouseup = null;
 								onien.layer[that.layer].mouseup = null;
 							}
+						}else{
+							try{
+								this.end();
+							}catch(e){
+								
+							}
 						}
 					}else{
 						this.closecount--;
@@ -1784,6 +1844,11 @@ class OeMessage{
 					if(this.page+1 >= this.textlist.length){
 						this.visible	= false;
 						this.closecount	= 0;
+						try{
+							this.end();
+						}catch(e){
+							
+						}
 					}else{
 						this.page		+= 1;
 						this.text		= "";
@@ -1797,7 +1862,6 @@ class OeMessage{
 			}
 		}else{
 			this.text = this.textlist[this.page];
-			this.textstart = false;
 			
 			if(this.mode == "end"){
 				this.wait		= true;
@@ -1805,6 +1869,11 @@ class OeMessage{
 				this.mouseup = function(){
 					if(this.page+1 >= this.textlist.length){
 						this.visible	= false;
+						try{
+							this.end();
+						}catch(e){
+							
+						}
 					}else{
 						this.page		+= 1;
 						this.text		= "";
@@ -1818,6 +1887,11 @@ class OeMessage{
 				onien.layer[this.layer].mouseup = function(){
 					if(that.page+1 >= that.textlist.length){
 						that.visible	= false;
+						try{
+							that.end();
+						}catch(e){
+							
+						}
 					}else{
 						that.page		+= 1;
 						that.text		= "";
@@ -1848,6 +1922,18 @@ class OeMessage{
 						that.mouseup = null;
 						onien.layer[that.layer].mouseup = null;
 					}
+				}else if(this.textstart){
+					if(this.endcount == 0){
+						this.textstart = false;
+						try{
+							this.end();
+						}catch(e){
+
+						}
+					}else{
+						this.endcount--;
+					}
+					
 				}
 			}else{
 				this.closecount--;
@@ -1855,6 +1941,11 @@ class OeMessage{
 					if(this.page+1 >= this.textlist.length){
 						this.visible	= false;
 						this.closecount	= 0;
+						try{
+							this.end();
+						}catch(e){
+							
+						}
 					}else{
 						this.page		+= 1;
 						this.text		= "";

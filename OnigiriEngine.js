@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.7(編集中)
+OnigiriEngine Ver1.0.8(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -1018,7 +1018,7 @@ function OnigiriEngine(w,h){
 		//各レイヤーの処理
 		for(var i in onien.layer){
 			//イベントをつける場合は各オブジェクトの発火確認
-			if(onien.layer[i].nonEvent == false){
+			if(onien.layer[i].nonEvent == false && onien.layer[i].visible == true){
 				//イベントの並び順の逆の順でソートして処理していく
 				var eventSort = [];
 				for(var k in onien.layer[i].sortList){

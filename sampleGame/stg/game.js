@@ -13,7 +13,7 @@ window.onload	= function(){
 	onien.fps		= 30;
 	
 	//使う画像・音声ファイルを全てリストアップ
-	onien.assetList	= ["img/back.png","img/chip.png","img/shot.png","img/boss.png"];
+	onien.assetList	= ["img/back.png","img/chip.png","img/shot.png","img/boss.png","se/bobon.ogg","se/bobon.mp3","se/tyon.ogg","se/tyon.mp3"];
 	
 	//画像・音声ファイルの読み込みを開始する
 	onien.load();
@@ -34,6 +34,7 @@ window.onload	= function(){
 		gamedata.nodamage	= null;		// プレイヤーの無敵時間
 		gamedata.enemys		= {};		// 敵のスプライトを収納する連想配列
 		gamedata.lifes		= [];		// プレイヤーのライフのスプライトを収納する配列
+		gamedata.score		= 0;
 		
 		//--- ゲーム変数に、敵を作る機能を追加する
 		gamedata.MakeEnemy	= function(type,x,y){
@@ -52,6 +53,8 @@ window.onload	= function(){
 			
 			// 敵にイベントを設定する
 			enemy.enterframe	= function(){
+				if(!gamedata.gamestart){return;}
+				
 				// 見た目によって動きを変える
 				if(this.coma == 2){
 					this.y		+= 4;
@@ -78,8 +81,16 @@ window.onload	= function(){
 					this.coma	= 5;
 					// カウント0で消滅する
 					if(this.delcount == 0){
+						// 効果音
+						onien.se.start("se/tyon");
+						
+						// 消滅する
 						this.del();
 						delete gamedata.enemys[i];
+						
+						// スコアを＋する
+						gamedata.score	+= 10;
+						scoretext.text	= "SCORE:" + gamedata.score;
 					}
 				}
 				
@@ -90,12 +101,17 @@ window.onload	= function(){
 					enemyshot.col	= [5,1,5,14,11,14,11,1];
 					// 敵のショットのイベントを設定
 					enemyshot.enterframe	= function(){
+						if(!gamedata.gamestart){return;}
+						
 						// 下へ動いていく
 						this.y	+= 8;
 						// プレイヤーと接触したら…
 						if(this.colCheck(player) || player.colCheck(this)){
 							// プレイヤーが無敵状態じゃなければ…
 							if(gamedata.nodamage == null){
+								// 効果音再生
+								onien.se.start("se/bobon");
+								
 								// ショットを削除して
 								this.del();
 								// プレイヤーの無敵状態を設定して
@@ -181,6 +197,11 @@ window.onload	= function(){
 		startbutton.paddingTop	= 15;
 		startbutton.add("startlayer");
 		
+		//--- スコアテキストを用意する
+		var scoretext	= new OeText("SCORE:"+gamedata.score,550,10);
+		scoretext.color	= "white";
+		scoretext.add("uilayer");
+		
 		//--- ★イベントの設定
 		//--- キャラクター等用のレイヤー のイベントを設定する
 		layer1.enterframe	= function(){
@@ -235,6 +256,8 @@ window.onload	= function(){
 				boss.col		= [15,86,4,102,4,123,16,112,23,125,40,113,51,125,67,110,89,129,114,112,129,127,150,113,167,126,187,113,197,125,202,100,189,86,173,42,142,22,102,14,60,25,29,46];
 				// ボスのイベントの設定をする
 				boss.enterframe	= function(){
+					if(!gamedata.gamestart){return;}
+					
 					// まずは下に移動していき
 					if(boss.y <= 80){
 						boss.y	+= 4;
@@ -266,6 +289,9 @@ window.onload	= function(){
 						
 						// 無敵状態カウントが終わったら
 						if(boss.delcount == 0){
+							// 効果音再生
+							onien.se.start("se/tyon");
+							
 							// 無敵状態カウントをリセットし、見た目は不透明に
 							boss.delcount	= 99;
 							boss.opacity	= 1;
@@ -273,6 +299,10 @@ window.onload	= function(){
 							boss.life--;
 							// ライフがゼロになったら
 							if(boss.life <= 0){
+								// スコアを＋する
+								gamedata.score	+= 50;
+								scoretext.text	= "SCORE:" + gamedata.score;
+								
 								// ボス消滅
 								boss.del();
 								delete gamedata.enemys["boss"];
@@ -299,12 +329,17 @@ window.onload	= function(){
 							bossshot.col	= [5,1,5,14,11,14,11,1];
 							// 弾のイベント設定を行う
 							bossshot.enterframe	= function(){
+								if(!gamedata.gamestart){return;}
+								
 								// 下に移動していく
 								this.y	+= 8;
 								// 接触判定を行う
 								if(this.colCheck(player) || player.colCheck(this)){
 									// プレイヤーが無敵状態じゃなければ
 									if(gamedata.nodamage == null){
+										// 効果音再生
+										onien.se.start("se/bobon");
+										
 										// ショットを削除して
 										this.del();
 										// プレイヤーの無敵状態を設定して
@@ -467,6 +502,8 @@ window.onload	= function(){
 				shot.col	= [0,0,0,16,16,16,16,0];
 				//弾にイベントを設定する
 				shot.enterframe	= function(){
+					if(!gamedata.gamestart){return;}
+					
 					//上へ移動する
 					this.y	-= 8;
 					//敵の数だけ接触判定の処理をする

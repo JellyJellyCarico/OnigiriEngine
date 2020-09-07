@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.8(編集中)
+OnigiriEngine Ver1.0.8
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -1679,6 +1679,8 @@ class OeMessage{
 		this.end		= function(){};
 		this.endcount	= 2;
 		
+		this.pagechange	= function(page){};
+		
 		//クリック待ち画像を生成
 		var big			= waitsize?waitsize:"small";
 		var canvas		= document.createElement('canvas');
@@ -1736,8 +1738,10 @@ class OeMessage{
 	open(texts,mode){
 		this.visible	= true;
 		this.textlist	= texts;
+		this.text		= "";
 		this.mode		= mode?mode:"end";
 		this.page		= 0;
+		this.textcount	= 0;
 		this.textlength = this.textlist[0].length;
 		this.textstart	= true;
 		this.closecount	= this.mode;
@@ -1771,6 +1775,11 @@ class OeMessage{
 								this.textlength = this.textlist[this.page].length;
 								this.wait		= false;
 								this.textstart	= true;
+								try{
+									this.pagechange(this.page);
+								}catch(e){
+									
+								}
 							}
 							this.mouseup = null;
 							onien.layer[this.layer].mouseup = null;
@@ -1792,6 +1801,11 @@ class OeMessage{
 								that.textlength = that.textlist[that.page].length;
 								that.wait		= false;
 								that.textstart	= true;
+								try{
+									that.pagechange(that.page);
+								}catch(e){
+									
+								}
 							}
 							that.mouseup = null;
 							onien.layer[that.layer].mouseup = null;
@@ -1808,6 +1822,12 @@ class OeMessage{
 								this.wait		= false;
 								this.textstart	= true;
 								
+								try{
+									this.pagechange(this.page);
+								}catch(e){
+									
+								}
+								
 								this.mouseup = null;
 								onien.layer[this.layer].mouseup = null;
 							}
@@ -1820,6 +1840,12 @@ class OeMessage{
 								that.textlength = that.textlist[that.page].length;
 								that.wait		= false;
 								that.textstart	= true;
+								
+								try{
+									that.pagechange(that.page);
+								}catch(e){
+									
+								}
 								
 								that.mouseup = null;
 								onien.layer[that.layer].mouseup = null;
@@ -1857,6 +1883,12 @@ class OeMessage{
 						this.wait		= false;
 						this.textstart	= true;
 						this.closecount	= this.mode;
+						
+						try{
+							this.pagechange(this.page);
+						}catch(e){
+							
+						}
 					}
 				}
 			}
@@ -1878,6 +1910,12 @@ class OeMessage{
 						this.page		+= 1;
 						this.text		= "";
 						this.wait		= false;
+						
+						try{
+							this.pagechange(this.page);
+						}catch(e){
+							
+						}
 					}
 					this.mouseup = null;
 					onien.layer[this.layer].mouseup = null;
@@ -1896,6 +1934,12 @@ class OeMessage{
 						that.page		+= 1;
 						that.text		= "";
 						that.wait		= false;
+						
+						try{
+							that.pagechange(that.page);
+						}catch(e){
+							
+						}
 					}
 					that.mouseup = null;
 					onien.layer[that.layer].mouseup = null;
@@ -1909,6 +1953,12 @@ class OeMessage{
 						this.text		= "";
 						this.wait		= false;
 						
+						try{
+							this.pagechange(this.page);
+						}catch(e){
+							
+						}
+						
 						this.mouseup = null;
 						onien.layer[this.layer].mouseup = null;
 					}
@@ -1918,6 +1968,12 @@ class OeMessage{
 						that.page		+= 1;
 						that.text		= "";
 						that.wait		= false;
+						
+						try{
+							that.pagechange(that.page);
+						}catch(e){
+							
+						}
 						
 						that.mouseup = null;
 						onien.layer[that.layer].mouseup = null;
@@ -1951,6 +2007,11 @@ class OeMessage{
 						this.text		= "";
 						this.wait		= false;
 						this.closecount	= this.mode;
+						try{
+							this.pagechange(this.page);
+						}catch(e){
+							
+						}
 					}
 				}
 			}

@@ -271,7 +271,7 @@ function OnigiriEngine(w,h){
 			kekka	= false;
 		}
 		
-		if(one.scaleX!=null || one.scaleY!=null || obj.scaleX!=null || obj.scaleY!=null){
+		if(one.scaleX!=null || one.scaleY!=null || one.rotate!=null || obj.scaleX!=null || obj.scaleY!=null || obj.rotate!=null){
 			kekka	= false;
 		}
 		
@@ -320,7 +320,7 @@ function OnigiriEngine(w,h){
 			kekka	= false;
 		}
 		
-		if(one.scaleX!=null || one.scaleY!=null || obj.scaleX!=null || obj.scaleY!=null){
+		if(one.scaleX!=null || one.scaleY!=null || one.rotate!=null || obj.scaleX!=null || obj.scaleY!=null || obj.rotate!=null){
 			kekka	= false;
 		}
 		
@@ -574,7 +574,10 @@ function OnigiriEngine(w,h){
 									}else{
 										onien.ctx.scale(img.scale,img.scale);
 									}
-									onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)))
+									if(img.rotate!=null){
+										onien.ctx.rotate(img.rotate*(Math.PI/180));
+									}
+									onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
 									
 									onien.ctx.globalAlpha	= img.opacity;
 									
@@ -1294,6 +1297,7 @@ class OeSprite{
 		this.scaleX		= null;
 		this.scaleY		= null;
 		this.opacity	= 1;
+		this.rotate		= null;
 	}
 	
 	//接触判定（オブジェクトの中心点距離で判定）

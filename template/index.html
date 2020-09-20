@@ -20,6 +20,12 @@
 			/* スクロールバーをなくす */
 			overflow: hidden;
 		}
+		
+		canvas {
+			/* キャンバス拡大時にぼやけるのを防止する */
+			image-rendering: -moz-crisp-edges;	/* Firefox */
+			image-rendering: pixelated; 		/* Chrome */ 
+		}
 	</style>
 </head>
 

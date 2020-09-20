@@ -560,7 +560,11 @@ function OnigiriEngine(w,h){
 									onien.ctx.save();
 									
 									onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
-									onien.ctx.scale(img.scale,img.scale);
+									if(img.scaleX!=null && img.scaleY!=null){
+										onien.ctx.scale(img.scaleX,img.scaleY);
+									}else{
+										onien.ctx.scale(img.scale,img.scale);
+									}
 									onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)))
 									
 									onien.ctx.globalAlpha	= img.opacity;
@@ -1278,6 +1282,8 @@ class OeSprite{
 		this.nonEvent	= false;
 		this.col		= [0,0,this.w,0,this.w,this.h,0,this.h];
 		this.scale		= 1;
+		this.scaleX		= null;
+		this.scaleY		= null;
 		this.opacity	= 1;
 	}
 	

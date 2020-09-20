@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.8
+OnigiriEngine Ver1.0.9（編集中）
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -339,23 +339,44 @@ function OnigiriEngine(w,h){
 		
 		//自動キャンバス調整がオンの場合
 		if(onien.autoScale){
+			
+			// スマホの場合はサイズを測るものを用意する
+			if(onien.platform=="i" || onien.platform=="android"){
+				onien.mobimg	= document.createElement("div");
+				onien.mobimg.style.position	= "absolute";
+				onien.mobimg.style.left		= "0px";
+				onien.mobimg.style.top		= "0px";
+				onien.mobimg.style.backgroundColor	= "rgba(0,0,0,0)";
+				onien.mobimg.style.width	= "100%";
+				onien.mobimg.style.height	= "100%";
+				onien.mobimg.style.zIndex	= 0;
+				onien.canvas.style.zIndex	= 1;
+				document.body.appendChild(onien.mobimg);
+			}
+			
 			//キャンバスサイズを自動調整する関数を作る
 			onien.setScreen	= function(){
+				
 				var sW		= innerWidth;
 				var sH		= innerHeight;
+				
+				// スマホ用の設定
+				if(onien.platform=="i" || onien.platform=="android"){
+					sW		= onien.mobimg.clientWidth;
+					sH		= onien.mobimg.clientHeight;
+				}
+				
 				var cW		= onien.w;
 				var cH		= onien.h;
 				var scale	= 1;
-				if(sW > sH){
-					//横長
+				
+				var sP		= sW/sH;
+				var cP		= cW/cH;
+				
+				if(sP > cP){
 					scale	= sH/cH;
-					//onien.canvas.style.maxWidth			= "auto";
-					//onien.canvas.style.maxHeight		= "100%";
 				}else{
-					//縦長
 					scale	= sW/cW;
-					//onien.canvas.style.maxWidth			= "100%";
-					//onien.canvas.style.maxHeight		= "auto";
 				}
 				
 				onien.canvas.style.width			= scale * onien.w + "px";

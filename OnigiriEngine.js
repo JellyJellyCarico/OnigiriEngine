@@ -270,6 +270,11 @@ function OnigiriEngine(w,h){
 		if(one.scale!=1 || obj.scale!=1){
 			kekka	= false;
 		}
+		
+		if(one.scaleX!=null || one.scaleY!=null || obj.scaleX!=null || obj.scaleY!=null){
+			kekka	= false;
+		}
+		
 		return kekka;
 	}
 	
@@ -312,6 +317,10 @@ function OnigiriEngine(w,h){
 		}
 		
 		if(one.scale!=1 || obj.scale!=1){
+			kekka	= false;
+		}
+		
+		if(one.scaleX!=null || one.scaleY!=null || obj.scaleX!=null || obj.scaleY!=null){
 			kekka	= false;
 		}
 		

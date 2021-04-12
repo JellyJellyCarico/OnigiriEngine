@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta name="title" content="おにぎりエンジン：CollisionSet.htmlの使い方" />
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <title>おにぎりエンジン：CollisionSet.htmlの使い方</title>
+    <link rel="shortcut icon" href="https://jellyjelly.site/onien/favicon.ico">
+    <link rel="stylesheet" href="onien.css">
+	<style>
+		body{
+			word-break: break-all;
+		}
+	</style>
+</head>
+
+<body>
+
+<header>
+    <h1 id="up">おにぎりエンジン：CollisionSet.htmlの使い方</h1>
+</header>
+	<div class="box">
+		<ul style="background-color: white;padding-bottom: 30px;">
+			<h2>目次</h2>
+			<li><a href="#about">CollisionSet.htmlとは</a></li>
+			<li><a href="#step1">１　まず画像を読み込む</a></li>
+			<li><a href="#step2">２　コリジョン設定をする（四角の場合）</a></li>
+			<li><a href="#step3">３　コリジョン設定をする（多角形の場合）</a></li>
+			<li><a href="#step4">４　チップ適用する</a></li>
+			<li><a href="#step5">５　コリジョン設定を保存する</a></li>
+			<li><a href="#step6">６　コリジョン設定を読み込む</a></li>
+			
+		</ul>
+		
+		<h2 id="about">CollisionSet.htmlとは</h2>
+		<div>
+			<p>
+			・CollisionSet.htmlは、おにぎりエンジンをダウンロードすると同封されています。<br>
+			・スプライトクラスなどのコリジョン設定の作成を支援するツールです。<br>
+			・コリジョン設定は接触判定に使用する設定です。（参考：<a href="howto.html#col2">基本的な使い方「接触判定をする　その２」</a>）</p>
+			<p>
+			・CollisionSet.htmlを開くとこんな感じの画面が表示されます。<br>
+			<img src="img/colhtml0.png" style="max-width: 100%;">
+			</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="step1">１　まず画像を読み込む</h2>
+		<div>
+			<img src="img/colhtml1.png" style="max-width: 100%;">
+			<p>・ファイルを選択をクリックして画像を選択肢、読込ボタンを押すと画像を読み込みます。<br>
+			・うまく読み込めない場合は、もう一度、読込ボタンを押してください。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="step2">２　コリジョン設定をする（四角の場合）</h2>
+		<div>
+			<img src="img/colhtml2.png" style="max-width: 100%;">
+			<p>・四角のコリジョン設定をする場合は、ツールを四角にして、コリジョン設定したい箇所をドラッグすると、コリジョン設定の数値が表示されます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="step3">３　コリジョン設定をする（多角形の場合）</h2>
+		<div>
+			<img src="img/colhtml3.png" style="max-width: 100%;">
+			<p>・多角形のコリジョン設定をする場合は、ツールを点設置にして、クリックで順番に点を設置していきます。</p>
+			<img src="img/colhtml4.png" style="max-width: 100%;">
+			<p>・それからツールを点閉じるに変更すると、点が閉じられてコリジョン設定の数値が表示されます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="step4">４　チップ適用する</h2>
+		<div>
+			<p>・このままだと画像全体のコリジョン設定になってしまっていますので、チップサイズを適用する必要があります。</p>
+			<img src="img/colhtml5.png" style="max-width: 100%;">
+			<p>・チップサイズを入力して、適用を押すと、チップ適用されたコリジョン設定の数値が表示されます。</p>
+			<p>・基本的にこのチップ適用したコリジョン設定の数値を、スプライトなどのcolパラメータに設定します。</p>
+			<div class="code">
+				<span class="c_com">//game.js</span><br>
+				var <span class="c_var">love</span> = new <span class="c_class">OeSprite</span>("img/chip.png",10,10,70,70,4);<br>
+				<span class="c_var">love</span>.col = [36,62,7,39,13,19,31,27,44,15,59,40];
+			</div>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="step5">５　コリジョン設定を保存する</h2>
+		<div>
+			<img src="img/colhtml6.png" style="max-width: 100%;">
+			<p>・これをコピーしてメモ帳などに貼り付けて、テキストデータとして保存しておきます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="step6">６　コリジョン設定を読み込む</h2>
+		<div>
+			<a href="colhtml7.png"><img src="img/colhtml7.png" style="max-width: 100%;"><br>クリックで画像を拡大</a>
+			<p>・まずは画像を選択して、読み込んでおきます。<br>
+			・そしてメモ帳などを使って保存しておいたテキストデータをコピーして、読み込みボタンの左にあるテキストボックスに貼り付けます。</p>
+			<a href="colhtml8.png"><img src="img/colhtml8.png" style="max-width: 100%;"><br>クリックで画像を拡大</a>
+			<p>・テキストボックスの右にある読み込みボタンを押すと、コリジョン設定が読み込まれます。<br>
+			・チップの設定やチップ適用したデータは読み込まれないので注意してください。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+	</div>
+	
+	<p class="cen" style="margin-top: 100px">
+		<a href="index.html">おにぎりエンジン</a> ＞ CollisionSet.htmlの使い方
+	</p>
+	
+</body>
+</html>

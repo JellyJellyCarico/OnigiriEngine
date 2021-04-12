@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta name="title" content="おにぎりエンジン：基本的な使い方" />
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <title>おにぎりエンジン：基本的な使い方</title>
+    <link rel="shortcut icon" href="https://jellyjelly.site/onien/favicon.ico">
+    <link rel="stylesheet" href="onien.css">
+	<style>
+		body{
+			word-break: break-all;
+		}
+	</style>
+</head>
+
+<body>
+
+<header>
+    <h1 id="up">おにぎりエンジン：基本的な使い方</h1>
+</header>
+	<div class="box">
+		<ul style="background-color: white;padding-bottom: 30px;">
+			<h2>目次</h2>
+			<li><a href="#dl">ダウンロードして準備する</a></li>
+			<li><a href="#indexhtml">index.htmlの基本的な書き方</a></li>
+			<li><a href="#gamejs">game.jsの基本的な書き方</a></li>
+			<li><a href="#sprite">画像の表示方法</a></li>
+			<li><a href="#text">文字の表示方法</a></li>
+			<li><a href="#enterframe">毎フレームごとに処理をする</a></li>
+			<li><a href="#click">クリックなどをされたら処理をする</a></li>
+			<li><a href="#col1">接触判定をする　その１</a></li>
+			<li><a href="#col2">接触判定をする　その２</a></li>
+			<li><a href="#sound">音の再生方法と停止方法</a></li>
+			
+		</ul>
+		
+		<h2 id="dl">ダウンロードして準備する</h2>
+		<div>
+			<p>・<a href="index.html">おにぎりエンジンのトップページ</a>で、「Googleドライブからダウンロードする」を選択する。</p>
+			<img src="img/dl.png" style="max-width: 100%"><br>
+			<p>・ダウンロードアイコンをクリックするとダウンロードできます。</p>
+			<p>・適当にプロジェクトフォルダを用意して、そこに<strong>OnigiriEngine.js</strong>と、templateフォルダに入っている<strong>index.html</strong>と<strong>game.js</strong>をコピーして入れておく。</p>
+			<img src="img/testgamefolder.png" style="max-width: 100%"><br>
+			<p>・ここにimgフォルダやsoundフォルダを追加していったり、game.jsでゲームのスクリプトを書いていったり、index.htmlを変更したりしてゲームを作っていきます。</p>
+			<p>・OnigiriEngine.js はおにぎりエンジンの本体で、<br>
+			　game.js などにゲームのスクリプトを書いていき、<br>
+			　index.html で OnigiriEngine.js と game.js を読み込む、という感じです。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="indexhtml">index.htmlの基本的な書き方</h2>
+		<div>
+			<p>・基本的に、<br>
+			　１．<strong>id="onigiri_canvas"</strong>の<strong>canvasタグ</strong>を設置する<br>
+			　２．<strong>scriptタグ</strong>で OnigiriEngine.js と game.js を読み込む<br>
+			　…という点を抑えていればＯＫです。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="gamejs">game.jsの基本的な書き方</h2>
+		<div>
+			<p>・基本的に、<br>
+				　１．おにぎりエンジンを読み込む<br>
+				　２．fpsなどを設定する<br>
+				　３．画像・音声ファイルのファイル名リストを登録する<br>
+				　４．画像・音声ファイルをロードする<br>
+				　５．ロードしたらゲームのモロモロの処理の準備をする<br>
+				　６．ゲームを起動する<br>
+			　という感じで書いていきます。</p>
+			<div class="code">
+				OnigiriEngine(500,500);&ensp;&ensp;&ensp;&ensp;<span class="c_com">//１．おにぎりエンジンを読み込む</span><br>
+				&ensp;<br>
+				window.onload = function(){<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_com">//２．fpsなどを設定する</span><br>
+				&ensp;&ensp;&ensp;&ensp;onien.autoScale = false;<br>
+				&ensp;&ensp;&ensp;&ensp;onien.setCenter = false;<br>
+				&ensp;&ensp;&ensp;&ensp;onien.fps = 30;<br>
+				&ensp;<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_com">//３．画像・音声ファイルのファイル名リストを登録する</span><br>
+				&ensp;&ensp;&ensp;&ensp;onien.assetList = ["img/xxx.png","sound/xxx.mp3"];&ensp;<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_com">//４．画像・音声ファイルをロードする</span><br>
+				&ensp;&ensp;&ensp;&ensp;onien.load();<br>
+				&ensp;<br>
+				&ensp;&ensp;&ensp;&ensp;onien.canvas.addEventListener("onienLoadFinish",function(){<br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="c_com">//５．ロードしたらゲームのモロモロの処理の準備をするスクリプトをこのへんに書く</span><br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="c_com">//６．ゲームを起動する</span><br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;onien.start();<br>
+				&ensp;&ensp;&ensp;&ensp;});<br>
+				};
+			</div>
+			<p><strong>１．おにぎりエンジンを読み込む</strong><br>・<strong>OnigiriEngine(500,500);</strong>の数値はキャンバスサイズですので、好きな数値に変更してください。</p>
+			<p>・その後の処理はページが読み込まれてからしていきたいので、<strong>window.onload = function(){～}</strong>の中に書いていきます。</p>
+			<p><strong>２．fpsなどを設定する</strong><br>・<strong>onien.autoScale</strong>では、自動でキャンバスサイズの拡縮をするかを設定します。デフォルトはtrueです。falseにすると、ウィンドウサイズに合わせて自動で拡縮しなくなります。</p>
+			<p>・<strong>onien.setCenter</strong>では、自動でキャンバスをセンター寄せするかを設定します。デフォルトはtrueです。falseにすると、ウィンドウサイズに合わせて自動で拡縮しなくなります。</p>
+			<p>・<strong>onien.fps</strong>では、ゲームのfpsを設定します。1秒ごとの画面描画回数です。</p>
+			<p><strong>３．画像・音声ファイルのファイル名リストを登録する</strong><br>・<strong>onien.assetList</strong>では、ゲームで使用する画像・音声ファイルのファイル名（参照パス）のリストを配列として設定しておきます。</p>
+			<p>・使用可能な拡張子：png,jpg,wav,mp3,ogg,m4a</p>
+			<p class="point">※これらの設定（autoScale,setCenter,fps,assetList）はonien.load()よりも前に書いておいてください。</p>
+			<p><strong>４．画像・音声ファイルをロードする</strong><br>・<strong>onien.load();</strong>で画像・音声ファイルの読み込みを開始します。</p>
+			<p><strong>５．ロードしたらゲームのモロモロの処理の準備をする</strong><br>・画像・音声ファイルの読み込みが完了すると onien.canvas から <strong>onienLoadFinish</strong> というイベントが発火します。</p>
+			<p>・ゲームのモロモロの処理は画像・音声ファイルの準備ができてから行いたいので、<strong>onien.canvas.addEventListener("onienLoadFinish",function(){～})</strong>の中に書いていきます。</p>
+			<p><strong>６．ゲームを起動する</strong><br>・モロモロの処理の後、<strong>onien.start();</strong>でゲームを起動します。</p>
+			<p>・次の項目から紹介するスクリプトは、基本的に「５」の箇所に書いていきます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="sprite">画像の表示方法</h2>
+		<div>
+			<p>・まずあらかじめ、<strong>レイヤー</strong>を作っておきます。</p>
+			<p>・レイヤーとは、重ね合わせて表示する透明なシートみたいなものです。</p>
+			<p>
+				　１．レイヤークラスを作成<br>
+				　２．作成したレイヤーをゲームに追加<br>
+				…という順序でレイヤーを作ります。</p>
+			<div class="code">
+				var <span class="c_var">layer</span> = new <span class="c_class">OeLayer</span>("layer1");<br>
+				<span class="c_var">layer</span>.addLayer();
+			</div>
+			<p>・<strong>new OeLayer(レイヤー名)</strong>で、レイヤークラスを作成します。レイヤー名の部分にはレイヤーの名前を文字列で書いておきます。</p>
+			<p>・作ったレイヤーを<strong>addLayer();</strong>するとゲームに追加されます。</p>
+			<p>・続いて画像（スプライト）の作成方法は<br>
+				　１．スプライトクラスを作成<br>
+				　２．作成したスプライトをレイヤーに追加<br>
+				　…という順序で画像を表示します。
+			</p>
+			<div class="code">
+				var <span class="c_var">player</span> = new <span class="c_class">OeSprite</span>("img/player.png",10,10,70,100,1);<br>
+				<span class="c_var">player</span>.add("layer1")
+			</div>
+			<p>・<strong>new OeSprite(ファイル名,表示位置X,表示位置Y,1コマの横の大きさ,1コマの縦の大きさ,コマ番号)</strong>で、スプライトクラスを作成します。</p>
+			<p>・画像は、画像サイズを上記で設定した 1コマの大きさ で割って、それぞれにコマ番号が振られます。<br>
+				<img src="img/sprite.png" style="max-width: 100%;"></p>
+			<p>・そして作ったスプライトを <strong>add(レイヤー名)</strong> してレイヤーに追加することで画像が表示されます。</p>
+			<p>・<strong>player.coma = 5;</strong> のように、スプライトのcomaパラメータを変更すると表示するコマを変更できます。</p>
+			<p>・<strong>player.x += 5;</strong> のように、スプライトのxやyパラメータを変更することで表示位置を変更できます。</p>
+			<p>・<strong>player.visible = false;</strong> のように、スプライトのvisibleパラメータを変更することで表示・非表示を制御できます。</p>
+			<p>・使用可能な拡張子：png,jpg</p>
+			<p>・その他のパラメータや関数については<a href="func.html">「関数など一覧」</a>をご覧ください。</p>
+			
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="text">文字の表示方法</h2>
+		<div>
+			<p>・画像同様、あらかじめ所属させるレイヤーを用意しておき、<br>
+			　１．文字クラスを作成<br>
+			　２．作成した文字をレイヤーに追加<br>
+			　…という順序で文字を表示します。</p>
+			<div class="code">
+				var <span class="c_var">startText</span> = new <span class="c_class">OeText</span>("START",50,50);<br>
+				<span class="c_var">startText</span>.add("layer1");
+			</div>
+			<p><strong>new OeText(表示したい文字,表示位置X,表示位置Y)</strong>で文字クラスを作成します。</p>
+			<p>そして、作った文字を <strong>add(レイヤー名)</strong> してレイヤーに追加することで文字が表示されます。</p>
+			<p>・<strong>startText.text = "FINISH";</strong> のように、文字クラスのtextパラメータを変更すると表示する文字を変更できます。</p>
+			<p>・<strong>startText.x += 5;</strong> のように、文字クラスのxやyパラメータを変更することで表示位置を変更できます。</p>
+			<p>・<strong>startText.visible = false;</strong> のように、文字クラスのvisibleパラメータを変更することで表示・非表示を制御できます。</p>
+			<p>・その他のパラメータや関数については<a href="func.html">「関数など一覧」</a>をご覧ください。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="enterframe">毎フレームごとに処理をする</h2>
+		<div>
+			<p>・スプライトクラスなどはenterframeパラメータにfunctionを設定することで、毎フレームごとに処理を実行できます。</p>
+			<div class="code">
+				var <span class="c_var">player</span> = new <span class="c_class">OeSprite</span>("img/player.png",10,10,70,100,0);<br>
+				<span class="c_var">player</span>.add("layer1");<br>
+				<span class="c_var">player</span>.enterframe = function(){<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_var">player</span>.x += 10;<br>
+				}
+			</div>
+			<p>・上の例だと、毎フレームごとにplayerスプライトのxが+10されて、どんどん右へ移動していきます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="click">クリックなどをされたら処理をする</h2>
+		<div>
+			<p>・スプライトクラスなどはclickなどのパラメータにfunctionを設定することで、クリックなどをされたときに処理を実行できます。</p>
+			<div class="code">
+				var <span class="c_var">player</span> = new <span class="c_class">OeSprite</span>("img/player.png",10,10,70,100,9);<br>
+				<span class="c_var">player</span>.add("layer1");<br>
+				<span class="c_var">player</span>.click = function(){<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_var">player</span>.coma = 1;<br>
+				}
+			</div>
+			<p>・上の例だと、playerスプライトがクリックされると、表示するコマ番号が 9 から 1 に変更されます。</p>
+			<p>・以下、各クラスで使用できるイベント一覧です。</p>
+			<p>●スプライト：click , mousedown , mouseup , mousemove , mouseleave</p>
+			<p>●ぷりアニ：click , mousedown , mouseup , mousemove , mouseleave</p>
+			<p>●HTMLタグ：mousedown , mouseup , mousemove , mouseleave</p>
+			<p>●文字：click , mousedown , mouseup , mousemove , mouseleave</p>
+			<p>●レイヤー：click , mousedown , mouseup , mousemove</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="col1">接触判定をする　その１</h2>
+		<div>
+			<p>・２つの方法で接触判定ができます。</p>
+			<p>・まずは、それぞれのオブジェクトの中心点の距離で判定する方法です。</p>
+			<div class="code">
+				<span class="c_com">//プレイヤーとモブを作成する</span><br>
+				var <span class="c_var">player</span> = new <span class="c_class">OeSprite</span>("img/player.png",10,10,70,100,0);<br>
+				var <span class="c_var">mob</span> = new <span class="c_class">OeSprite</span>("img/mob.png",10,120,70,100,0);<br>
+				<span class="c_var">player</span>.add("layer1");<br>
+				<span class="c_var">mob</span>.add("layer1");<br>
+				　<br>
+				<span class="c_com">//プレイヤーのenterframe処理で接触判定する</span><br>
+				<span class="c_var">player</span>.enterframe = function(){<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_var">player</span>.y += 10;<br>
+				&ensp;&ensp;&ensp;&ensp;if(<span class="c_var">player</span>.contactCheck(<span class="c_var">mob</span>,50) == true){<br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="c_var">player</span>.coma = 6;<br>
+				&ensp;&ensp;&ensp;&ensp;}<br>
+				}
+			</div>
+			<p>・スプライトクラスとぷりアニクラスは、<strong>contactCheck(対象のスプライトなど,判定距離)</strong> で接触判定できます。</p>
+			<p>・それぞれの中心点の距離が判定距離で指定した数値以下であれば、接触したと判定して <strong>true</strong> を返します。それ以外の場合は false を返します。</p>
+			<p>・上の例では、 player と mob の中心点距離が50以下になるとplayerのコマ番号が0から6に変更されます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="col2">接触判定をする　その２</h2>
+		<div>
+			<p>・もう１つの接触判定は、コリジョン設定によるものです。</p>
+			<p>・コリジョン設定は、接触判定範囲の設定です。</p>
+			<p>・例えば<img src="img/col0.png">に<img src="img/col.png">という感じでコリジョン設定するなら、colパラメータに<br>
+			[37,60,7,40,12,13,33,22,55,11,61,40]<br>
+			と設定します。</p>
+			<p>・右の画像の黒い部分がコリジョン判定範囲で、各頂点を配列としてコリジョン設定する感じです。CollisionSet.htmを使うと比較的簡単にコリジョン設定を作成できるかと思います。<br>
+			（参考：<a href="colhtml.html">CollisionSet.htmの使い方</a>）</p>
+			<div class="code">
+				<span class="c_com">//love1とlove2というスプライトを作成する</span><br>
+				<span class="c_com">//※上記のハート画像</span><br>
+				var <span class="c_var">love1</span> = new <span class="c_class">OeSprite</span>("img/chip.png",10,10,70,70,4);<br>
+				var <span class="c_var">love2</span> = new <span class="c_class">OeSprite</span>("img/chip.png",200,10,70,70,4);<br>
+				　<br>
+				<span class="c_com">//コリジョン設定を行う</span><br>
+				<span class="c_var">love1</span>.col = [37,60,7,40,12,13,33,22,55,11,61,40];<br>
+				<span class="c_var">love2</span>.col = [37,60,7,40,12,13,33,22,55,11,61,40];<br>
+				　<br>
+				<span class="c_var">love1</span>.add("layer1");<br>
+				<span class="c_var">love2</span>.add("layer1");<br>
+				　<br>
+				<span class="c_com">//love1のenterframe処理内で接触判定する</span><br>
+				<span class="c_var">love1</span>.enterframe = function(){<br>
+				&ensp;&ensp;&ensp;&ensp;<span class="c_var">love1</span>.x += 10;<br>
+				&ensp;&ensp;&ensp;&ensp;if(<span class="c_var">love1</span>.colCheck(<span class="c_var">love2</span>) == true){<br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="c_var">love1</span>.del();<br>
+				&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="c_var">love2</span>.del();<br>
+				&ensp;&ensp;&ensp;&ensp;}<br>
+				}
+			</div>
+			<p>・スプライトクラスとぷりアニクラスは、<strong>colCheck(対象のスプライトなど) </strong>で接触判定できます。</p>
+			<p>・自分のコリジョン判定範囲内に、相手のコリジョン設定の各頂点が入っていると、接触していると判定して <strong>true</strong> を返します。それ以外の場合は false を返します。</p>
+			<p>・上の例では、 love1 と love2 のコリジョンが接触すると、 love1 も love2 も消滅するようになっています。</p>
+			<p>・<strong>colCheck(対象のスプライトなど,x,y)</strong> とすると、x,yの位置に自分が移動したと仮定して接触判定をすることもできます。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+		
+		<h2 id="sound">音の再生方法と停止方法</h2>
+		<div>
+			<p>・BGMを再生するのは <strong>onien.bgm.start(音声ファイル名);</strong> です。<br>
+			　注意点は、<span class="point">拡張子を省略する</span>ことです。</p>
+			<div class="code">
+				<span class="c_com">//assetListに、同じ名前で違う拡張子の音声ファイルを登録しておく</span><br>
+				onien.assetList = ["sound/bgm1.ogg","sound/bgm1.m4a"];<br>
+				<span style="color: darkgray;">（中略）</span><br>
+				<span class="c_com">//再生する時は拡張子を省略</span><br>
+				onien.bgm.start("sound/bgm1");
+			</div>
+			<p>・assetListに「同じ名前で違う拡張子」の音声ファイルを登録しておくことで、ブラウザで再生可能なファイルを自動で選択して再生を開始します。</p>
+			<p>・より具体的に言うと、複数の拡張子のファイルが登録されていれば、「 wav → mp3 → ogg → m4a 」の順で、ブラウザで再生可能かチェックしていき、再生可能なものがあった時点でそのファイルを再生する仕組みです。</p>
+			<p>・BGMの再生を停止するのは <strong>onien.bgm.stop();</strong> です。</p>
+			<p>・効果音もほぼ同じで、再生は <strong>onien.se.start(音声ファイル名);</strong> で、停止は <strong>onien.se.stop();</strong> です。BGMと同様、拡張子は省略して設定してください。</p>
+			<p>・BGMはリピート再生され、効果音は1回のみ再生されます。</p>
+			<p>・使用可能な拡張子：wav,mp3,ogg,m4a</p>
+			<p>・さらに詳しくは、<a href="func.html">「関数など一覧」</a>の <strong>onienオブジェクト</strong> の <strong>bgm,se</strong> の欄をご覧ください。</p>
+		</div>
+			
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+	</div>
+	
+	<p class="cen" style="margin-top: 100px">
+		<a href="index.html">おにぎりエンジン</a> ＞ 基本的な使い方
+	</p>
+	
+</body>
+</html>

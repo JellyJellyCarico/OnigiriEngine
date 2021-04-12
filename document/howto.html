@@ -22,7 +22,6 @@
 	<div class="box">
 		<ul style="background-color: white;padding-bottom: 30px;">
 			<h2>目次</h2>
-			<li><a href="#dl">ダウンロードして準備する</a></li>
 			<li><a href="#indexhtml">index.htmlの基本的な書き方</a></li>
 			<li><a href="#gamejs">game.jsの基本的な書き方</a></li>
 			<li><a href="#sprite">画像の表示方法</a></li>
@@ -34,22 +33,6 @@
 			<li><a href="#sound">音の再生方法と停止方法</a></li>
 			
 		</ul>
-		
-		<h2 id="dl">ダウンロードして準備する</h2>
-		<div>
-			<p>・<a href="index.html">おにぎりエンジンのトップページ</a>で、「Googleドライブからダウンロードする」を選択する。</p>
-			<img src="img/dl.png" style="max-width: 100%"><br>
-			<p>・ダウンロードアイコンをクリックするとダウンロードできます。</p>
-			<p>・適当にプロジェクトフォルダを用意して、そこに<strong>OnigiriEngine.js</strong>と、templateフォルダに入っている<strong>index.html</strong>と<strong>game.js</strong>をコピーして入れておく。</p>
-			<img src="img/testgamefolder.png" style="max-width: 100%"><br>
-			<p>・ここにimgフォルダやsoundフォルダを追加していったり、game.jsでゲームのスクリプトを書いていったり、index.htmlを変更したりしてゲームを作っていきます。</p>
-			<p>・OnigiriEngine.js はおにぎりエンジンの本体で、<br>
-			　game.js などにゲームのスクリプトを書いていき、<br>
-			　index.html で OnigiriEngine.js と game.js を読み込む、という感じです。</p>
-		</div>
-			
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
 		
 		<h2 id="indexhtml">index.htmlの基本的な書き方</h2>
 		<div>
@@ -202,9 +185,9 @@
 			<p>・以下、各クラスで使用できるイベント一覧です。</p>
 			<p>●スプライト：click , mousedown , mouseup , mousemove , mouseleave</p>
 			<p>●ぷりアニ：click , mousedown , mouseup , mousemove , mouseleave</p>
-			<p>●HTMLタグ：mousedown , mouseup , mousemove , mouseleave</p>
+			<p>●HTMLタグ(作成時にbuttonOnの設定がある場合のみ)：mousedown , mouseup , mousemove , mouseleave</p>
 			<p>●文字：click , mousedown , mouseup , mousemove , mouseleave</p>
-			<p>●レイヤー：click , mousedown , mouseup , mousemove</p>
+			<p>●レイヤー：click , mousedown , mouseup , mousemove , mouseleave</p>
 		</div>
 			
 		<p class="right"><a href="#up">▲上に戻る</a></p>

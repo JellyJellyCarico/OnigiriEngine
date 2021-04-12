@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.1.0a（編集中）
+OnigiriEngine Ver1.1.0a
 
 https://jellyjelly.site/onien/
 Copyright Carico

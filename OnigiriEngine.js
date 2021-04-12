@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.0.9
+OnigiriEngine Ver1.1.0a（編集中）
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -198,18 +198,17 @@ function OnigiriEngine(w,h){
 	//★スプライトなどを追加する関数
 	onien.addObj	= function(ele,layerName){
 		ele.layer	= layerName;
-		ele.id		= ele.type + onien.idcount;
-		ele.idNum	= onien.idcount;
+		ele.id		= ele.type + "_" + onien.idcount;
 		onien.idcount++;
 		onien.layer[layerName].content[ele.id]	= ele;
-		onien.layer[layerName].sortList.push({"id":ele.id,"idNum":ele.idNum,"y":ele.y});
-		onien.layer[layerName].sortStart();
+		onien.layer[layerName].sortList.push({"id":ele.id,"y":ele.y});
+		//onien.layer[layerName].sortStart();
 	}
 	
 	//★スプライトなどを削除する関数
 	onien.delObj	= function(ele){
 		try{
-			if(ele.type == "priani"){
+			if(ele.type == "P"){
 				onien.priani.deletePriani(ele.chara);
 			}
 			
@@ -292,20 +291,15 @@ function OnigiriEngine(w,h){
 			
 			onien.ctx.beginPath();
 			onien.ctx.moveTo(one.col[0]+xxx+lx,one.col[1]+yyy+ly);
-			for(var i=2; i<one.col.length; i++){
-				if(i%2==0){
-					onien.ctx.lineTo(one.col[i]+xxx+lx,one.col[i+1]+yyy+ly);
-				}
+			for(var i=2; (i+1)<one.col.length; i+=2){
+				onien.ctx.lineTo(one.col[i]+xxx+lx,one.col[i+1]+yyy+ly);
 			}
 			
 			
 			var olx	= onien.layer[obj.layer].x;
 			var oly	= onien.layer[obj.layer].y;
 			
-			if(onien.ctx.isPointInPath(obj.col[0]+obj.x+olx,obj.col[1]+obj.y+oly)){
-				kekka = true;
-			}
-			for(var i=2; i<obj.col.length; i++){
+			for(var i=0; (i+1)<obj.col.length; i+=2){
 				if(onien.ctx.isPointInPath(obj.col[i]+obj.x+olx,obj.col[i+1]+obj.y+oly)){
 					kekka = true;
 				}
@@ -332,19 +326,6 @@ function OnigiriEngine(w,h){
 		//キャンバスのサイズを設定
 		onien.canvas.width	= onien.w;
 		onien.canvas.height	= onien.h;
-		
-		//センター寄せがオンの場合
-		/*
-		if(onien.setCenter){
-			var left=0;
-			if(window.innerWidth>onien.w){
-				left	= (window.innerWidth - (onien.w))/2;
-			}
-			onien.canvas.style.position	= "absolute";
-			onien.canvas.style.left		= left + "px";
-		}
-		*/
-		
 		
 		//自動キャンバス調整がオンの場合
 		if(onien.autoScale){
@@ -391,6 +372,7 @@ function OnigiriEngine(w,h){
 				onien.canvas.style.width			= scale * onien.w + "px";
 				onien.canvas.style.height			= scale * onien.h + "px";
 				
+				// センター寄せがオンの場合
 				if(onien.setCenter){
 					var left = 0;
 					if(sW - scale*onien.w > 0){
@@ -553,9 +535,8 @@ function OnigiriEngine(w,h){
 							//オブジェクトが表示なら描写・操作を行う
 							if(img.visible==true){
 								//オブジェクトがスプライトなら描画処理
-								if(img.type	== "sprite"){
-									if(typeof(img.src) == "object"){
-									}else{
+								if(img.type	== "S"){
+									if(typeof(img.src) != "object"){
 										img.src		= onien.asset[img.src];
 									}
 									
@@ -586,7 +567,7 @@ function OnigiriEngine(w,h){
 									
 								}
 								//オブジェクトがHTMLタグなら
-								if(img.type == "html"){
+								if(img.type == "H"){
 									img.obj.style.visibility = "visible";
 									
 									if(img.x != null || img.y != null){
@@ -634,11 +615,11 @@ function OnigiriEngine(w,h){
 									}
 								}
 								//オブジェクトがぷりアニなら
-								if(img.type == "priani"){
+								if(img.type == "P"){
 									onien.priani.drawPriani(img.chara,img.x,img.y);
 								}
 								//オブジェクトがテキストなら
-								if(img.type == "text"){
+								if(img.type == "T"){
 									var dx		= img.x + onien.layer[i].x;
 									var dy		= img.y + onien.layer[i].y;
 									onien.ctx.save();
@@ -671,7 +652,7 @@ function OnigiriEngine(w,h){
 									onien.ctx.restore();
 								}
 								//オブジェクトがメッセージなら
-								if(img.type == "mes"){
+								if(img.type == "M"){
 									var dx		= img.x + onien.layer[i].x;
 									var dy		= img.y + onien.layer[i].y;
 									onien.ctx.save();
@@ -762,7 +743,7 @@ function OnigiriEngine(w,h){
 								}
 							}else{
 								//オブジェクトがHTMLタグなら
-								if(img.type == "html"){
+								if(img.type == "H"){
 									img.obj.style.visibility = "hidden";
 								}
 							}
@@ -777,7 +758,7 @@ function OnigiriEngine(w,h){
 						//レイヤーが非表示ならHTMLタグを非表示にしておくぞ
 						for(var j in onien.layer[i].content){
 							var img		= onien.layer[i].content[j];
-							if(img.type == "html"){
+							if(img.type == "H"){
 								img.obj.style.visibility	= "hidden";
 							}
 						}
@@ -1070,7 +1051,7 @@ function OnigiriEngine(w,h){
 					//イベントをつける場合は発火確認
 					if(obj.nonEvent == false){
 						//スプライト・ぷりアニの場合
-						if(obj.type != "html" && obj.visible == true){
+						if(obj.type != "H" && obj.visible == true){
 							var objX	= obj.x + onien.layer[obj.layer].x;
 							var objY	= obj.y + onien.layer[obj.layer].y;
 							
@@ -1114,7 +1095,23 @@ function OnigiriEngine(w,h){
 				var objY2	= objY + onien.layer[i].h;
 				
 				//クリック位置に該当レイヤーがあれば発火
-				if(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2 && onien.layer[i].visible == true){
+				if(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2 && onien.layer[i].visible == true && mode != "mouseleave" && onien.layer[i][mode]){
+					try{
+						onien.layer[i][mode](e,clickX,clickY,touchnum);
+					}catch(e){
+						
+					}
+				}
+				
+				if(onien.layer[i][mode] && mode == "mouseleave" && mouseleaveMode == "trueleave" && onien.layer[i].visible == true){
+					try{
+						onien.layer[i][mode](e,clickX,clickY,touchnum);
+					}catch(e){
+						
+					}
+				}
+				
+				if(!(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2) && onien.layer[i].visible == true && mode == "mouseleave" && mouseleaveMode == "canvasleave" && onien.layer[i][mode]){
 					try{
 						onien.layer[i][mode](e,clickX,clickY,touchnum);
 					}catch(e){
@@ -1290,7 +1287,7 @@ class OeSprite{
 		this.h			= h?h:src.height;
 		this.coma		= coma?coma:0;
 		this.visible	= true;
-		this.type		= "sprite";
+		this.type		= "S";
 		this.nonEvent	= false;
 		this.col		= [0,0,this.w,0,this.w,this.h,0,this.h];
 		this.scale		= 1;
@@ -1344,11 +1341,11 @@ class OeLayer{
 		}
 		var sortType	= this.sortType
 		if(sortType == "big"){
-			//idNumが大きい番号の方が上にくる
-			this.sortList	= this.sortList.sort((a,b) => {return a.idNum - b.idNum});
+			//idが大きい番号の方が上にくる
+			this.sortList	= this.sortList.sort((a,b) => {return a.id.split("_")[1] - b.id.split("_")[1]});
 		}else if(sortType == "small"){
-			//idNumが小さい番号の方が上にくる
-			this.sortList	= this.sortList.sort((a,b) => {return b.idNum - a.idNum});
+			//idが小さい番号の方が上にくる
+			this.sortList	= this.sortList.sort((a,b) => {return b.id.split("_")[1] - a.id.split("_")[1]});
 		}else{
 			//yが大きい方が上にくる
 			this.sortList	= this.sortList.sort((a,b) => {return a.y - b.y});
@@ -1378,7 +1375,7 @@ class OeHtmlTag{
 		this.id			= id;
 		this.obj		= document.getElementById(id);
 		this.visible	= true;
-		this.type		= "html";
+		this.type		= "H";
 		//this.obj.style.visibility = "visible";
 		this.buttonOn	= on?on:null;
 		this.buttonOff	= off?off:null;
@@ -1395,111 +1392,113 @@ class OeHtmlTag{
 		this.autoH		= null;
 		this.autoF		= null;
 		
-		var that	= this;
-		
-			
-		//イベントセット
-		
-		if(onien.platform != "i" && onien.platform != "android"){
-			//PC用
-			this.obj.addEventListener("mousedown",function(e){
-				if(that.buttonOn){
-					that.obj.src	= onien.asset[that.buttonOn].src;
-				}
-				
-				try{
-					that.mousedown(e);
-				}catch(e){
-					
-				}
-			});
-								  
-			this.obj.addEventListener("mouseup",function(e){
-				if(that.buttonOff){
-					that.obj.src	= onien.asset[that.buttonOff].src;
-				}
-				
-				try{
-					that.mouseup(e);
-				}catch(e){
-					
-				}
-			});
-			
-			this.obj.addEventListener("mouseleave",function(e){
-				if(that.buttonOff){
-					that.obj.src	= onien.asset[that.buttonOff].src;
-				}
-				
-				try{
-					that.mouseleave(e);
-				}catch(e){
-					
-				}
-			});
-			
-			this.obj.addEventListener("mousemove",function(e){
-				try{
-					that.mousemove(e);
-				}catch(e){
-					
-				}
-			});
-		}else{
-			//スマホ用
-			this.obj.addEventListener("touchstart",function(e){
-				e.preventDefault();
-				
-				if(that.buttonOn){
-					that.obj.src	= onien.asset[that.buttonOn].src;
-				}
-				
-				
-				try{
-					that.mousedown(e);
-				}catch(e){
-					
-				}
-			});
-							  
-			this.obj.addEventListener("touchend",function(e){
-				e.preventDefault();
-				
-				if(that.buttonOff){
-					that.obj.src	= onien.asset[that.buttonOff].src;
-				}
-				
-				try{
-					that.mouseup(e);
-				}catch(e){
-					
-				}
-			});
-			
-			this.obj.addEventListener("touchcancel",function(e){
-				e.preventDefault();
-				
-				if(that.buttonOff){
-					that.obj.src	= onien.asset[that.buttonOff].src;
-				}
-				
-				try{
-					that.mouseleave(e);
-				}catch(e){
-					
-				}
-			});
-			
-			this.obj.addEventListener("touchmove",function(e){
-				e.preventDefault();
-				
-				try{
-					that.mousemove(e);
-				}catch(e){
-					
-				}
-			});
+		//buttonOnの設定がある場合はイベントセット
+		if(this.buttonOn != null){
+			var that	= this;
+
+			if(onien.platform != "i" && onien.platform != "android"){
+				//PC用
+				this.obj.addEventListener("mousedown",function(e){
+					if(that.buttonOn){
+						that.obj.src	= onien.asset[that.buttonOn].src;
+					}
+
+					try{
+						that.mousedown(e);
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("mouseup",function(e){
+					if(that.buttonOff){
+						that.obj.src	= onien.asset[that.buttonOff].src;
+					}
+
+					try{
+						that.mouseup(e);
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("mouseleave",function(e){
+					if(that.buttonOff){
+						that.obj.src	= onien.asset[that.buttonOff].src;
+					}
+
+					try{
+						that.mouseleave(e);
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("mousemove",function(e){
+					try{
+						that.mousemove(e);
+					}catch(e){
+
+					}
+				});
+			}else{
+				//スマホ用
+				this.obj.addEventListener("touchstart",function(e){
+					e.preventDefault();
+
+					if(that.buttonOn){
+						that.obj.src	= onien.asset[that.buttonOn].src;
+					}
+
+
+					try{
+						that.mousedown(e);
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("touchend",function(e){
+					e.preventDefault();
+
+					if(that.buttonOff){
+						that.obj.src	= onien.asset[that.buttonOff].src;
+					}
+
+					try{
+						that.mouseup(e);
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("touchcancel",function(e){
+					e.preventDefault();
+
+					if(that.buttonOff){
+						that.obj.src	= onien.asset[that.buttonOff].src;
+					}
+
+					try{
+						that.mouseleave(e);
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("touchmove",function(e){
+					e.preventDefault();
+
+					try{
+						that.mousemove(e);
+					}catch(e){
+
+					}
+				});
+			}
 		}
+		
+		
 	}
 	
 	//自分を追加
@@ -1576,7 +1575,7 @@ class OePriani{
 		this.y			= y?y:0;
 		this.refrain	= refrain?refrain:true;
 		this.visible	= true;
-		this.type		= "priani";
+		this.type		= "P";
 		this.nonEvent	= false;
 		
 		onien.priani.loadPriani(prianiId,chara,x,y,refrain);
@@ -1626,7 +1625,7 @@ class OeText{
 		this.w			= 100;
 		this.h			= 100;
 		this.visible	= true;
-		this.type		= "text";
+		this.type		= "T";
 		this.nonEvent	= false;
 		
 		this.size		= "24px";
@@ -1682,7 +1681,7 @@ class OeMessage{
 		this.w			= w?w:500;
 		this.h			= h?h:200;
 		this.visible	= true;
-		this.type		= "mes";
+		this.type		= "M";
 		this.nonEvent	= false;
 		
 		this.size		= "24px";

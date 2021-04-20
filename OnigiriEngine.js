@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.1.0a
+OnigiriEngine Ver1.1.0b(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -547,23 +547,33 @@ function OnigiriEngine(w,h){
 									var cx		= img.coma%countX * img.w;
 									var cy		= Math.floor(img.coma/countX) * img.h;
 									
-									onien.ctx.save();
-									
-									onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
-									if(img.scaleX!=null && img.scaleY!=null){
-										onien.ctx.scale(img.scaleX,img.scaleY);
-									}else{
-										onien.ctx.scale(img.scale,img.scale);
+									var inScreen	= true;
+									if(((dx+img.w)<0) || (dx>onien.w) || ((dy+img.h)<0) || (dy>onien.h)) {
+										inScreen = false;
 									}
-									if(img.rotate!=null){
-										onien.ctx.rotate(img.rotate*(Math.PI/180));
+									if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null){
+										inScreen = true;
 									}
-									onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
 									
-									onien.ctx.globalAlpha	= img.opacity;
+									if(inScreen){
+										onien.ctx.save();
 									
-									onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);
-									onien.ctx.restore();
+										onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
+										if(img.scaleX!=null && img.scaleY!=null){
+											onien.ctx.scale(img.scaleX,img.scaleY);
+										}else{
+											onien.ctx.scale(img.scale,img.scale);
+										}
+										if(img.rotate!=null){
+											onien.ctx.rotate(img.rotate*(Math.PI/180));
+										}
+										onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
+
+										onien.ctx.globalAlpha	= img.opacity;
+
+										onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);
+										onien.ctx.restore();
+									}
 									
 								}
 								//オブジェクトがHTMLタグなら
@@ -737,7 +747,9 @@ function OnigiriEngine(w,h){
 								
 								//オブジェクトのenterframe処理
 								try{
-									img.enterframe();
+									if(img.enterframe){
+										img.enterframe();
+									}
 								}catch(e){
 									
 								}

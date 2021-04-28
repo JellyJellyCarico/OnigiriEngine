@@ -387,19 +387,17 @@ function OnigiriEngine(w,h){
 			
 			onien.setScreen();
 			
-			//ウィンドウサイズが変わったらそれに合わせる
-			window.addEventListener("resize",function(){
+			onien.windowEvent = function(){
 				if(onien.autoScale == true){
 					onien.setScreen();
 				}
-			});
+			};
+			
+			//ウィンドウサイズが変わったらそれに合わせる
+			window.addEventListener("resize",onien.windowEvent);
 			
 			//オリエンテーションが変わったらそれに合わせる
-			window.addEventListener("orientationchange",function(){
-				if(onien.autoScale == true){
-					onien.setScreen();
-				}
-			});
+			window.addEventListener("orientationchange",onien.windowEvent);
 		}
 		
 		if(onien.assetList.length > 0){
@@ -509,15 +507,17 @@ function OnigiriEngine(w,h){
 	
 	//★ゲームをスタートする（タイマーが動き出す）
 	onien.start	= function(){
-		//enterframeイベントを設置
+		//enterframe処理
 		var second	= Math.floor(1000/onien.fps);
-		onien.enterframeEvent	= new CustomEvent("enterframe");
 		onien.enterframeTimer	= setInterval(function(){
-			onien.canvas.dispatchEvent(onien.enterframeEvent);
+			try{
+				onien.enterframeFunction();
+			}catch(e){
+				
+			}
 		},second);
 		
-		//enterframe発生時の内容
-		onien.canvas.addEventListener("enterframe",function(){
+		onien.enterframeFunction = function(){
 			if(onien.ready == true){
 				//準備が出来ていたら動作開始
 				
@@ -557,17 +557,19 @@ function OnigiriEngine(w,h){
 									
 									if(inScreen){
 										onien.ctx.save();
-									
-										onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
-										if(img.scaleX!=null && img.scaleY!=null){
-											onien.ctx.scale(img.scaleX,img.scaleY);
-										}else{
-											onien.ctx.scale(img.scale,img.scale);
+										
+										if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null){
+											onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
+											if(img.scaleX!=null && img.scaleY!=null){
+												onien.ctx.scale(img.scaleX,img.scaleY);
+											}else{
+												onien.ctx.scale(img.scale,img.scale);
+											}
+											if(img.rotate!=null){
+												onien.ctx.rotate(img.rotate*(Math.PI/180));
+											}
+											onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
 										}
-										if(img.rotate!=null){
-											onien.ctx.rotate(img.rotate*(Math.PI/180));
-										}
-										onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
 
 										onien.ctx.globalAlpha	= img.opacity;
 
@@ -780,16 +782,14 @@ function OnigiriEngine(w,h){
 				//フレームナンバーを増やす
 				onien.frame++;
 				
-				
 			}
-		});
+		};
 		
 		//PCかスマホで追加するイベントを変更する
 		if(onien.platform != "i" && onien.platform != "android"){
 			//PC用の処理
 			
-			//clickイベント追加
-			onien.canvas.addEventListener("click",function(e){
+			onien.pcEvent = function(e){
 				var e		= e;
 				var clickX	= e.pageX;
 				var clickY	= e.pageY;
@@ -802,83 +802,44 @@ function OnigiriEngine(w,h){
 				clickX		= Math.floor((onien.w/r.width)*clickX);
 				clickY		= Math.floor((onien.h/r.height)*clickY);
 				
-				onien.eventClickCheck(e,clickX,clickY,"click");
-			});
+				if(e.type == "click"){
+					onien.eventClickCheck(e,clickX,clickY,"click");
+				}
+				if(e.type == "mousedown"){
+					onien.eventClickCheck(e,clickX,clickY,"mousedown");
+				}
+				if(e.type == "mouseup"){
+					onien.eventClickCheck(e,clickX,clickY,"mouseup");
+				}
+				if(e.type == "mousemove"){
+					onien.eventClickCheck(e,clickX,clickY,"mousemove");
+					onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave");
+				}
+				if(e.type == "mouseleave"){
+					onien.eventClickCheck(e,clickX,clickY,"mouseleave","trueleave");
+				}
+				
+			};
+			
+			//clickイベント追加
+			onien.canvas.addEventListener("click",onien.pcEvent);
 			
 			//mousedownイベント追加
-			onien.canvas.addEventListener("mousedown",function(e){
-				var e		= e;
-				var clickX	= e.pageX;
-				var clickY	= e.pageY;
-				var r		= e.target.getBoundingClientRect();
-				var rx		= r.left;
-				var ry		= r.top;
-				clickX		= clickX - rx;
-				clickY		= clickY - ry;
-				
-				clickX		= Math.floor((onien.w/r.width)*clickX);
-				clickY		= Math.floor((onien.h/r.height)*clickY);
-				
-				onien.eventClickCheck(e,clickX,clickY,"mousedown");
-			});
+			onien.canvas.addEventListener("mousedown",onien.pcEvent);
 			
 			//mouseupイベント追加
-			onien.canvas.addEventListener("mouseup",function(e){
-				var e		= e;
-				var clickX	= e.pageX;
-				var clickY	= e.pageY;
-				var r		= e.target.getBoundingClientRect();
-				var rx		= r.left;
-				var ry		= r.top;
-				clickX		= clickX - rx;
-				clickY		= clickY - ry;
-				
-				clickX		= Math.floor((onien.w/r.width)*clickX);
-				clickY		= Math.floor((onien.h/r.height)*clickY);
-				
-				onien.eventClickCheck(e,clickX,clickY,"mouseup");
-			});
+			onien.canvas.addEventListener("mouseup",onien.pcEvent);
 			
 			//mousemoveイベント追加
-			onien.canvas.addEventListener("mousemove",function(e){
-				var e		= e;
-				var clickX	= e.pageX;
-				var clickY	= e.pageY;
-				var r		= e.target.getBoundingClientRect();
-				var rx		= r.left;
-				var ry		= r.top;
-				clickX		= clickX - rx;
-				clickY		= clickY - ry;
-				
-				clickX		= Math.floor((onien.w/r.width)*clickX);
-				clickY		= Math.floor((onien.h/r.height)*clickY);
-				
-				onien.eventClickCheck(e,clickX,clickY,"mousemove");
-				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave");
-			});
+			onien.canvas.addEventListener("mousemove",onien.pcEvent);
 			
 			//mouseleaveイベント追加
-			onien.canvas.addEventListener("mouseleave",function(e){
-				var e		= e;
-				var clickX	= e.pageX;
-				var clickY	= e.pageY;
-				var r		= e.target.getBoundingClientRect();
-				var rx		= r.left;
-				var ry		= r.top;
-				clickX		= clickX - rx;
-				clickY		= clickY - ry;
-				
-				clickX		= Math.floor((onien.w/r.width)*clickX);
-				clickY		= Math.floor((onien.h/r.height)*clickY);
-				
-				onien.eventClickCheck(e,clickX,clickY,"mouseleave","trueleave");
-			});
+			onien.canvas.addEventListener("mouseleave",onien.pcEvent);
 			
 		}else{
 			//スマホ用の処理
 			
-			//touchendイベント追加
-			onien.canvas.addEventListener("touchend",function(e){
+			onien.notpcEvent = function(e){
 				var e		= e;
 				var clickX	= 0;
 				var clickY	= 0;
@@ -915,108 +876,42 @@ function OnigiriEngine(w,h){
 					
 				}
 				
-				onien.eventClickCheck(e,clickX,clickY,"click",null,0);
-				onien.eventClickCheck(e,clickX,clickY,"mouseup",null,0);
-				
-				if(clickX2 != -999 && clickY2 != -999){
-					onien.eventClickCheck(e,clickX2,clickY2,"click",null,1);
-					onien.eventClickCheck(e,clickX2,clickY2,"mouseup",null,1);
+				if(e.type == "touchend"){
+					onien.eventClickCheck(e,clickX,clickY,"click",null,0);
+					onien.eventClickCheck(e,clickX,clickY,"mouseup",null,0);
+
+					if(clickX2 != -999 && clickY2 != -999){
+						onien.eventClickCheck(e,clickX2,clickY2,"click",null,1);
+						onien.eventClickCheck(e,clickX2,clickY2,"mouseup",null,1);
+					}
+				}
+				if(e.type == "touchstart"){
+					onien.eventClickCheck(e,clickX,clickY,"mousedown",null,0);
+
+					if(clickX2 != -999 && clickY2 != -999){
+						onien.eventClickCheck(e,clickX2,clickY2,"mousedown",null,1);
+					}
+				}
+				if(e.type == "touchmove"){
+					onien.eventClickCheck(e,clickX,clickY,"mousemove",null,0);
+					onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave",0);
+
+					if(clickX2 != -999 && clickY2 != -999){
+						onien.eventClickCheck(e,clickX2,clickY2,"mousemove",null,1);
+						onien.eventClickCheck(e,clickX2,clickY2,"mouseleave","canvasleave",1);
+					}
 				}
 				
-			});
+			};
+			
+			//touchendイベント追加
+			onien.canvas.addEventListener("touchend",onien.notpcEvent);
 			
 			//touchstartイベント追加
-			onien.canvas.addEventListener("touchstart",function(e){
-				var e		= e;
-				var clickX	= 0;
-				var clickY	= 0;
-				e.preventDefault();
-				try{
-					var ob		= e.changedTouches[0];
-					var x		= ob.pageX;
-					var y		= ob.pageY;
-					var r		= ob.target.getBoundingClientRect();
-					var rx		= r.left;
-					var ry		= r.top;
-					x			= x - rx;
-					y			= y - ry;
-					clickX		= (onien.w/r.width)*x;
-					clickY		= (onien.h/r.height)*y;
-				}catch(error){
-					
-				}
-				
-				var clickX2	= -999;
-				var clickY2	= -999;
-				try{
-					var ob		= e.changedTouches[1];
-					var x		= ob.pageX;
-					var y		= ob.pageY;
-					var r		= ob.target.getBoundingClientRect();
-					var rx		= r.left;
-					var ry		= r.top;
-					x			= x - rx;
-					y			= y - ry;
-					clickX2		= (onien.w/r.width)*x;
-					clickY2		= (onien.h/r.height)*y;
-				}catch(error){
-					
-				}
-				
-				onien.eventClickCheck(e,clickX,clickY,"mousedown",null,0);
-				
-				if(clickX2 != -999 && clickY2 != -999){
-					onien.eventClickCheck(e,clickX2,clickY2,"mousedown",null,1);
-				}
-				
-			});
+			onien.canvas.addEventListener("touchstart",onien.notpcEvent);
 			
 			//touchmoveイベント追加
-			onien.canvas.addEventListener("touchmove",function(e){
-				var e		= e;
-				var clickX	= 0;
-				var clickY	= 0;
-				e.preventDefault();
-				try{
-					var ob		= e.changedTouches[0];
-					var x		= ob.pageX;
-					var y		= ob.pageY;
-					var r		= ob.target.getBoundingClientRect();
-					var rx		= r.left;
-					var ry		= r.top;
-					x			= x - rx;
-					y			= y - ry;
-					clickX		= (onien.w/r.width)*x;
-					clickY		= (onien.h/r.height)*y;
-				}catch(error){
-					
-				}
-				
-				var clickX2	= -999;
-				var clickY2	= -999;
-				try{
-					var ob		= e.changedTouches[1];
-					var x		= ob.pageX;
-					var y		= ob.pageY;
-					var r		= ob.target.getBoundingClientRect();
-					var rx		= r.left;
-					var ry		= r.top;
-					x			= x - rx;
-					y			= y - ry;
-					clickX2		= (onien.w/r.width)*x;
-					clickY2		= (onien.h/r.height)*y;
-				}catch(error){
-					
-				}
-				
-				onien.eventClickCheck(e,clickX,clickY,"mousemove",null,0);
-				onien.eventClickCheck(e,clickX,clickY,"mouseleave","canvasleave",0);
-				
-				if(clickX2 != -999 && clickY2 != -999){
-					onien.eventClickCheck(e,clickX2,clickY2,"mousemove",null,1);
-					onien.eventClickCheck(e,clickX2,clickY2,"mouseleave","canvasleave",1);
-				}
-			});
+			onien.canvas.addEventListener("touchmove",onien.notpcEvent);
 			
 		}
 		
@@ -1024,7 +919,12 @@ function OnigiriEngine(w,h){
 	
 	//★ゲームの完全終了処理（タイマー切ってonienを消す）
 	onien.end	= function(){
+		onien.ready = false;
+		
 		clearInterval(onien.enterframeTimer);
+		
+		onien.ctx.clearRect(0,0,onien.w,onien.h);
+		
 		for(var i in onien.bgm.buf){
 			if(onien.bgm.buf[i]!=null){
 				onien.bgm.buf[i].pause();
@@ -1037,6 +937,18 @@ function OnigiriEngine(w,h){
 				onien.se.buf[i] = null;
 			}
 		}
+		
+		window.removeEventListener("resize",onien.windowEvent);
+		window.removeEventListener("orientationchange",onien.windowEvent);
+		
+		onien.canvas.removeEventListener("click",onien.pcEvent);
+		onien.canvas.removeEventListener("mousedown",onien.pcEvent);
+		onien.canvas.removeEventListener("mouseup",onien.pcEvent);
+		onien.canvas.removeEventListener("mousemove",onien.pcEvent);
+		onien.canvas.removeEventListener("mouseleave",onien.pcEvent);
+		onien.canvas.removeEventListener("touchend",onien.notpcEvent);
+		onien.canvas.removeEventListener("touchstart",onien.notpcEvent);
+		onien.canvas.removeEventListener("touchmove",onien.notpcEvent);
 		
 		onien = null;
 		dataPriani	= {};

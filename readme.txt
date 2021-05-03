@@ -1,4 +1,4 @@
-﻿おにぎりエンジン(OnigiriEngine)  ver.1.1.0a  (C) かりこ(Carico)
+﻿おにぎりエンジン(OnigiriEngine)  ver.1.1.0b  (C) かりこ(Carico)
 https://jellyjelly.site/onien/
 
 ■概要
@@ -28,6 +28,14 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
+・ver.1.1.0b(2021/5/3) 　各レイヤーのスプライト描画処理方法を修正
+                         各種オブジェクトにenterframeが設定されている場合のみ、その関数を実行するように変更
+                         各種イベントリスナーを無名関数から関数名指定に変更
+                         （onienにwindowEvent、pcEvent、notpcEventを追加）
+                         enterframeをカスタムイベント発火処理を挟まずにsetIntervalで実行するように変更
+                         （onienにenterframeFunctionを追加。onien.enterframeEventを消去）
+                         end関数の処理追加
+                         （キャンバスの表示をクリア処理と各種イベントリスナーを消去処理を追加。）
 ・ver.1.1.0a(2021/4/12)  各種クラスのidおよびtypeパラメータの様式を変更
                          各種クラスのidNumパラメータの廃止
                          各種クラスadd時にレイヤーのsortStart機能が実行されるのを廃止

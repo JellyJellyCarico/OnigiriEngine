@@ -871,7 +871,7 @@
 			<span class="c_var">tmp</span>.draw("chip.png",0,0,70,70,0,0); <span class="c_com">//草を描く</span><br>
 			<span class="c_var">tmp</span>.draw("chip.png",0,70,70,70,0,0); <span class="c_com">//おにぎりを描く</span><br>
 			<br>
-			var <span class="c_var">sprite</span> = new <span class="c_class">OeSprite</span>(<span class="c_var">tmp</span>,0,0,70,70,0);<br>
+			var <span class="c_var">sprite</span> = new <span class="c_class">OeSprite</span>(<span class="c_var">tmp</span>.canvas,0,0,70,70,0);<br>
 			<span class="c_var">sprite</span>.add("layer1");
 		</p>
 		<p>この結果layer1に描写される画像<br><img src="img/tmpcanvas.png" style="max-width: 100%"></p>
@@ -1182,7 +1182,9 @@
 				<td>【関数】ゲームの完全終了処理（タイマー切ってonienをリセット）<br>
 				<span class="small">※onien.enterframeTimerをクリア。<br>
 				※bgmとseを止めてnullへ。<br>
-				※onien=null、dataPriani={}にしてすっきり。</span>
+				※onien=null、dataPriani={}にしてすっきり。<br>
+				※キャンバスの表示をクリアする。<br>
+				※各種イベントリスナーを消去する。</span>
 				</td>
 			</tr>
 			<tr>
@@ -1330,13 +1332,18 @@
 				※prianiクラスの場合、onien.priani.deletePrianiでキャラデータも削除。</span></td>
 			</tr>
 			<tr>
-				<th class="nouse">enterframeEvent</th>
-				<td>【カスタムイベント】enterframe<br>
-				<span class="small">※onien.enterframeTimerがonien.fpsのスピード間隔でenterframeイベントを発火する。</span></td>
+				<th class="nouse" style="background-color: gray;">enterframeEvent</th>
+				<td style="background-color: gray;">【カスタムイベント】enterframe<br>
+				<span class="small">※onien.enterframeTimerがonien.fpsのスピード間隔でenterframeイベントを発火する。</span><br>
+				※ver1.1.0b～廃止済み</td>
+			</tr>
+			<tr>
+				<th class="nouse">enterframeFunction()</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】enterframe処理を実行する関数。</td>
 			</tr>
 			<tr>
 				<th class="nouse">enterframeTimer</th>
-				<td>【タイマー】enterframeを発火するためのタイマー</td>
+				<td>【タイマー】enterframe処理を実行するためのタイマー</td>
 			</tr>
 			<tr>
 				<th class="nouse">eventClickCheck<br>(e,clickX,clickY,mode,mouseleaveMode,touchnum)</th>
@@ -1360,6 +1367,16 @@
 				<th class="nouse">loadfinishEvent</th>
 				<td>【カスタムイベント】onienLoadFinish<br>
 				<span class="small">※onien.load関数でonien.assetListの読み込みが完了したことをお知らせ。</span></td>
+			</tr>
+			<tr>
+				<th class="nouse">notpcEvent(e)</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】スマホ用のイベント発生時に実行する関数。<br>
+				・e：イベントオブジェクト</td>
+			</tr>
+			<tr>
+				<th class="nouse">pcEvent(e)</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】パソコン用のイベント発生時に実行する関数。<br>
+				・e：イベントオブジェクト</td>
 			</tr>
 			<tr>
 				<th class="nouse">priani</th>
@@ -1387,6 +1404,10 @@
 				<td>【関数】ウィンドウサイズに合わせてキャンバスサイズを自動調整する。<br>
 				<span class="small">※onien.load関数実行時、onien.autoScaleがtrueなら設置される。<br>
 				※onien.load関数実行時と、ウィンドウサイズ変更時に実行される。</span></td>
+			</tr>
+			<tr>
+				<th class="nouse">windowEvent()</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】windowのイベント発生時に実行する関数。</td>
 			</tr>
 		</table>
 		</div>

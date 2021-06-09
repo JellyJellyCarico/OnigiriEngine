@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.1.0b
+OnigiriEngine Ver1.1.0c（作業中）
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -956,9 +956,15 @@ function OnigiriEngine(w,h){
 	
 	//★クリック系のイベント処理
 	onien.eventClickCheck	= function(e,clickX,clickY,mode,mouseleaveMode,touchnum){
-		
-		//各レイヤーの処理
+		// イベントチェック用の並び替え
+		var key = [];
 		for(var i in onien.layer){
+			key.unshift(i);
+		}
+
+		//各レイヤーの処理
+		for(var ii=0; ii<key.length; ii++){
+			var i = key[ii];
 			//イベントをつける場合は各オブジェクトの発火確認
 			if(onien.layer[i].nonEvent == false && onien.layer[i].visible == true){
 				//イベントの並び順の逆の順でソートして処理していく
@@ -1002,7 +1008,7 @@ function OnigiriEngine(w,h){
 							}
 							if(!(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2) && obj[mode] && mode == "mouseleave" && mouseleaveMode == "canvasleave"){
 								try{
-									console.log("leave")
+									//console.log("leave")
 									obj[mode](e,clickX,clickY,touchnum);
 								}catch(e){
 									
@@ -1439,10 +1445,22 @@ class OeHtmlTag{
 	positionSet(){
 		var sW		= innerWidth;
 		var sH		= innerHeight;
+
+		if(onien.mobimg){
+			if(onien.platform == "i" || onien.platform=="android"){
+				sW		= onien.mobimg.clientWidth;
+				sH		= onien.mobimg.clientHeight;
+			}
+		}
+
 		var cW		= onien.w;
 		var cH		= onien.h;
 		var scale	= 1;
-		if(sW > sH){
+
+		var sP		= sW/sH;
+		var cP		= cW/cH;
+
+		if(sP > cP){
 			//横長
 			scale	= sH/cH;
 		}else{
@@ -1473,10 +1491,22 @@ class OeHtmlTag{
 		
 		var sW		= innerWidth;
 		var sH		= innerHeight;
+
+		if(onien.mobimg){
+			if(onien.platform == "i" || onien.platform=="android"){
+				sW		= onien.mobimg.clientWidth;
+				sH		= onien.mobimg.clientHeight;
+			}
+		}
+
 		var cW		= onien.w;
 		var cH		= onien.h;
 		var scale	= 1;
-		if(sW > sH){
+
+		var sP		= sW/sH;
+		var cP		= cW/cH;
+
+		if(sP > cP){
 			//横長
 			scale	= sH/cH;
 		}else{

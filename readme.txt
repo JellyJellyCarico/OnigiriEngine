@@ -1,4 +1,4 @@
-﻿おにぎりエンジン(OnigiriEngine)  ver.1.1.0b  (C) かりこ(Carico)
+﻿おにぎりエンジン(OnigiriEngine)  ver.1.1.0c  (C) かりこ(Carico)
 https://jellyjelly.site/onien/
 
 ■概要
@@ -28,21 +28,23 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
+・ver.1.1.0c(2021/6/10)　HTMLタグクラスのpositionSet()とscaleSet()の修正。（autoPositionとautoScaleがtrueの時に画面外にはみ出る場合があるバグを修正しました）
+　レイヤーのマウスイベント処理順序を修正。（重ね順的に上にあるレイヤーのマウスイベントを先に実行するように変更しました）
+　音声再生処理を修正。（canPlayTypeがmaybeのものを優先的に再生するようにしました）
+　追加ロードクラスを追加。（ゲームの途中で画像・音声ファイルをロードできるようにしました）
+　文字クラスに機能を追加。（borderColor、borderSize、roundedプロパティを追加しました）
 ・ver.1.1.0b(2021/5/3) 　各レイヤーのスプライト描画処理方法を修正
-                         各種オブジェクトにenterframeが設定されている場合のみ、その関数を実行するように変更
-                         各種イベントリスナーを無名関数から関数名指定に変更
-                         （onienにwindowEvent、pcEvent、notpcEventを追加）
-                         enterframeをカスタムイベント発火処理を挟まずにsetIntervalで実行するように変更
-                         （onienにenterframeFunctionを追加。onien.enterframeEventを消去）
-                         end関数の処理追加
-                         （キャンバスの表示をクリア処理と各種イベントリスナーを消去処理を追加。）
+　各種オブジェクトにenterframeが設定されている場合のみ、その関数を実行するように変更
+　各種イベントリスナーを無名関数から関数名指定に変更（onienにwindowEvent、pcEvent、notpcEventを追加）
+　enterframeをカスタムイベント発火処理を挟まずにsetIntervalで実行するように変更（onienにenterframeFunctionを追加。onien.enterframeEventを消去）
+　end関数の処理追加（キャンバスの表示をクリア処理と各種イベントリスナーを消去処理を追加。）
 ・ver.1.1.0a(2021/4/12)  各種クラスのidおよびtypeパラメータの様式を変更
-                         各種クラスのidNumパラメータの廃止
-                         各種クラスadd時にレイヤーのsortStart機能が実行されるのを廃止
-                         colCheckの記述修正
-                         レイヤークラスのイベント判定修正かつmouseleave機能追加
-                         idNumパラメータの廃止に伴いレイヤーのsortStart機能の記述修正
-                         HTMLタグクラス作成時にbuttonOnの設定がある場合のみ各種イベントを設置するように変更
+　各種クラスのidNumパラメータの廃止
+　各種クラスadd時にレイヤーのsortStart機能が実行されるのを廃止
+　colCheckの記述修正
+　レイヤークラスのイベント判定修正かつmouseleave機能追加
+　idNumパラメータの廃止に伴いレイヤーのsortStart機能の記述修正
+　HTMLタグクラス作成時にbuttonOnの設定がある場合のみ各種イベントを設置するように変更
 ・ver.1.0.9(2020/9/20) スプライトクラス機能追加、キャンバス自動拡縮機能修正、テンプレート（index.html）修正
 ・ver.1.0.8(2020/9/7)　サンプルゲーム（シューティングとノベル）追加、メッセージクラス機能追加、イベント判定処理の修正
 ・ver.1.0.7(2020/8/31) キャンバスセンター寄せ機能修正、メッセージクラス機能追加

@@ -677,7 +677,13 @@ function OnigiriEngine(w,h){
 									onien.ctx.save();
 									
 									onien.ctx.globalAlpha = img.opacity;
-									
+
+									if(img.borderSize != null || img.borderColor != null || img.rounded != null){
+										onien.ctx.lineJoin = img.rounded ? "round" : "bavel";
+										onien.ctx.lineWidth = img.borderSize!=null ? img.borderSize : 1;
+										onien.ctx.strokeStyle = img.borderColor!=null ? img.borderColor : "black";
+										onien.ctx.strokeRect(dx,dy,img.w,img.h);
+									}
 									if(img.back != null){
 										onien.ctx.fillStyle		= img.back;
 										onien.ctx.fillRect(dx,dy,img.w,img.h);
@@ -1637,6 +1643,9 @@ class OeText{
 		this.family		= "sans-serif";
 		
 		this.back		= null;
+		this.borderColor= null;
+		this.borderSize	= null;
+		this.rounded	= null;
 		this.src		= null;
 		this.paddingLeft	= 0;
 		this.paddingTop		= 0;

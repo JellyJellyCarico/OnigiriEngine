@@ -28,11 +28,11 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
-・ver.1.1.0c(2021/6/10)　HTMLタグクラスのpositionSet()とscaleSet()の修正。（autoPositionとautoScaleがtrueの時に画面外にはみ出る場合があるバグを修正しました）
-　レイヤーのマウスイベント処理順序を修正。（重ね順的に上にあるレイヤーのマウスイベントを先に実行するように変更しました）
-　音声再生処理を修正。（canPlayTypeがmaybeのものを優先的に再生するようにしました）
-　追加ロードクラスを追加。（ゲームの途中で画像・音声ファイルをロードできるようにしました）
-　文字クラスに機能を追加。（borderColor、borderSize、roundedプロパティを追加しました）
+・ver.1.1.0c(2021/6/10)　HTMLタグクラスのpositionSet()とscaleSet()の修正（autoPositionとautoScaleがtrueの時に画面外にはみ出る場合があるバグを修正しました）
+　レイヤーのマウスイベント処理順序を修正（重ね順的に上にあるレイヤーのマウスイベントを先に実行するように変更しました）
+　音声再生処理を修正（canPlayTypeがmaybeのものを優先的に再生するようにしました）
+　追加ロードクラスを追加（ゲームの途中で画像・音声ファイルをロードできるようにしました）
+　文字クラスに機能を追加（borderColor、borderSize、roundedプロパティを追加しました）
 ・ver.1.1.0b(2021/5/3) 　各レイヤーのスプライト描画処理方法を修正
 　各種オブジェクトにenterframeが設定されている場合のみ、その関数を実行するように変更
 　各種イベントリスナーを無名関数から関数名指定に変更（onienにwindowEvent、pcEvent、notpcEventを追加）

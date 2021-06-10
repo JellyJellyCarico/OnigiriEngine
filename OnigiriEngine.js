@@ -90,7 +90,27 @@ function OnigiriEngine(w,h){
 		}
 		
 		//再生する
-		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
+		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")=="maybe"){
+			//wavファイルを再生
+			onien.bgm.buf[b]		= onien.asset[name + ".wav"];
+			onien.bgm.buf[b].volume	= onien.bgm.vol;
+			onien.bgm.buf[b].play();
+		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")=="maybe"){
+			//mp3ファイルを再生
+			onien.bgm.buf[b]		= onien.asset[name + ".mp3"];
+			onien.bgm.buf[b].volume	= onien.bgm.vol;
+			onien.bgm.buf[b].play();
+		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")=="maybe"){
+			//oggファイルを再生
+			onien.bgm.buf[b]		= onien.asset[name + ".ogg"];
+			onien.bgm.buf[b].volume	= onien.bgm.vol;
+			onien.bgm.buf[b].play();
+		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")=="maybe"){
+			//m4aファイルを再生
+			onien.bgm.buf[b]		= onien.asset[name + ".m4a"];
+			onien.bgm.buf[b].volume	= onien.bgm.vol;
+			onien.bgm.buf[b].play();
+		}else if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
 			//wavファイルを再生
 			onien.bgm.buf[b]		= onien.asset[name + ".wav"];
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
@@ -106,7 +126,7 @@ function OnigiriEngine(w,h){
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
 			onien.bgm.buf[b].play();
 		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")!=""){
-			//oggファイルを再生
+			//m4aファイルを再生
 			onien.bgm.buf[b]		= onien.asset[name + ".m4a"];
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
 			onien.bgm.buf[b].play();
@@ -115,7 +135,7 @@ function OnigiriEngine(w,h){
 		//リピート再生させるためのやつ
 		if(onien.bgm.buf[b] != null){
 			onien.bgm.buf[b].addEventListener("ended",function(){
-				onien.bgm.buf[b].pause();
+				//onien.bgm.buf[b].pause();
 				onien.bgm.buf[b].currentTime = 0;
 				onien.bgm.buf[b].play();
 			});
@@ -144,23 +164,43 @@ function OnigiriEngine(w,h){
 		}
 		
 		//再生する
-		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
+		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")=="maybe"){
+			// wavファイル再生
+			onien.se.buf[b]		= onien.asset[name + ".wav"];
+			onien.se.buf[b].volume	= onien.se.vol;
+			onien.se.buf[b].play();
+		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")=="maybe"){
+			// mp3ファイルを再生
+			onien.se.buf[b]		= onien.asset[name + ".mp3"];
+			onien.se.buf[b].volume	= onien.se.vol;
+			onien.se.buf[b].play();
+		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")=="maybe"){
+			// oggファイル再生
+			onien.se.buf[b]		= onien.asset[name + ".ogg"];
+			onien.se.buf[b].volume	= onien.se.vol;
+			onien.se.buf[b].play();
+		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")=="maybe"){
+			// m4aファイル再生
+			onien.se.buf[b]		= onien.asset[name + ".m4a"];
+			onien.se.buf[b].volume	= onien.se.vol;
+			onien.se.buf[b].play();
+		}else if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
 			//wavファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".wav"];
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")!=""){
-			//wavファイルを再生
+			//mp3ファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".mp3"];
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")!=""){
-			//wavファイルを再生
+			//oggファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".ogg"];
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")!=""){
-			//wavファイルを再生
+			//m4aファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".m4a"];
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
@@ -745,6 +785,16 @@ function OnigiriEngine(w,h){
 									
 									//メッセージ表示用のenterframe実行
 									img.mesEnterFrame();
+								}
+								//オブジェクトがロードプラスなら
+								if(img.type == "X"){
+									try{
+										if(!img.ready){
+											img.loadCheck();
+										}
+									}catch(e){
+
+									}
 								}
 								
 								//オブジェクトのenterframe処理
@@ -2018,6 +2068,121 @@ class OeMessage{
 	}
 	
 	//自分を削除
+	del(){
+		onien.delObj(this);
+	}
+}
+
+//ロードクラス
+class OeLoadPlus{
+	constructor(){
+		this.assetList = [];
+		this.assetSet = 0;
+		this.ready = false;		// 読み込みが終了しているか
+		this.visible = true;	// enterframe処理のための便宜上の要素
+		this.type = "X";		// 描画処理を行なわない特殊クラス
+		this.progress = 0;
+	}
+
+	// ロードを始める
+	load(){
+		if(this.assetList.length > 0){
+			var that = this;
+
+			// 1つずつ読み込んでいく
+			for(var i in this.assetList){
+				onien.assetList.push(this.assetList[i]);
+
+				// 画像ファイルの読み込み処理
+				if(this.assetList[i].indexOf(".png")!=-1 || this.assetList[i].indexOf(".jpg")!=-1 || this.assetList[i].indexOf(".gif")!=-1){
+					onien.asset[this.assetList[i]] = new Image();
+					onien.asset[this.assetList[i]].src = this.assetList[i];
+					onien.asset[this.assetList[i]].onload = function(){
+						that.assetSet++;
+					}
+				}
+
+				// WAVEファイルの読み込み処理
+				if(this.assetList[i].indexOf(".wav")!=-1){
+					onien.asset[this.assetList[i]] = new Audio();
+					var audio = onien.asset[this.assetList[i]];
+					if(audio.canPlayType("audio/wav")!=""){
+						audio.src = this.assetList[i];
+						audio.load();
+						audio.addEventListener("canplaythrough",function(){
+							that.assetSet++;
+						})
+					}else{
+						this.assetSet++;
+					}
+				}
+
+				// MP3ファイルの読み込み処理
+				if(this.assetList[i].indexOf(".mp3")!=-1){
+					onien.asset[this.assetList[i]] = new Audio();
+					var audio = onien.asset[this.assetList[i]];
+					if(audio.canPlayType("audio/mpeg")!=""){
+						audio.src = this.assetList[i];
+						audio.load();
+						audio.addEventListener("canplaythrough",function(){
+							that.assetSet++;
+						})
+					}else{
+						this.assetSet++;
+					}
+				}
+
+				// OGGファイルの読み込み処理
+				if(this.assetList[i].indexOf(".ogg")!=-1){
+					onien.asset[this.assetList[i]] = new Audio();
+					var audio = onien.asset[this.assetList[i]];
+					if(audio.canPlayType("audio/ogg")!=""){
+						audio.src = this.assetList[i];
+						audio.load();
+						audio.addEventListener("canplaythrough",function(){
+							that.assetSet++;
+						})
+					}else{
+						this.assetSet++;
+					}
+				}
+
+				// AACファイルの読み込み処理
+				if(this.assetList[i].indexOf(".m4a")!=-1){
+					onien.asset[this.assetList[i]] = new Audio();
+					var audio = onien.asset[this.assetList[i]];
+					if(audio.canPlayType("audio/mp4")!=""){
+						audio.src = this.assetList[i];
+						audio.load();
+						audio.addEventListener("canplaythrough",function(){
+							that.assetSet++;
+						})
+					}else{
+						this.assetSet++;
+					}
+				}
+			}
+		}
+	}
+
+	// 定期処理
+	loadCheck(){
+		if(this.assetSet == this.assetList.length){
+			// 読み込み終了
+			this.ready = true;
+			this.progress = 100;
+		}else{
+			this.progress = Math.floor((this.assetSet/this.assetList.length)*100);
+			console.log(this.progress)
+		}
+	}
+
+	// 自分を追加
+	add(layerName){
+		onien.addObj(this,layerName);
+	}
+
+	// 自分を削除
 	del(){
 		onien.delObj(this);
 	}

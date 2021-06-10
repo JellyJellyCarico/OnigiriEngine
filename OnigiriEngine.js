@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.1.0c（作業中）
+OnigiriEngine Ver1.1.0c
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -1037,7 +1037,7 @@ function OnigiriEngine(w,h){
 					//イベントをつける場合は発火確認
 					if(obj.nonEvent == false){
 						//スプライト・ぷりアニの場合
-						if(obj.type != "H" && obj.visible == true){
+						if(obj.type != "X" && obj.type != "H" && obj.visible == true){
 							var objX	= obj.x + onien.layer[obj.layer].x;
 							var objY	= obj.y + onien.layer[obj.layer].y;
 							

@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta name="title" content="おにぎりエンジン：更新内容の詳細な記録" />
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <title>おにぎりエンジン：更新内容の詳細な記録</title>
+    <link rel="shortcut icon" href="https://jellyjelly.site/onien/favicon.ico">
+    <link rel="stylesheet" href="onien.css">
+</head>
+
+<body>
+
+<header>
+    <h1>おにぎりエンジン：更新内容の詳細な記録</h1>
+</header>
+
+<div class="box">
+	<p>
+		2021/6/10 <span class="subtitle">ver.1.1.0c</span><br>
+		・HTMLタグクラスのpositionSet()とscaleSet()の修正。（autoPositionとautoScaleがtrueの時に画面外にはみ出る場合があるバグを修正しました）<br>
+		・レイヤーのマウスイベント処理順序を修正。（重ね順的に上にあるレイヤーのマウスイベントを先に実行するように変更しました）<br>
+		・音声再生処理を修正。（canPlayTypeがmaybeのものを優先的に再生するようにしました）<br>
+		・追加ロードクラスを追加。（ゲームの途中で画像・音声ファイルをロードできるようにしました）<br>
+		・文字クラスに機能を追加。（borderColor、borderSize、roundedプロパティを追加しました）
+	</p>
+	<hr>
+	<p>
+		2021/5/3 <span class="subtitle">ver.1.1.0b</span><br>
+		・各レイヤーのスプライト描画処理方法を修正。<br>
+		・各種オブジェクトにenterframeが設定されている場合のみ、その関数を実行するように変更。（これにより動作がかなり軽量化しました）<br>
+		・各種イベントリスナーを無名関数から関数名指定に変更。（onienにwindowEvent、pcEvent、notpcEventを追加）<br>
+		・enterframeをカスタムイベント発火処理を挟まずにsetIntervalで実行するように変更。（onienにenterframeFunctionを追加。onien.enterframeEventを消去）<br>
+		・end関数の処理追加。（キャンバスの表示をクリア処理と各種イベントリスナーを消去処理を追加）
+	</p>
+	<hr>
+	<p>
+		2021/4/12 <span class="subtitle">ver.1.1.0a</span><br>
+		・各種クラスのidおよびtypeパラメータの様式を変更。<br>
+		・idNumパラメータの廃止。<br>
+		・add時にレイヤーのsortStart機能が実行されるのを廃止。<br>
+		・colCheckの記述修正。<br>
+		・レイヤークラスのイベント判定修正。（mouseleave機能追加、idNumパラメータの廃止に伴いレイヤーのsortStart機能の記述修正）<br>
+		・HTMLタグクラス作成時、buttonOnの設定がある場合のみ各種addEventListenerを設置するように変更。
+	</p>
+	<hr>
+	<p>
+		2020/9/20 <span class="subtitle">ver.1.0.9</span><br>
+		・スプライトクラス機能追加。<br>
+		・キャンバス自動拡縮機能修正。<br>
+		・テンプレート（index.html）修正。
+	</p>
+	<hr>
+	<p>
+		2020/9/7 <span class="subtitle">ver.1.0.8</span><br>
+		・サンプルゲーム（シューティングとノベル）追加。<br>
+		・メッセージクラス機能追加。<br>
+		・イベント判定処理の修正。
+	</p>
+	<hr>
+	<p>
+		2020/8/31 <span class="subtitle">ver.1.0.7</span><br>
+		・キャンバスセンター寄せ機能修正。<br>
+		・メッセージクラス機能追加。
+	</p>
+	<hr>
+	<p>
+		2020/8/31 <span class="subtitle">ver.1.0.6</span><br>
+		・メッセージクラス追加。<br>
+		・文字クラスに機能追加。
+	</p>
+	<hr>
+	<p>
+		2020/8/30 <span class="subtitle">ver.1.0.5</span><br>
+		・キャンバス自動拡縮機能修正。<br>
+		・文字クラス修正。<br>
+		・一時キャンバスクラス追加。
+	</p>
+	<hr>
+	<p>
+		2020/8/30 <span class="subtitle">ver.1.0.4</span><br>
+		・HTMLタグクラスの修正と機能追加。<br>
+		・キャンバスの自動拡縮機能修正。
+	</p>
+	<hr>
+	<p>
+		2020/8/24 <span class="subtitle">ver.1.0.3</span><br>
+		・キャンバスセンター寄せ機能追加。<br>
+		・タッチイベント修正。<br>
+		・CollisionSet.htm修正。
+	</p>
+	<hr>
+	<p>
+		2020/8/23 <span class="subtitle">ver.1.0.2</span><br>
+		・文字クラス・HTMLタグクラスの機能追加。<br>
+		・利用条件改訂。<br>
+		・Lightバージョンの廃止。
+	</p>
+	<hr>
+	<p>
+		2020/6/7 <span class="subtitle">ver.1.0.1</span><br>
+		・キャンバスの自動拡縮方法とイベント座標の取得方法の変更。
+	</p>
+	<hr>
+	<p>
+		2020/6/5 <span class="subtitle">ver.1.0.0</span><br>
+		・公開開始。
+	</p>
+</div>
+
+	<p class="cen" style="margin-top: 100px">
+		<a href="index.html">おにぎりエンジン</a> ＞ 更新内容の詳細な記録
+	</p>
+	
+</body>
+</html>

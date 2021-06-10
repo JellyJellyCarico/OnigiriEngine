@@ -35,6 +35,7 @@
 			<li><a href="#OeText">OeText</a>　文字クラス</li>
 			<li><a href="#OeTmpCanvas">OeTmpCanvas</a>　一時キャンバスクラス</li>
 			<li><a href="#OeMessage">OeMessage</a>　メッセージクラス</li>
+			<li><a href="#OeLoadPlus">OeLoadPlus</a>　追加ロードクラス</li>
 			<li><a href="#onien">onien</a>　onienオブジェクト</li>
 		</ul>
 		
@@ -105,7 +106,7 @@
 			</tr>
 			<tr>
 				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。</td>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
 			</tr>
 			<tr>
 				<th>h</th>
@@ -262,7 +263,7 @@
 			</tr>
 			<tr>
 				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。</td>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
 			</tr>
 			<tr>
 				<th>h</th>
@@ -369,7 +370,7 @@
 		<h2 id="OeHtemlTag">OeHtmlTag(id,buttonOn,buttonOff)</h2>
 		<div>
 		<p>　・HTMLタグクラスです。<strong>new OeHtmlTag(sid,buttonOn,buttonOff)</strong>で作成します。<br>
-			　※注意：buttonOnを設定して作成する場合、該当HTMLタグ要素に各種イベントリスナーがセットされますので、inputタグやtextareaタグは指定すると、スマホの場合はイベント発生時にpreventDefaultをするので、入力等が動作しなくなります。buttonOnを設定して作成しない場合は、各種イベントリスナーがセットされないため、特に問題ないと思います。</p>
+			　※注意：buttonOnを設定して作成する場合、該当HTMLタグ要素に各種イベントリスナーがセットされます。スマホの場合はイベント発生時にpreventDefaultを実行するので、inputタグやtextareaタグは入力等が動作しなくなります。buttonOnを設定して作成しない場合は、各種イベントリスナーがセットされないため、特に問題なく動作すると思われます。</p>
 		<table style="width: 100%">
 			<tr>
 				<th>id</th>
@@ -419,7 +420,7 @@
 			</tr>
 			<tr>
 				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。</td>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
 			</tr>
 			<tr>
 				<th>fontsize</th>
@@ -599,7 +600,7 @@
 			</tr>
 			<tr>
 				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。</td>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
 			</tr>
 			<tr>
 				<th>mousedown</th>
@@ -714,6 +715,14 @@
 				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【文字列】背景色　<span class="sub">（デフォルト：null）</span></td>
 			</tr>
 			<tr>
+				<th>borderColor</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span>【文字列】枠の色　<span class="sub">（デフォルト：null）</span></td>
+			</tr>
+			<tr>
+				<th>borderSize</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span>【数値】枠のサイズ　<span class="sub">（デフォルト：null）</span></td>
+			</tr>
+			<tr>
 				<th>click</th>
 				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】クリックした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
 			</tr>
@@ -727,7 +736,7 @@
 			</tr>
 			<tr>
 				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。</td>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
 			</tr>
 			<tr>
 				<th>family</th>
@@ -768,6 +777,10 @@
 			<tr>
 				<th>paddingTop</th>
 				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】上の空白　<span class="sub">（デフォルト：0）</span></td>
+			</tr>
+			<tr>
+				<th>rounded</th>
+				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span>【真偽値】枠の角を丸めるか否か（trueで角を丸める。falseで角を丸めない。）　<span class="sub">（デフォルト：null）</span></td>
 			</tr>
 			<tr>
 				<th>size</th>
@@ -944,7 +957,7 @@
 			</tr>
 			<tr>
 				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。</td>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
 			</tr>
 			<tr>
 				<th>family</th>
@@ -1134,6 +1147,103 @@
 			<br>
 			<span class="c_com">//メッセージを表示する</span><br>
 			<span class="c_var">mes</span>.open(["花子/元気？","太朗/元気だよ！"],"end");
+		</p>
+			
+		</div>
+		
+		<p class="right"><a href="#up">▲上に戻る</a></p>
+		<hr>
+
+		<h2 id="OeLoadPlus">OeLoadPlus() <span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span></h2>
+		<div>
+		<p>　・追加ロードクラスです。<strong>OeLoadPlus()</strong>で作成します。作成時に引数は設定しません。ゲームをスタートした後に画像・音声ファイルをロードする際に使用します。</p>
+		<p>　以下、使用可能なパラメータ・関数</p>
+		<table style="width: 100%">
+			<tr>
+				<th>add(layerName)</th>
+				<td>【関数】自分をレイヤーに追加します。<br>
+				・layerName：レイヤーの名前（文字列）</td>
+			</tr>
+			<tr>
+				<th>assetList</th>
+				<td>【配列】読み込むファイルのリスト。<br>
+					["img/chip.png","sound/win.ogg"]といった感じで設定する。</td>
+			</tr>
+			<tr>
+				<th>del()</th>
+				<td>【関数】自分を削除する。</td>
+			</tr>
+			<tr>
+				<th>enterframe</th>
+				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
+			</tr>
+			<tr>
+				<th>load()</th>
+				<td>【関数】ロードを実行する。<br>assetListに設定したファイルの読み込みを開始します。</td>
+			</tr>
+			<tr>
+				<th>progress</th>
+				<td>【数値】ロードの進捗状況。　※0～100</td>
+			</tr>
+			<tr>
+				<th>ready</th>
+				<td>【真偽値】ロードが完了するとtrueになる。</td>
+			</tr>
+		</table>
+		<p>　以下、通常は使用しないパラメータ・関数</p>
+		<table style="width: 100%">
+			<tr>
+				<th class="nouse">assetSet</th>
+				<td>【数値】読み込み済みのファイル数</td>
+			</tr>
+			<tr>
+				<th class="nouse">id</th>
+				<td>【文字列】オブジェクトの固有番号<br>
+				※addした時に付与されます。"X_1"といった「タイプ_固有番号」形式の文字列。</td>
+			</tr>
+			<tr>
+				<th class="nouse">layer</th>
+				<td>【文字列】所属しているレイヤーの名前</td>
+			</tr>
+			<tr>
+				<th class="nouse">loadCheck()</th>
+				<td>【関数】フレーム毎に処理する内容</td>
+			</tr>
+			<tr>
+				<th class="nouse">type</th>
+				<td>【文字列】オブジェクトタイプ（"X"）</td>
+			</tr>
+			<tr>
+				<th class="nouse">visible</th>
+				<td>【真偽値】フレーム毎に処理するために、便宜上必要となる値</td>
+			</tr>
+		</table>
+			
+		<p><strong>使い方の例</strong></p>
+		<p class="code">
+			<span class="c_com">//何も表示しないクラスだが、レイヤーに追加することで機能するので、レイヤーを準備する</span><br>
+			var <span class="c_var">layer1</span> = new <span class="c_class">OeLayer</span>("layer1", 0, 0, 700, 420);<br>
+			<span class="c_var">layer1</span>.addLayer();<br>
+			<br>
+			<span class="c_com">//ロード後に実行する処理を実行したらtrueになる変数</span><br>
+			var <span class="c_var">executed</span> = false;<br>
+			<br>
+			<span class="c_com">//追加ロードクラスを作成して、ロードを実行</span><br>
+			var <span class="c_var">loadPlus</span> = new <span class="c_class">OeLoadPlus</span>();<br>
+			<span class="c_var">loadPlus</span>.assetList = ["img/button_a1.png","sound/win.ogg"];<br>
+			<span class="c_var">loadPlus</span>.add("layer1");<br>
+			<span class="c_var">loadPlus</span>.load();<br>
+			<span class="c_com">//ロード完了後の処理をenterframeの関数内に記述</span><br>
+			<span class="c_var">loadPlus</span>.enterframe = function(){<br>
+			&emsp;&emsp;&emsp;&emsp;if(<span class="c_var">loadPlus</span>.ready==true && <span class="c_var">executed</span>==false){<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var <span class="c_var">button</span> = new <span class="c_class">OeSprite</span>("img/button_a1.png",0,0,70,70,0);<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">button</span>.click = function(){<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;onien.se.start("sound/win");<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">button</span>.add("layer1");<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">executed</span> = true;<br>
+			&emsp;&emsp;&emsp;&emsp;}<br>
+			}
 		</p>
 			
 		</div>

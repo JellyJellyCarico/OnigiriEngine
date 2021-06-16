@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.1.0c
+OnigiriEngine Ver1.1.0d(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -591,14 +591,14 @@ function OnigiriEngine(w,h){
 									if(((dx+img.w)<0) || (dx>onien.w) || ((dy+img.h)<0) || (dy>onien.h)) {
 										inScreen = false;
 									}
-									if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null){
+									if(img.scale>1 || img.scaleX>1 || img.scaleY>1 || img.rotate!=null){
 										inScreen = true;
 									}
 									
 									if(inScreen){
 										onien.ctx.save();
 										
-										if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null){
+										if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null || img.scale!=1){
 											onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
 											if(img.scaleX!=null && img.scaleY!=null){
 												onien.ctx.scale(img.scaleX,img.scaleY);

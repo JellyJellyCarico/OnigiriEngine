@@ -1675,13 +1675,32 @@ class OeTmpCanvas{
 		this.context	= this.canvas.getContext('2d');
 	}
 	
-	draw(src,cutx,cuty,cutw,cuth,putx,puty){
+	draw(src,cutx,cuty,cutw,cuth,putx,puty,putw,puth){
 		if(typeof(src) != "object"){
 			src		= onien.asset[src];
 		}
+
+		var pW = putw ? putw : cutw;
+		var pH = puth ? puth : cuth;
 		
 		this.context.save();
-		this.context.drawImage(src,cutx,cuty,cutw,cuth,putx,puty,cutw,cuth);
+		this.context.drawImage(src,cutx,cuty,cutw,cuth,putx,puty,pW,pH);
+		this.context.restore();
+	}
+
+	drawComa(src,coma,w,h,putx,puty,putw,puth){
+		if(typeof(src) != "object"){
+			src		= onien.asset[src];
+		}
+
+		var countX = Math.floor(src.width/w);
+		var cx = coma%countX*w;
+		var cy = Math.floor(coma/countX)*h;
+		var pW = putw ? putw : w;
+		var pH = puth ? puth : h;
+
+		this.context.save();
+		this.context.drawImage(src,cx,cy,w,h,putx,puty,pW,pH);
 		this.context.restore();
 	}
 }

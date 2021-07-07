@@ -611,6 +611,10 @@ function OnigiriEngine(w,h){
 											onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
 										}
 
+										if(img.composite){
+											onien.ctx.globalCompositeOperation = img.composite;
+										}
+
 										onien.ctx.globalAlpha	= img.opacity;
 
 										onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);

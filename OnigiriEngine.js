@@ -90,44 +90,28 @@ function OnigiriEngine(w,h){
 		}
 		
 		//再生する
-		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")=="maybe"){
+		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
 			//wavファイルを再生
 			onien.bgm.buf[b]		= onien.asset[name + ".wav"];
-			onien.bgm.buf[b].volume	= onien.bgm.vol;
-			onien.bgm.buf[b].play();
-		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")=="maybe"){
-			//mp3ファイルを再生
-			onien.bgm.buf[b]		= onien.asset[name + ".mp3"];
-			onien.bgm.buf[b].volume	= onien.bgm.vol;
-			onien.bgm.buf[b].play();
-		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")=="maybe"){
-			//oggファイルを再生
-			onien.bgm.buf[b]		= onien.asset[name + ".ogg"];
-			onien.bgm.buf[b].volume	= onien.bgm.vol;
-			onien.bgm.buf[b].play();
-		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")=="maybe"){
-			//m4aファイルを再生
-			onien.bgm.buf[b]		= onien.asset[name + ".m4a"];
-			onien.bgm.buf[b].volume	= onien.bgm.vol;
-			onien.bgm.buf[b].play();
-		}else if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
-			//wavファイルを再生
-			onien.bgm.buf[b]		= onien.asset[name + ".wav"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".wav";
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
 			onien.bgm.buf[b].play();
 		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")!=""){
 			//mp3ファイルを再生
 			onien.bgm.buf[b]		= onien.asset[name + ".mp3"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".mp3";
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
 			onien.bgm.buf[b].play();
 		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")!=""){
 			//oggファイルを再生
 			onien.bgm.buf[b]		= onien.asset[name + ".ogg"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".ogg";
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
 			onien.bgm.buf[b].play();
 		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")!=""){
 			//m4aファイルを再生
 			onien.bgm.buf[b]		= onien.asset[name + ".m4a"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".m4a";
 			onien.bgm.buf[b].volume	= onien.bgm.vol;
 			onien.bgm.buf[b].play();
 		}
@@ -164,44 +148,28 @@ function OnigiriEngine(w,h){
 		}
 		
 		//再生する
-		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")=="maybe"){
-			// wavファイル再生
-			onien.se.buf[b]		= onien.asset[name + ".wav"];
-			onien.se.buf[b].volume	= onien.se.vol;
-			onien.se.buf[b].play();
-		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")=="maybe"){
-			// mp3ファイルを再生
-			onien.se.buf[b]		= onien.asset[name + ".mp3"];
-			onien.se.buf[b].volume	= onien.se.vol;
-			onien.se.buf[b].play();
-		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")=="maybe"){
-			// oggファイル再生
-			onien.se.buf[b]		= onien.asset[name + ".ogg"];
-			onien.se.buf[b].volume	= onien.se.vol;
-			onien.se.buf[b].play();
-		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")=="maybe"){
-			// m4aファイル再生
-			onien.se.buf[b]		= onien.asset[name + ".m4a"];
-			onien.se.buf[b].volume	= onien.se.vol;
-			onien.se.buf[b].play();
-		}else if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
+		if(onien.asset[name + ".wav"] && audio.canPlayType("audio/wav")!=""){
 			//wavファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".wav"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".wav";
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}else if(onien.asset[name + ".mp3"] && audio.canPlayType("audio/mpeg")!=""){
 			//mp3ファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".mp3"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".mp3";
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}else if(onien.asset[name + ".ogg"] && audio.canPlayType("audio/ogg")!=""){
 			//oggファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".ogg"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".ogg";
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}else if(onien.asset[name + ".m4a"] && audio.canPlayType("audio/mp4")!=""){
 			//m4aファイルを再生
 			onien.se.buf[b]		= onien.asset[name + ".m4a"];
+			if(onien.platform == "i") onien.se.buf[b].src		= name + ".m4a";
 			onien.se.buf[b].volume	= onien.se.vol;
 			onien.se.buf[b].play();
 		}

@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.1.0d(編集中)
+OnigiriEngine Ver1.1.0d→Ver1.2.0(編集中)
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -183,11 +183,21 @@ function OnigiriEngine(w,h){
 	//★スプライトなどを追加する関数
 	onien.addObj	= function(ele,layerName){
 		ele.layer	= layerName;
-		ele.id		= ele.type + "_" + onien.idcount;
-		onien.idcount++;
-		onien.layer[layerName].content[ele.id]	= ele;
-		onien.layer[layerName].sortList.push({"id":ele.id,"y":ele.y});
-		//onien.layer[layerName].sortStart();
+		if(onien.layer[layerName].maplayer){
+			if(ele.type == "S"){
+				ele.id		= Math.floor(ele.x/onien.layer[layerName].cw) + "x" + Math.floor(ele.y/onien.layer[layerName].ch);
+				if(onien.layer[layerName].content[ele.id]) console.log(layerName+"にてオブジェクトを上書き追加")
+				onien.layer[layerName].content[ele.id]	= ele;
+			}else{
+				console.log("オブジェクト追加失敗。マップレイヤーに追加できないオブジェクトでした。")
+			}
+		}else{
+			ele.id		= ele.type + "_" + onien.idcount;
+			onien.idcount++;
+			onien.layer[layerName].content[ele.id]	= ele;
+			onien.layer[layerName].sortList.push({"id":ele.id,"y":ele.y});
+		}
+
 	}
 	
 	//★スプライトなどを削除する関数
@@ -513,260 +523,326 @@ function OnigiriEngine(w,h){
 				for(var i in onien.layer){
 					if(onien.layer[i].visible==true){
 						//レイヤーが表示ならレイヤー内の描写・操作を行う
-						for(var j in onien.layer[i].sortList){
-							//sortListの並び順で描画する
-							var thisid	= onien.layer[i].sortList[j].id;
-							var img		= onien.layer[i].content[thisid];
-							//オブジェクトが表示なら描写・操作を行う
-							if(img.visible==true){
-								//オブジェクトがスプライトなら描画処理
-								if(img.type	== "S"){
-									if(typeof(img.src) != "object"){
-										img.src		= onien.asset[img.src];
+						// マップレイヤーの場合
+						if(onien.layer[i].maplayer){
+							var cw = onien.layer[i].cw;	// チップ１つの横幅
+							var ch = onien.layer[i].ch;	// チップ１つの縦幅
+							var lxx = onien.layer[i].x*(-1);
+							var lyy = onien.layer[i].y*(-1);
+							var lx = Math.floor(lxx/cw) - 1; //表示領域の左上のチップx座標
+							var ly = Math.floor(lyy/ch) - 1; //表示領域の左上のチップy座標
+							var wcX = Math.floor(onien.w/cw) + 2;	// 画面に表示する横チップ数
+							var wcY = Math.floor(onien.h/ch) + 2;	// 画面に表示する縦チップ数
+							for(var xx=0; xx<wcX; xx++){
+								for(var yy=0; yy<wcY; yy++){
+									if(onien.layer[i].content[(lx + xx)+"x"+(ly + yy)]){
+										var img = onien.layer[i].content[(lx + xx)+"x"+(ly + yy)];
+										if(img.visible==true){
+											if(typeof(img.src) != "object"){
+												img.src = onien.asset[img.src];
+											}
+											var dx = img.x + onien.layer[i].x;
+											var dy = img.y + onien.layer[i].y;
+											var countX = Math.floor(img.src.width/img.w);
+											var cx = img.coma%countX * img.w;
+											var cy = Math.floor(img.coma/countX) * img.h;
+
+											onien.ctx.save();
+											
+											if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null || img.scale!=1){
+												onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
+												if(img.scaleX!=null && img.scaleY!=null){
+													onien.ctx.scale(img.scaleX,img.scaleY);
+												}else{
+													onien.ctx.scale(img.scale,img.scale);
+												}
+												if(img.rotate!=null){
+													onien.ctx.rotate(img.rotate*(Math.PI/180));
+												}
+												onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
+											}
+
+											if(img.composite){
+												onien.ctx.globalCompositeOperation = img.composite;
+											}
+
+											onien.ctx.globalAlpha	= img.opacity;
+
+											onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);
+											onien.ctx.restore();
+
+											//オブジェクトのenterframe処理
+											try{
+												if(img.enterframe){
+													img.enterframe();
+												}
+											}catch(e){
+												
+											}
+										}
+
 									}
-									
-									var dx		= img.x + onien.layer[i].x;
-									var dy		= img.y + onien.layer[i].y;
-									var countX	= Math.floor(img.src.width/img.w);
-									var countY	= Math.floor(img.src.height/img.h);
-									var cx		= img.coma%countX * img.w;
-									var cy		= Math.floor(img.coma/countX) * img.h;
-									
-									var inScreen	= true;
-									if(((dx+img.w)<0) || (dx>onien.w) || ((dy+img.h)<0) || (dy>onien.h)) {
-										inScreen = false;
+								}
+							}
+							
+						}else{
+						//　通常レイヤーの場合
+							for(var j in onien.layer[i].sortList){
+								//sortListの並び順で描画する
+								var thisid	= onien.layer[i].sortList[j].id;
+								var img		= onien.layer[i].content[thisid];
+								//オブジェクトが表示なら描写・操作を行う
+								if(img.visible==true){
+									//オブジェクトがスプライトなら描画処理
+									if(img.type	== "S"){
+										if(typeof(img.src) != "object"){
+											img.src		= onien.asset[img.src];
+										}
+										
+										var dx		= img.x + onien.layer[i].x;
+										var dy		= img.y + onien.layer[i].y;
+										var countX	= Math.floor(img.src.width/img.w);
+										var countY	= Math.floor(img.src.height/img.h);
+										var cx		= img.coma%countX * img.w;
+										var cy		= Math.floor(img.coma/countX) * img.h;
+										
+										var inScreen	= true;
+										if(((dx+img.w)<0) || (dx>onien.w) || ((dy+img.h)<0) || (dy>onien.h)) {
+											inScreen = false;
+										}
+										if(img.scale>1 || img.scaleX>1 || img.scaleY>1 || img.rotate!=null){
+											inScreen = true;
+										}
+										
+										if(inScreen){
+											onien.ctx.save();
+											
+											if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null || img.scale!=1){
+												onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
+												if(img.scaleX!=null && img.scaleY!=null){
+													onien.ctx.scale(img.scaleX,img.scaleY);
+												}else{
+													onien.ctx.scale(img.scale,img.scale);
+												}
+												if(img.rotate!=null){
+													onien.ctx.rotate(img.rotate*(Math.PI/180));
+												}
+												onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
+											}
+
+											if(img.composite){
+												onien.ctx.globalCompositeOperation = img.composite;
+											}
+
+											onien.ctx.globalAlpha	= img.opacity;
+
+											onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);
+											onien.ctx.restore();
+										}
+										
 									}
-									if(img.scale>1 || img.scaleX>1 || img.scaleY>1 || img.rotate!=null){
-										inScreen = true;
+									//オブジェクトがHTMLタグなら
+									if(img.type == "H"){
+										img.obj.style.visibility = "visible";
+										
+										if(img.x != null || img.y != null){
+											img.obj.style.position = "absolute";
+										}
+										if(img.x != null){
+											if(img.autoPosition == true){
+												img.positionSet();
+												img.obj.style.left		= img.autoX+"px";
+											}else{
+												img.obj.style.left		= img.x+"px";
+											}
+										}
+										if(img.y != null){
+											if(img.autoPosition == true){
+												img.positionSet();
+												img.obj.style.top		= img.autoY+"px";
+											}else{
+												img.obj.style.top		= img.y+"px";
+											}
+										}
+										if(img.w != null || img.autoScale == true){
+											if(img.autoScale == true){
+												img.scaleSet();
+												img.obj.style.width		= img.autoW+"px";
+											}else{
+												img.obj.style.width		= img.w+"px";
+											}
+										}
+										if(img.h != null || img.autoScale == true){
+											if(img.autoScale == true){
+												img.scaleSet();
+												img.obj.style.height	= img.autoH+"px";
+											}else{
+												img.obj.style.height	= img.h+"px";
+											}
+										}
+										if(img.fontsize != null || img.autoScale == true){
+											if(img.autoScale == true){
+												img.scaleSet();
+												img.obj.style.fontSize	= img.autoF+"px";
+											}else{
+												img.obj.style.fontSize	= img.fontsize+"px";
+											}
+										}
 									}
-									
-									if(inScreen){
+									//オブジェクトがぷりアニなら
+									if(img.type == "P"){
+										onien.priani.drawPriani(img.chara,img.x,img.y);
+									}
+									//オブジェクトがテキストなら
+									if(img.type == "T"){
+										var dx		= img.x + onien.layer[i].x;
+										var dy		= img.y + onien.layer[i].y;
 										onien.ctx.save();
 										
-										if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null || img.scale!=1){
-											onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
-											if(img.scaleX!=null && img.scaleY!=null){
-												onien.ctx.scale(img.scaleX,img.scaleY);
+										onien.ctx.globalAlpha = img.opacity;
+
+										if(img.borderSize != null || img.borderColor != null || img.rounded != null){
+											onien.ctx.lineJoin = img.rounded ? "round" : "bavel";
+											onien.ctx.lineWidth = img.borderSize!=null ? img.borderSize : 1;
+											onien.ctx.strokeStyle = img.borderColor!=null ? img.borderColor : "black";
+											onien.ctx.strokeRect(dx,dy,img.w,img.h);
+										}
+										if(img.back != null){
+											onien.ctx.fillStyle		= img.back;
+											onien.ctx.fillRect(dx,dy,img.w,img.h);
+										}
+										
+										if(img.src != null){
+											if(typeof(img.src) == "object"){
 											}else{
-												onien.ctx.scale(img.scale,img.scale);
+												img.src		= onien.asset[img.src];
 											}
-											if(img.rotate!=null){
-												onien.ctx.rotate(img.rotate*(Math.PI/180));
-											}
-											onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
+											onien.ctx.drawImage(img.src,dx,dy,img.w,img.h);
 										}
-
-										if(img.composite){
-											onien.ctx.globalCompositeOperation = img.composite;
+										
+										
+										if(isNaN(img.size) == false){
+											img.size	= img.size + "px";
 										}
-
-										onien.ctx.globalAlpha	= img.opacity;
-
-										onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);
+										
+										onien.ctx.fillStyle		= img.color;
+										onien.ctx.font			= img.size + " " + img.family;
+										onien.ctx.textAlign		= "left";
+										onien.ctx.textBaseline	= "top";
+										onien.ctx.fillText(img.text,dx+img.paddingLeft,dy+img.paddingTop);
 										onien.ctx.restore();
 									}
-									
-								}
-								//オブジェクトがHTMLタグなら
-								if(img.type == "H"){
-									img.obj.style.visibility = "visible";
-									
-									if(img.x != null || img.y != null){
-										img.obj.style.position = "absolute";
-									}
-									if(img.x != null){
-										if(img.autoPosition == true){
-											img.positionSet();
-											img.obj.style.left		= img.autoX+"px";
+									//オブジェクトがメッセージなら
+									if(img.type == "M"){
+										var dx		= img.x + onien.layer[i].x;
+										var dy		= img.y + onien.layer[i].y;
+										onien.ctx.save();
+										
+										onien.ctx.globalAlpha = img.opacity;
+										
+										//メッセージ背景描写
+										if(img.src != null){
+											if(typeof(img.src) == "object"){
+											}else{
+												img.src		= onien.asset[img.src];
+											}
+											onien.ctx.drawImage(img.src,dx,dy,img.w,img.h);
 										}else{
-											img.obj.style.left		= img.x+"px";
+											onien.ctx.fillStyle		= img.back;
+											
+											onien.ctx.beginPath();
+											onien.ctx.moveTo(dx+img.radius,dy+img.radius);
+											onien.ctx.arc(dx+img.radius,dy+img.radius,img.radius,(180*Math.PI/180),(270*Math.PI/180));
+											onien.ctx.fill();
+											
+											onien.ctx.beginPath();
+											onien.ctx.moveTo(dx+(img.w-img.radius),dy+img.radius);
+											onien.ctx.arc(dx+(img.w-img.radius),dy+img.radius,img.radius,(-90*Math.PI/180),(0*Math.PI/180));
+											onien.ctx.fill();
+											
+											onien.ctx.beginPath();
+											onien.ctx.moveTo(dx+(img.w-img.radius),dy+(img.h-img.radius));
+											onien.ctx.arc(dx+(img.w-img.radius),dy+(img.h-img.radius),img.radius,(0*Math.PI/180),(90*Math.PI/180));
+											onien.ctx.fill();
+											
+											onien.ctx.beginPath();
+											onien.ctx.moveTo(dx+img.radius,dy+(img.h-img.radius));
+											onien.ctx.arc(dx+img.radius,dy+(img.h-img.radius),img.radius,(90*Math.PI/180),(180*Math.PI/180));
+											onien.ctx.fill();
+											
+											onien.ctx.fillRect(dx+img.radius,dy,img.w-img.radius*2,img.radius);
+											onien.ctx.fillRect(dx+img.radius,dy+img.radius,img.w-img.radius*2,img.h-img.radius*2);
+											onien.ctx.fillRect(dx+img.radius,dy+img.radius+(img.h-img.radius*2),img.w-img.radius*2,img.radius);
+											onien.ctx.fillRect(dx,dy+img.radius,img.radius,img.h-img.radius*2);
+											onien.ctx.fillRect(dx+img.w-img.radius,dy+img.radius,img.radius,img.h-img.radius*2);
+											
 										}
-									}
-									if(img.y != null){
-										if(img.autoPosition == true){
-											img.positionSet();
-											img.obj.style.top		= img.autoY+"px";
-										}else{
-											img.obj.style.top		= img.y+"px";
+										
+										
+										if(isNaN(img.size) == false){
+											img.size	= img.size + "px";
 										}
-									}
-									if(img.w != null || img.autoScale == true){
-										if(img.autoScale == true){
-											img.scaleSet();
-											img.obj.style.width		= img.autoW+"px";
-										}else{
-											img.obj.style.width		= img.w+"px";
+										
+										onien.ctx.fillStyle		= img.color;
+										onien.ctx.font			= img.size + " " + img.family;
+										onien.ctx.textAlign		= "left";
+										onien.ctx.textBaseline	= "top";
+										
+										for(var lines=img.text.split(img.newLine), i=0, l=lines.length; l>i; i++){
+											var line	= lines[i];
+											var addY	= 0;
+											if(i){
+												addY += img.lineHeight * i;
+											}
+											if(i==0){
+												onien.ctx.fillStyle = img.firstColor;
+											}else{
+												onien.ctx.fillStyle		= img.color;
+											}
+											onien.ctx.fillText(line,dx+img.paddingLeft,dy+img.paddingTop+addY);
 										}
-									}
-									if(img.h != null || img.autoScale == true){
-										if(img.autoScale == true){
-											img.scaleSet();
-											img.obj.style.height	= img.autoH+"px";
-										}else{
-											img.obj.style.height	= img.h+"px";
+										
+										if(img.wait == true){
+											if(onien.frame%img.waitSpeed == 0){
+												img.waitCount++;
+												if(img.waitCount>3){img.waitCount = 0;}
+											}
+											onien.ctx.drawImage(img.waitCanvas,img.waitCount*img.waitCanvas.height,0,img.waitCanvas.height,img.waitCanvas.height,dx+img.waitX,dy+img.waitY,img.waitCanvas.height,img.waitCanvas.height);
 										}
+										
+										onien.ctx.restore();
+										
+										//メッセージ表示用のenterframe実行
+										img.mesEnterFrame();
 									}
-									if(img.fontsize != null || img.autoScale == true){
-										if(img.autoScale == true){
-											img.scaleSet();
-											img.obj.style.fontSize	= img.autoF+"px";
-										}else{
-											img.obj.style.fontSize	= img.fontsize+"px";
-										}
-									}
-								}
-								//オブジェクトがぷりアニなら
-								if(img.type == "P"){
-									onien.priani.drawPriani(img.chara,img.x,img.y);
-								}
-								//オブジェクトがテキストなら
-								if(img.type == "T"){
-									var dx		= img.x + onien.layer[i].x;
-									var dy		= img.y + onien.layer[i].y;
-									onien.ctx.save();
-									
-									onien.ctx.globalAlpha = img.opacity;
+									//オブジェクトがロードプラスなら
+									if(img.type == "X"){
+										try{
+											if(!img.ready){
+												img.loadCheck();
+											}
+										}catch(e){
 
-									if(img.borderSize != null || img.borderColor != null || img.rounded != null){
-										onien.ctx.lineJoin = img.rounded ? "round" : "bavel";
-										onien.ctx.lineWidth = img.borderSize!=null ? img.borderSize : 1;
-										onien.ctx.strokeStyle = img.borderColor!=null ? img.borderColor : "black";
-										onien.ctx.strokeRect(dx,dy,img.w,img.h);
-									}
-									if(img.back != null){
-										onien.ctx.fillStyle		= img.back;
-										onien.ctx.fillRect(dx,dy,img.w,img.h);
-									}
-									
-									if(img.src != null){
-										if(typeof(img.src) == "object"){
-										}else{
-											img.src		= onien.asset[img.src];
 										}
-										onien.ctx.drawImage(img.src,dx,dy,img.w,img.h);
 									}
 									
-									
-									if(isNaN(img.size) == false){
-										img.size	= img.size + "px";
-									}
-									
-									onien.ctx.fillStyle		= img.color;
-									onien.ctx.font			= img.size + " " + img.family;
-									onien.ctx.textAlign		= "left";
-									onien.ctx.textBaseline	= "top";
-									onien.ctx.fillText(img.text,dx+img.paddingLeft,dy+img.paddingTop);
-									onien.ctx.restore();
-								}
-								//オブジェクトがメッセージなら
-								if(img.type == "M"){
-									var dx		= img.x + onien.layer[i].x;
-									var dy		= img.y + onien.layer[i].y;
-									onien.ctx.save();
-									
-									onien.ctx.globalAlpha = img.opacity;
-									
-									//メッセージ背景描写
-									if(img.src != null){
-										if(typeof(img.src) == "object"){
-										}else{
-											img.src		= onien.asset[img.src];
-										}
-										onien.ctx.drawImage(img.src,dx,dy,img.w,img.h);
-									}else{
-										onien.ctx.fillStyle		= img.back;
-										
-										onien.ctx.beginPath();
-										onien.ctx.moveTo(dx+img.radius,dy+img.radius);
-										onien.ctx.arc(dx+img.radius,dy+img.radius,img.radius,(180*Math.PI/180),(270*Math.PI/180));
-										onien.ctx.fill();
-										
-										onien.ctx.beginPath();
-										onien.ctx.moveTo(dx+(img.w-img.radius),dy+img.radius);
-										onien.ctx.arc(dx+(img.w-img.radius),dy+img.radius,img.radius,(-90*Math.PI/180),(0*Math.PI/180));
-										onien.ctx.fill();
-										
-										onien.ctx.beginPath();
-										onien.ctx.moveTo(dx+(img.w-img.radius),dy+(img.h-img.radius));
-										onien.ctx.arc(dx+(img.w-img.radius),dy+(img.h-img.radius),img.radius,(0*Math.PI/180),(90*Math.PI/180));
-										onien.ctx.fill();
-										
-										onien.ctx.beginPath();
-										onien.ctx.moveTo(dx+img.radius,dy+(img.h-img.radius));
-										onien.ctx.arc(dx+img.radius,dy+(img.h-img.radius),img.radius,(90*Math.PI/180),(180*Math.PI/180));
-										onien.ctx.fill();
-										
-										onien.ctx.fillRect(dx+img.radius,dy,img.w-img.radius*2,img.radius);
-										onien.ctx.fillRect(dx+img.radius,dy+img.radius,img.w-img.radius*2,img.h-img.radius*2);
-										onien.ctx.fillRect(dx+img.radius,dy+img.radius+(img.h-img.radius*2),img.w-img.radius*2,img.radius);
-										onien.ctx.fillRect(dx,dy+img.radius,img.radius,img.h-img.radius*2);
-										onien.ctx.fillRect(dx+img.w-img.radius,dy+img.radius,img.radius,img.h-img.radius*2);
-										
-									}
-									
-									
-									if(isNaN(img.size) == false){
-										img.size	= img.size + "px";
-									}
-									
-									onien.ctx.fillStyle		= img.color;
-									onien.ctx.font			= img.size + " " + img.family;
-									onien.ctx.textAlign		= "left";
-									onien.ctx.textBaseline	= "top";
-									
-									for(var lines=img.text.split(img.newLine), i=0, l=lines.length; l>i; i++){
-										var line	= lines[i];
-										var addY	= 0;
-										if(i){
-											addY += img.lineHeight * i;
-										}
-										if(i==0){
-											onien.ctx.fillStyle = img.firstColor;
-										}else{
-											onien.ctx.fillStyle		= img.color;
-										}
-										onien.ctx.fillText(line,dx+img.paddingLeft,dy+img.paddingTop+addY);
-									}
-									
-									if(img.wait == true){
-										if(onien.frame%img.waitSpeed == 0){
-											img.waitCount++;
-											if(img.waitCount>3){img.waitCount = 0;}
-										}
-										onien.ctx.drawImage(img.waitCanvas,img.waitCount*img.waitCanvas.height,0,img.waitCanvas.height,img.waitCanvas.height,dx+img.waitX,dy+img.waitY,img.waitCanvas.height,img.waitCanvas.height);
-									}
-									
-									onien.ctx.restore();
-									
-									//メッセージ表示用のenterframe実行
-									img.mesEnterFrame();
-								}
-								//オブジェクトがロードプラスなら
-								if(img.type == "X"){
+									//オブジェクトのenterframe処理
 									try{
-										if(!img.ready){
-											img.loadCheck();
+										if(img.enterframe){
+											img.enterframe();
 										}
 									}catch(e){
-
+										
 									}
-								}
-								
-								//オブジェクトのenterframe処理
-								try{
-									if(img.enterframe){
-										img.enterframe();
+								}else{
+									//オブジェクトがHTMLタグなら
+									if(img.type == "H"){
+										img.obj.style.visibility = "hidden";
 									}
-								}catch(e){
-									
-								}
-							}else{
-								//オブジェクトがHTMLタグなら
-								if(img.type == "H"){
-									img.obj.style.visibility = "hidden";
 								}
 							}
 						}
+
 						//レイヤーのenterframe処理
 						try{
 							onien.layer[i].enterframe();
@@ -972,12 +1048,32 @@ function OnigiriEngine(w,h){
 			var i = key[ii];
 			//イベントをつける場合は各オブジェクトの発火確認
 			if(onien.layer[i].nonEvent == false && onien.layer[i].visible == true){
-				//イベントの並び順の逆の順でソートして処理していく
 				var eventSort = [];
-				for(var k in onien.layer[i].sortList){
-					eventSort.push(onien.layer[i].sortList[k].id);
+				if(onien.layer[i].maplayer){
+					//マップレイヤーの場合のソート処理
+					var cw = onien.layer[i].cw;	// チップ１つの横幅
+					var ch = onien.layer[i].ch;	// チップ１つの縦幅
+					var lxx = onien.layer[i].x*(-1);
+					var lyy = onien.layer[i].y*(-1);
+					var lx = Math.floor(lxx/cw) - 1; //表示領域の左上のチップx座標
+					var ly = Math.floor(lyy/ch) - 1; //表示領域の左上のチップy座標
+					var wcX = Math.floor(onien.w/cw) + 2;	// 画面に表示する横チップ数
+					var wcY = Math.floor(onien.h/ch) + 2;	// 画面に表示する縦チップ数
+					for(var xx=0; xx<wcX; xx++){
+						for(var yy=0; yy<wcY; yy++){
+							if(onien.layer[i].content[(lx + xx)+"x"+(ly + yy)]){
+								eventSort.push((lx + xx)+"x"+(ly + yy));
+							}
+						}
+					}
+
+				}else{
+					//イベントの並び順の逆の順でソートして処理していく
+					for(var k in onien.layer[i].sortList){
+						eventSort.push(onien.layer[i].sortList[k].id);
+					}
+					eventSort = eventSort.reverse();
 				}
-				eventSort = eventSort.reverse();
 				
 				//各オブジェクトの処理
 				for(var j in eventSort){
@@ -1301,6 +1397,16 @@ class OeLayer{
 	delAllObject(){
 		onien.layer[this.name].content	= {};
 		onien.layer[this.name].sortList	= [];
+	}
+}
+
+//マップレイヤークラス
+class OeMapLayer extends OeLayer{
+	constructor(name,x,y,w,h,cw,ch){
+		super(name,x,y,w,h);
+		this.cw = cw?cw:80;
+		this.ch = ch?ch:80;
+		this.maplayer = true;
 	}
 }
 

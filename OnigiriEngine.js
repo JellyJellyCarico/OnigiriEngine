@@ -602,7 +602,6 @@ function OnigiriEngine(w,h){
 										var dx		= img.x + onien.layer[i].x;
 										var dy		= img.y + onien.layer[i].y;
 										var countX	= Math.floor(img.src.width/img.w);
-										var countY	= Math.floor(img.src.height/img.h);
 										var cx		= img.coma%countX * img.w;
 										var cy		= Math.floor(img.coma/countX) * img.h;
 										
@@ -1089,8 +1088,37 @@ function OnigiriEngine(w,h){
 							var objX2	= objX + obj.w;
 							var objY2	= objY + obj.h;
 							
+							//クリック位置に該当オブジェクトがあるかどうか判定
+							var hit		= false;
+							if(obj.scale==1 && obj.scaleX==null && obj.scaleY==null && obj.rotate==null){
+								// 拡縮なしの場合
+								if(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2){
+									hit = true;
+								}
+							}else{
+								// 拡縮ありの場合
+								var dx = obj.x + onien.layer[i].x;
+								var dy = obj.y + onien.layer[i].y;
+								onien.ctx.save();
+								onien.ctx.beginPath();
+								onien.ctx.translate(dx+(obj.w/2),dy+(obj.h/2));
+								if(obj.scaleX && obj.scaleY){
+									onien.ctx.scale(obj.scaleX,obj.scaleY);
+								}else{
+									onien.ctx.scale(obj.scale,obj.scale);
+								}
+								if(obj.rotate!=null){
+									onien.ctx.rotate(obj.rotate*(Math.PI/180));
+								}
+								onien.ctx.translate(-(dx+(obj.w/2)),-(dy+(obj.h/2)));
+								onien.ctx.rect(dx,dy,obj.w,obj.h);
+								onien.ctx.closePath();
+								hit = onien.ctx.isPointInPath(clickX,clickY);
+								onien.ctx.restore();
+							}
+
 							//クリック位置に該当オブジェクトがあれば発火
-							if(obj[mode] && objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2 && mode != "mouseleave"){
+							if(obj[mode] && hit && mode != "mouseleave"){
 								try{
 									obj[mode](e,clickX,clickY,touchnum);
 									break;
@@ -1107,7 +1135,7 @@ function OnigiriEngine(w,h){
 									
 								}
 							}
-							if(!(objX <= clickX && clickX <= objX2 && objY <= clickY && clickY <= objY2) && obj[mode] && mode == "mouseleave" && mouseleaveMode == "canvasleave"){
+							if(hit==false && obj[mode] && mode == "mouseleave" && mouseleaveMode == "canvasleave"){
 								try{
 									//console.log("leave")
 									obj[mode](e,clickX,clickY,touchnum);

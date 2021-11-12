@@ -282,7 +282,22 @@ function OnigiriEngine(w,h){
 		if(one.col.length%2 == 0 && obj.col.length%2 == 0){
 			var lx	= onien.layer[one.layer].x;
 			var ly	= onien.layer[one.layer].y;
+			var dx	= one.x + lx;
+			var dy	= one.y + ly;
 			onien.ctx.save();
+
+			if(one.scaleX!=null || one.scaleY!=null || one.rotate!=null || one.scale!=1){
+				onien.ctx.translate(dx+(one.w/2),dy+(one.h/2));
+				if(one.scaleX && one.scaleY){
+					onien.ctx.scale(one.scaleX,one.scaleY);
+				}else{
+					onien.ctx.scale(one.scale,one.scale);
+				}
+				if(one.rotate!=null){
+					onien.ctx.rotate(one.rotate*(Math.PI/180));
+				}
+				onien.ctx.translate(-(dx+(one.w/2)),-(dy+(one.h/2)));
+			}
 			
 			onien.ctx.beginPath();
 			onien.ctx.moveTo(one.col[0]+xxx+lx,one.col[1]+yyy+ly);
@@ -305,6 +320,7 @@ function OnigiriEngine(w,h){
 			onien.ctx.restore();
 		}
 		
+		/*
 		if(one.scale!=1 || obj.scale!=1){
 			kekka	= false;
 		}
@@ -312,6 +328,7 @@ function OnigiriEngine(w,h){
 		if(one.scaleX!=null || one.scaleY!=null || one.rotate!=null || obj.scaleX!=null || obj.scaleY!=null || obj.rotate!=null){
 			kekka	= false;
 		}
+		*/
 		
 		return kekka;
 	}

@@ -192,8 +192,10 @@ function OnigiriEngine(w,h){
 				console.log("オブジェクト追加失敗。マップレイヤーに追加できないオブジェクトでした。")
 			}
 		}else{
-			ele.id		= ele.type + "_" + onien.idcount;
-			onien.idcount++;
+			if(!ele.id){
+				ele.id		= ele.type + "_" + onien.idcount;
+				onien.idcount++;
+			}
 			onien.layer[layerName].content[ele.id]	= ele;
 			onien.layer[layerName].sortList.push({"id":ele.id,"y":ele.y});
 		}
@@ -680,28 +682,18 @@ function OnigiriEngine(w,h){
 												img.obj.style.top		= img.y+"px";
 											}
 										}
-										if(img.w != null || img.autoScale == true){
-											if(img.autoScale == true){
-												img.scaleSet();
-												img.obj.style.width		= img.autoW+"px";
-											}else{
-												img.obj.style.width		= img.w+"px";
-											}
+										if(img.w != null){
+											img.obj.style.width		= img.w+"px";
 										}
-										if(img.h != null || img.autoScale == true){
-											if(img.autoScale == true){
-												img.scaleSet();
-												img.obj.style.height	= img.autoH+"px";
-											}else{
-												img.obj.style.height	= img.h+"px";
-											}
+										if(img.h != null){
+											img.obj.style.height	= img.h+"px";
 										}
-										if(img.fontsize != null || img.autoScale == true){
-											if(img.autoScale == true){
-												img.scaleSet();
-												img.obj.style.fontSize	= img.autoF+"px";
-											}else{
-												img.obj.style.fontSize	= img.fontsize+"px";
+										if(img.autoScale){
+											var scale = img.scaleSet()
+											img.obj.style.setProperty("--htmlTagScale",scale);
+											if(img.autoPosition == true){
+												img.obj.style.left = Math.floor((scale*img.w - img.w)/2) + img.autoX + "px";
+												img.obj.style.top = Math.floor((scale*img.h - img.h)/2) + img.autoY + "px";
 											}
 										}
 									}
@@ -1457,134 +1449,34 @@ class OeMapLayer extends OeLayer{
 
 //htmlタグクラス
 class OeHtmlTag{
-	constructor(id,on,off){
+	constructor(id,autoPosition,autoScale){
+		if(document.getElementById(id)){
+			this.obj		= document.getElementById(id);
+		}else{
+			this.obj		= document.createElement("div");
+			this.obj.id		= id;
+			document.body.appendChild(this.obj);
+		}
 		this.id			= id;
-		this.obj		= document.getElementById(id);
 		this.visible	= true;
 		this.type		= "H";
-		//this.obj.style.visibility = "visible";
-		this.buttonOn	= on?on:null;
-		this.buttonOff	= off?off:null;
 		this.x			= null;
 		this.y			= null;
 		this.w			= null;
 		this.h			= null;
-		this.fontsize	= null;
-		this.autoPosition	= false;
-		this.autoScale		= false;
+		this.autoPosition	= autoPosition?autoPosition:false;
+		this.autoScale		= autoScale?autoScale:false;
 		this.autoX		= null;
 		this.autoY		= null;
-		this.autoW		= null;
-		this.autoH		= null;
-		this.autoF		= null;
-		
-		//buttonOnの設定がある場合はイベントセット
-		if(this.buttonOn != null){
-			var that	= this;
-
-			if(onien.platform != "i" && onien.platform != "android"){
-				//PC用
-				this.obj.addEventListener("mousedown",function(e){
-					if(that.buttonOn){
-						that.obj.src	= onien.asset[that.buttonOn].src;
-					}
-
-					try{
-						that.mousedown(e);
-					}catch(e){
-
-					}
-				});
-
-				this.obj.addEventListener("mouseup",function(e){
-					if(that.buttonOff){
-						that.obj.src	= onien.asset[that.buttonOff].src;
-					}
-
-					try{
-						that.mouseup(e);
-					}catch(e){
-
-					}
-				});
-
-				this.obj.addEventListener("mouseleave",function(e){
-					if(that.buttonOff){
-						that.obj.src	= onien.asset[that.buttonOff].src;
-					}
-
-					try{
-						that.mouseleave(e);
-					}catch(e){
-
-					}
-				});
-
-				this.obj.addEventListener("mousemove",function(e){
-					try{
-						that.mousemove(e);
-					}catch(e){
-
-					}
-				});
-			}else{
-				//スマホ用
-				this.obj.addEventListener("touchstart",function(e){
-					e.preventDefault();
-
-					if(that.buttonOn){
-						that.obj.src	= onien.asset[that.buttonOn].src;
-					}
-
-
-					try{
-						that.mousedown(e);
-					}catch(e){
-
-					}
-				});
-
-				this.obj.addEventListener("touchend",function(e){
-					e.preventDefault();
-
-					if(that.buttonOff){
-						that.obj.src	= onien.asset[that.buttonOff].src;
-					}
-
-					try{
-						that.mouseup(e);
-					}catch(e){
-
-					}
-				});
-
-				this.obj.addEventListener("touchcancel",function(e){
-					e.preventDefault();
-
-					if(that.buttonOff){
-						that.obj.src	= onien.asset[that.buttonOff].src;
-					}
-
-					try{
-						that.mouseleave(e);
-					}catch(e){
-
-					}
-				});
-
-				this.obj.addEventListener("touchmove",function(e){
-					e.preventDefault();
-
-					try{
-						that.mousemove(e);
-					}catch(e){
-
-					}
-				});
+		if(autoScale == true){
+			if(!document.getElementById("OnigiriEngineHtmlTagClassStyle")){
+				var styletag = document.createElement("style");
+				styletag.id = "OnigiriEngineHtmlTagClassStyle";
+				styletag.innerHTML = `.OnigiriEngineHtmlTagClass{transform: scale(var(--htmlTagScale));}`;
+				document.body.appendChild(styletag);
 			}
+			this.obj.classList.add("OnigiriEngineHtmlTagClass");
 		}
-		
-		
 	}
 	
 	//自分を追加
@@ -1641,9 +1533,6 @@ class OeHtmlTag{
 		if(this.h	== null){
 			this.h = this.obj.scrollHeight?this.obj.scrollHeight:100;
 		}
-		if(this.fontsize == null){
-			this.fontsize = this.obj.style.fontSize?this.obj.style.fontSize:20;
-		}
 		
 		var sW		= innerWidth;
 		var sH		= innerHeight;
@@ -1670,9 +1559,339 @@ class OeHtmlTag{
 			scale	= sW/cW;
 		}
 		
-		this.autoW	= scale * this.w;
-		this.autoH	= scale * this.h;
-		this.autoF	= scale * this.fontsize;
+		return scale;
+	}
+}
+
+//imgボタンhtmlタグクラス
+class OeImgButtonHtmlTag extends OeHtmlTag{
+	constructor(id,autoPosition,autoScale,buttonOn,buttonOff){
+		if(!document.getElementById(id)){
+			var tempimg = document.createElement("img");
+			tempimg.id = id;
+			if(buttonOff){
+				if(onien.asset[buttonOff]){
+					tempimg.src = onien.asset[buttonOff].src;
+				}else{
+					tempimg.src = buttonOff;
+				}
+				
+				tempimg.w = tempimg.src.width;
+				tempimg.h = tempimg.src.height;
+			}
+			document.body.appendChild(tempimg);
+		}
+		super(id,autoPosition,autoScale);
+		if(buttonOn && buttonOff){
+			var that = this;
+			that.buttonOn = buttonOn;
+			that.buttonOff = buttonOff;
+			if(onien.platform != "i" && onien.platform != "android"){
+				//PC用
+				this.obj.addEventListener("mousedown",function(e){
+					if(that.buttonOn){
+						if(onien.asset[that.buttonOn]){
+							that.obj.src	= onien.asset[that.buttonOn].src;
+						}else{
+							that.obj.src	= buttonOn
+						}
+					}
+
+					try{
+						if(that.mousedown){
+							that.mousedown(e);
+						}
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("mouseup",function(e){
+					if(that.buttonOff){
+						if(onien.asset[that.buttonOff]){
+							that.obj.src	= onien.asset[that.buttonOff].src;
+						}else{
+							that.obj.src	= buttonOff
+						}
+					}
+
+					try{
+						if(that.mouseup){
+							that.mouseup(e);
+						}
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("mouseleave",function(e){
+					if(that.buttonOff){
+						if(onien.asset[that.buttonOff]){
+							that.obj.src	= onien.asset[that.buttonOff].src;
+						}else{
+							that.obj.src	= buttonOff
+						}
+					}
+
+					try{
+						if(that.mouseleave){
+							that.mouseleave(e);
+						}
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("mousemove",function(e){
+					try{
+						if(that.mousemove){
+							that.mousemove(e);
+						}
+					}catch(e){
+
+					}
+				});
+			}else{
+				//スマホ用
+				this.obj.addEventListener("touchstart",function(e){
+					e.preventDefault();
+
+					if(that.buttonOn){
+						if(onien.asset[that.buttonOn]){
+							that.obj.src	= onien.asset[that.buttonOn].src;
+						}else{
+							that.obj.src	= buttonOn
+						}
+					}
+
+					try{
+						if(that.mousedown){
+							that.mousedown(e);
+						}
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("touchend",function(e){
+					e.preventDefault();
+
+					if(that.buttonOff){
+						if(onien.asset[that.buttonOff]){
+							that.obj.src	= onien.asset[that.buttonOff].src;
+						}else{
+							that.obj.src	= buttonOff
+						}
+					}
+
+					try{
+						if(that.mouseup){
+							that.mouseup(e);
+						}
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("touchcancel",function(e){
+					e.preventDefault();
+
+					if(that.buttonOff){
+						if(onien.asset[that.buttonOff]){
+							that.obj.src	= onien.asset[that.buttonOff].src;
+						}else{
+							that.obj.src	= buttonOff
+						}
+					}
+
+					try{
+						if(that.mouseleave){
+							that.mouseleave(e);
+						}
+					}catch(e){
+
+					}
+				});
+
+				this.obj.addEventListener("touchmove",function(e){
+					e.preventDefault();
+
+					try{
+						if(that.mousemove){
+							that.mousemove(e);
+						}
+					}catch(e){
+
+					}
+				});
+			}
+		}
+	}
+}
+
+//テキストボタンhtmlタグクラス
+class OeTextButtonHtmlTag extends OeHtmlTag{
+	constructor(id,autoPosition,autoScale,text,name){
+		var createnameless = false;
+		if(!document.getElementById(id)){
+			var tempbutton = document.createElement("div");
+			tempbutton.id = id;
+			tempbutton.className = name;
+			if(!name){
+				tempbutton.style.width = "150px";
+				tempbutton.style.height = "40px";
+				tempbutton.style.border = "solid 2px black";
+				tempbutton.style.borderRadius = "10px";
+				tempbutton.style.backgroundColor = "white";
+				tempbutton.style.fontSize = "26px";
+				tempbutton.style.textAlign = "center";
+				createnameless = true;
+			}
+			document.body.appendChild(tempbutton);
+		}else{
+			document.getElementById(id).classList.add(name);
+		}
+		super(id,autoPosition,autoScale);
+		this.obj.innerText = text;
+		var that	= this;
+
+		if(onien.platform != "i" && onien.platform != "android"){
+			//PC用
+			this.obj.addEventListener("mousedown",function(e){
+				if(createnameless){
+					that.obj.style.backgroundColor = "gray";
+				}
+
+				try{
+					if(that.mousedown){
+						that.mousedown(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("mouseup",function(e){
+				if(createnameless){
+					that.obj.style.backgroundColor = "white";
+				}
+
+				try{
+					if(that.mouseup){
+						that.mouseup(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("mouseleave",function(e){
+				if(createnameless){
+					that.obj.style.backgroundColor = "white";
+				}
+
+				try{
+					if(that.mouseleave){
+						that.mouseleave(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("mousemove",function(e){
+				try{
+					if(that.mousemove){
+						that.mousemove(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("click",function(e){
+				try{
+					if(that.click){
+						that.click(e);
+					}
+				}catch(e){
+
+				}
+			});
+		}else{
+			//スマホ用
+			this.obj.addEventListener("touchstart",function(e){
+				e.preventDefault();
+
+				if(createnameless){
+					that.obj.style.backgroundColor = "gray";
+				}
+
+				try{
+					if(that.mousedown){
+						that.mousedown(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("touchend",function(e){
+				e.preventDefault();
+
+				if(createnameless){
+					that.obj.style.backgroundColor = "white";
+				}
+
+				try{
+					if(that.mouseup){
+						that.mouseup(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("touchcancel",function(e){
+				e.preventDefault();
+
+				if(createnameless){
+					that.obj.style.backgroundColor = "white";
+				}
+
+				try{
+					if(that.mouseleave){
+						that.mouseleave(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("touchmove",function(e){
+				e.preventDefault();
+
+				try{
+					if(that.mousemove){
+						that.mousemove(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("click",function(e){
+				e.preventDefault();
+
+				try{
+					if(that.click){
+						that.click(e);
+					}
+				}catch(e){
+
+				}
+			});
+		}
 	}
 }
 

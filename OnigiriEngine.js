@@ -1192,7 +1192,7 @@ function OnigiriEngine(w,h){
 		
 		
 	};
-	
+
 	//★ぷりアニ機能追加
 	onien.priani			= {};
 	onien.priani.setting	= function(){
@@ -1893,6 +1893,252 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 			});
 		}
 	}
+}
+
+//メッセージHTMLタグクラス
+class OeMessageHtmlTag extends OeHtmlTag{
+	constructor(id,autoPosition,autoScale,layerName,name){
+		if(!document.getElementById(id)){
+			var tempmes = document.createElement("div");
+			tempmes.id = id;
+			tempmes.className = name;
+			if(!name){
+				tempmes.style.width = onien.w + "px";
+				tempmes.style.height = Math.floor(onien.h/3) + "px";
+				tempmes.style.borderRadius = "10px";
+				tempmes.style.backgroundColor = "#333333";
+				tempmes.style.fontSize = "26px";
+				tempmes.style.color = "white";
+				tempmes.style.textAlign = "left";
+				tempmes.style.padding = "10px";
+				tempmes.style.boxSizing = "border-box";
+			}
+			document.body.appendChild(tempmes);
+		}else{
+			document.getElementById(id).classList.add(name);
+		}
+		super(id,autoPosition,autoScale);
+		this.speed = 50;
+		this.timer = null;
+
+		var that = this;
+
+		if(layerName){
+			if(onien.layer[layerName]){
+				onien.layer[layerName].mouseup = function(){
+					that.mouseupDefault();
+				}
+			}
+		}
+
+		if(onien.platform != "i" && onien.platform != "android"){
+			//PC用
+			this.obj.addEventListener("mousedown",function(e){
+				try{
+					if(that.mousedown){
+						that.mousedown(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("mouseup",function(e){
+				that.mouseupDefault();
+
+				try{
+					if(that.mouseup){
+						that.mouseup(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("mouseleave",function(e){
+				try{
+					if(that.mouseleave){
+						that.mouseleave(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("mousemove",function(e){
+				try{
+					if(that.mousemove){
+						that.mousemove(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("click",function(e){
+				try{
+					if(that.click){
+						that.click(e);
+					}
+				}catch(e){
+
+				}
+			});
+		}else{
+			//スマホ用
+			this.obj.addEventListener("touchstart",function(e){
+				e.preventDefault();
+
+				try{
+					if(that.mousedown){
+						that.mousedown(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("touchend",function(e){
+				e.preventDefault();
+
+				that.mouseupDefault();
+
+				try{
+					if(that.mouseup){
+						that.mouseup(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("touchcancel",function(e){
+				e.preventDefault();
+
+				try{
+					if(that.mouseleave){
+						that.mouseleave(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("touchmove",function(e){
+				e.preventDefault();
+
+				try{
+					if(that.mousemove){
+						that.mousemove(e);
+					}
+				}catch(e){
+
+				}
+			});
+
+			this.obj.addEventListener("click",function(e){
+				e.preventDefault();
+
+				try{
+					if(that.click){
+						that.click(e);
+					}
+				}catch(e){
+
+				}
+			});
+		}
+	}
+
+	open(texts,mode){
+		this.texts = texts;
+		this.page = 0;
+		this.count = 0;
+		this.doing = true;
+		this.nextpage = false;
+		this.waitcount = 0;
+		this.mode = mode;
+
+		var that = this;
+		if(this.speed > 0){
+			this.timer = setInterval(function(){
+				//console.log("mes doing")
+				if(that.doing && !that.nextpage){
+					if(that.count >= that.texts[that.page].length){
+						that.doing = false;
+						that.nextpage = true;
+						if(!isNaN(that.mode)){
+							that.waitcount = Math.floor(that.mode);
+						}
+					}else{
+						that.obj.innerText += that.texts[that.page].charAt(that.count);
+					}
+					that.count++;
+				}else{
+					if(that.waitcount > 0){
+						that.waitcount--;
+						if(that.waitcount <= 0){
+							that.mouseupDefault();
+						}
+					}
+				}
+			},that.speed);
+		}else{
+			this.obj.innerText = this.texts[0];
+			this.nextpage = true;
+			if(!isNaN(this.mode)){
+				this.timer = setInterval(function(){
+					that.mouseupDefault();
+				},that.mode)
+			}
+		}
+		
+	}
+
+	mouseupDefault(){
+		if(!this.doing && this.nextpage){
+			this.doing = true;
+			this.nextpage = false;
+
+			this.page++;
+			this.count = 0;
+			if(this.page >= this.texts.length){
+				if(this.end){
+					this.end();
+				}
+				console.log("end");
+				clearInterval(this.timer);
+				this.timer = null;
+				if(this.mode != "select"){
+					this.visible = false;
+				}
+			}else{
+				if(this.pageChange){
+					this.pageChange();
+				}
+				this.obj.innerText = "";
+			}
+		}
+		if((this.speed <= 0) && this.nextpage){
+			this.page++;
+			if(this.page >= this.texts.length){
+				if(this.end){
+					this.end();
+				}
+				console.log("end");
+				this.nextpage = false;
+				if(this.mode != "select"){
+					this.visible = false;
+				}
+			}else{
+				if(this.pageChange){
+					this.pageChange();
+				}
+				this.obj.innerText = this.texts[this.page];
+			}
+		}
+	}
+	
 }
 
 //ぷりアニクラス

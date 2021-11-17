@@ -1472,7 +1472,7 @@ class OeHtmlTag{
 			if(!document.getElementById("OnigiriEngineHtmlTagClassStyle")){
 				var styletag = document.createElement("style");
 				styletag.id = "OnigiriEngineHtmlTagClassStyle";
-				styletag.innerHTML = `.OnigiriEngineHtmlTagClass{transform: scale(var(--htmlTagScale));}`;
+				styletag.innerHTML = `.OnigiriEngineHtmlTagClass{transform: scale(var(--htmlTagScale));} @keyframe waitMarkAnimation{0%{transform:scale(1,1)}50%{transform:scale(0.9,0.9)}100%{transform:scale(1,1)}}`;
 				document.body.appendChild(styletag);
 			}
 			this.obj.classList.add("OnigiriEngineHtmlTagClass");
@@ -1901,7 +1901,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		if(!document.getElementById(id)){
 			var tempmes = document.createElement("div");
 			tempmes.id = id;
-			tempmes.className = name;
 			if(!name){
 				tempmes.style.width = onien.w + "px";
 				tempmes.style.height = Math.floor(onien.h/3) + "px";
@@ -1912,14 +1911,40 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				tempmes.style.textAlign = "left";
 				tempmes.style.padding = "10px";
 				tempmes.style.boxSizing = "border-box";
+			}else{
+				tempmes.className = name;
 			}
 			document.body.appendChild(tempmes);
 		}else{
-			document.getElementById(id).classList.add(name);
+			if(name){
+				document.getElementById(id).classList.add(name);
+			}
 		}
 		super(id,autoPosition,autoScale);
+
 		this.speed = 50;
 		this.timer = null;
+
+		this.textSpace = document.createElement("div");
+		this.obj.appendChild(this.textSpace)
+
+		this.waitMarkColor = "yellow";
+		this.waitMarkSize = 20;
+		this.waitMarkShape = "●";
+		this.waitMarkPosition = "right";
+
+		var waitmark = document.createElement("div");
+		waitmark.innerHTML = this.waitMarkShape;
+		waitmark.style.width = (this.waitMarkSize + 4) + "px";
+		waitmark.style.height = (this.waitMarkSize + 4) + "px";
+		waitmark.style.fontSize = this.waitMarkSize + "px";
+		waitmark.style.color = this.waitMarkColor;
+		waitmark.style.position = "absolute";
+		waitmark.style.right = "10px";
+		waitmark.style.bottom = "10px";
+		waitmark.style.visibility = "hidden";
+		this.obj.appendChild(waitmark);
+		this.waitMark = waitmark;
 
 		var that = this;
 
@@ -2058,6 +2083,12 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		this.nextpage = false;
 		this.waitcount = 0;
 		this.mode = mode;
+		this.textSpace.innerHTML = "";
+
+		if(this.timer){
+			clearInterval(this.timer);
+			this.timer = null;
+		}
 
 		var that = this;
 		if(this.speed > 0){
@@ -2067,11 +2098,25 @@ class OeMessageHtmlTag extends OeHtmlTag{
 					if(that.count >= that.texts[that.page].length){
 						that.doing = false;
 						that.nextpage = true;
-						if(!isNaN(that.mode)){
-							that.waitcount = Math.floor(that.mode);
+						if((that.page >= (that.texts.length - 1)) && (that.mode == "select")){
+							console.log("end");
+							that.nextpage = false;
+							that.waitMark.style.visibility = "hidden";
+							clearInterval(that.timer);
+							that.timer = null;
+							if(that.end){
+								that.end();
+							}
+						}else{
+							if(!isNaN(that.mode)){
+								that.waitcount = Math.floor(that.mode);
+							}else{
+								that.waitMark.style.visibility = "visible";
+							}
 						}
 					}else{
-						that.obj.innerText += that.texts[that.page].charAt(that.count);
+						that.textSpace.innerText += that.texts[that.page].charAt(that.count);
+						that.waitMark.style.visibility = "hidden";
 					}
 					that.count++;
 				}else{
@@ -2084,12 +2129,27 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				}
 			},that.speed);
 		}else{
-			this.obj.innerText = this.texts[0];
-			this.nextpage = true;
+			this.textSpace.innerText = this.texts[0];
+			if((this.texts.length > 1) || (this.mode != "select")){
+				this.nextpage = true;
+			}
 			if(!isNaN(this.mode)){
+				if(this.timer){
+					clearInterval(this.timer);
+					this.time = null;
+				}
 				this.timer = setInterval(function(){
 					that.mouseupDefault();
 				},that.mode)
+			}else{
+				if((this.texts.length > 1) || (this.mode == "end")){
+					this.waitMark.style.visibility = "visible";
+				}else{
+					console.log("end");
+					if(this.end){
+						this.end();
+					}
+				}
 			}
 		}
 		
@@ -2103,42 +2163,62 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			this.page++;
 			this.count = 0;
 			if(this.page >= this.texts.length){
-				if(this.end){
-					this.end();
-				}
 				console.log("end");
+				this.waitMark.style.visibility = "hidden";
 				clearInterval(this.timer);
 				this.timer = null;
+
 				if(this.mode != "select"){
 					this.visible = false;
+					if(this.end){
+						this.end();
+					}
 				}
 			}else{
 				if(this.pageChange){
 					this.pageChange();
 				}
-				this.obj.innerText = "";
+				this.textSpace.innerText = "";
 			}
 		}
 		if((this.speed <= 0) && this.nextpage){
 			this.page++;
 			if(this.page >= this.texts.length){
-				if(this.end){
-					this.end();
-				}
 				console.log("end");
+				this.waitMark.style.visibility = "hidden";
 				this.nextpage = false;
+
 				if(this.mode != "select"){
 					this.visible = false;
+					if(this.end){
+						this.end();
+					}
 				}
 			}else{
-				if(this.pageChange){
-					this.pageChange();
+				if((this.page >= (this.texts.length - 1)) && (this.mode == "select")){
+					this.textSpace.innerText = this.texts[this.page];
+					console.log("end");
+					this.waitMark.style.visibility = "hidden";
+					this.nextpage = false;
+					if(this.pageChange){
+						this.pageChange();
+					}
+					if(this.end){
+						this.end();
+					}
+				}else{
+					if(this.pageChange){
+						this.pageChange();
+					}
+					this.textSpace.innerText = this.texts[this.page];
+					if(isNaN(this.mode)){
+						this.waitMark.style.visibility = "visible";
+					}
 				}
-				this.obj.innerText = this.texts[this.page];
+				
 			}
 		}
 	}
-	
 }
 
 //ぷりアニクラス

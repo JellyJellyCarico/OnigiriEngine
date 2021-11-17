@@ -846,6 +846,9 @@ function OnigiriEngine(w,h){
 									//オブジェクトがHTMLタグなら
 									if(img.type == "H"){
 										img.obj.style.visibility = "hidden";
+										if(img.waitMark){
+											img.waitMark.style.visibility = "hidden";
+										}
 									}
 								}
 							}
@@ -863,6 +866,9 @@ function OnigiriEngine(w,h){
 							var img		= onien.layer[i].content[j];
 							if(img.type == "H"){
 								img.obj.style.visibility	= "hidden";
+								if(img.waitMark){
+									img.waitMark.style.visibility = "hidden";
+								}
 							}
 						}
 					}
@@ -1486,6 +1492,7 @@ class OeHtmlTag{
 	
 	//自分を削除
 	del(){
+		document.body.removeChild(this.obj);
 		onien.delObj(this);
 	}
 	
@@ -1924,6 +1931,7 @@ class OeMessageHtmlTag extends OeHtmlTag{
 
 		this.speed = 50;
 		this.timer = null;
+		this.pushSpeedUp = true;
 
 		this.textSpace = document.createElement("div");
 		this.obj.appendChild(this.textSpace)
@@ -1959,6 +1967,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		if(onien.platform != "i" && onien.platform != "android"){
 			//PC用
 			this.obj.addEventListener("mousedown",function(e){
+				that.mousedownDefault();
+
 				try{
 					if(that.mousedown){
 						that.mousedown(e);
@@ -1981,6 +1991,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			});
 
 			this.obj.addEventListener("mouseleave",function(e){
+				that.mouseleaveDefault();
+
 				try{
 					if(that.mouseleave){
 						that.mouseleave(e);
@@ -2014,6 +2026,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			this.obj.addEventListener("touchstart",function(e){
 				e.preventDefault();
 
+				that.mousedownDefault();
+
 				try{
 					if(that.mousedown){
 						that.mousedown(e);
@@ -2039,6 +2053,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 
 			this.obj.addEventListener("touchcancel",function(e){
 				e.preventDefault();
+
+				that.mouseleaveDefault();
 
 				try{
 					if(that.mouseleave){
@@ -2084,6 +2100,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		this.waitcount = 0;
 		this.mode = mode;
 		this.textSpace.innerHTML = "";
+		this.frame = 0;
+		this.pushnow = false;
 
 		if(this.timer){
 			clearInterval(this.timer);
@@ -2093,41 +2111,49 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		var that = this;
 		if(this.speed > 0){
 			this.timer = setInterval(function(){
-				//console.log("mes doing")
-				if(that.doing && !that.nextpage){
-					if(that.count >= that.texts[that.page].length){
-						that.doing = false;
-						that.nextpage = true;
-						if((that.page >= (that.texts.length - 1)) && (that.mode == "select")){
-							console.log("end");
-							that.nextpage = false;
-							that.waitMark.style.visibility = "hidden";
-							clearInterval(that.timer);
-							that.timer = null;
-							if(that.end){
-								that.end();
-							}
-						}else{
-							if(!isNaN(that.mode)){
-								that.waitcount = Math.floor(that.mode);
+				if(that.visible){
+					that.frame++;
+					if((that.frame%3 == 0) || (that.pushnow)){
+						//console.log("mes doing")
+						if(that.doing && !that.nextpage){
+							if(that.count >= that.texts[that.page].length){
+								that.doing = false;
+								that.nextpage = true;
+								if((that.page >= (that.texts.length - 1)) && (that.mode == "select")){
+									console.log("end");
+									that.nextpage = false;
+									that.waitMark.style.visibility = "hidden";
+									clearInterval(that.timer);
+									that.timer = null;
+									if(that.end){
+										that.end();
+									}
+								}else{
+									if(!isNaN(that.mode)){
+										that.waitcount = Math.floor(that.mode);
+									}else{
+										that.waitMark.style.visibility = "visible";
+									}
+								}
 							}else{
-								that.waitMark.style.visibility = "visible";
+								that.textSpace.innerText += that.texts[that.page].charAt(that.count);
+								that.waitMark.style.visibility = "hidden";
+							}
+							that.count++;
+						}else{
+							if(that.waitcount > 0){
+								that.waitcount--;
+								if(that.waitcount <= 0){
+									that.mouseupDefault();
+								}
 							}
 						}
-					}else{
-						that.textSpace.innerText += that.texts[that.page].charAt(that.count);
-						that.waitMark.style.visibility = "hidden";
 					}
-					that.count++;
 				}else{
-					if(that.waitcount > 0){
-						that.waitcount--;
-						if(that.waitcount <= 0){
-							that.mouseupDefault();
-						}
-					}
+					that.waitMark.style.visibility = "hidden";
 				}
-			},that.speed);
+				
+			},Math.floor(that.speed/3));
 		}else{
 			this.textSpace.innerText = this.texts[0];
 			if((this.texts.length > 1) || (this.mode != "select")){
@@ -2156,31 +2182,36 @@ class OeMessageHtmlTag extends OeHtmlTag{
 	}
 
 	mouseupDefault(){
-		if(!this.doing && this.nextpage){
-			this.doing = true;
-			this.nextpage = false;
+		if(!this.pushnow){
+			if(!this.doing && this.nextpage){
+				this.doing = true;
+				this.nextpage = false;
 
-			this.page++;
-			this.count = 0;
-			if(this.page >= this.texts.length){
-				console.log("end");
-				this.waitMark.style.visibility = "hidden";
-				clearInterval(this.timer);
-				this.timer = null;
+				this.page++;
+				this.count = 0;
+				if(this.page >= this.texts.length){
+					console.log("end");
+					this.waitMark.style.visibility = "hidden";
+					clearInterval(this.timer);
+					this.timer = null;
 
-				if(this.mode != "select"){
-					this.visible = false;
-					if(this.end){
-						this.end();
+					if(this.mode != "select"){
+						this.visible = false;
+						if(this.end){
+							this.end();
+						}
 					}
+				}else{
+					if(this.pageChange){
+						this.pageChange();
+					}
+					this.textSpace.innerText = "";
 				}
-			}else{
-				if(this.pageChange){
-					this.pageChange();
-				}
-				this.textSpace.innerText = "";
 			}
+		}else{
+			this.pushnow = false;
 		}
+		
 		if((this.speed <= 0) && this.nextpage){
 			this.page++;
 			if(this.page >= this.texts.length){
@@ -2218,6 +2249,27 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				
 			}
 		}
+	}
+
+	mousedownDefault(){
+		if(this.pushSpeedUp && isNaN(this.mode)){
+			if(this.count < this.texts[this.page].length){
+				this.pushnow = true;
+			}
+		}
+	}
+
+	mouseleaveDefault(){
+		this.pushnow = false;
+	}
+
+	del(){
+		document.body.removeChild(this.obj);
+		if(this.timer){
+			clearInterval(this.timer);
+			this.timer = null;
+		}
+		onien.delObj(this);
 	}
 }
 

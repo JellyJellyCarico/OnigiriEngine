@@ -1961,6 +1961,9 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				onien.layer[layerName].mouseup = function(){
 					that.mouseupDefault();
 				}
+				onien.layer[layerName].mousedown = function(){
+					that.mousedownDefault();
+				}
 			}
 		}
 
@@ -1991,8 +1994,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			});
 
 			this.obj.addEventListener("mouseleave",function(e){
-				that.mouseleaveDefault();
-
 				try{
 					if(that.mouseleave){
 						that.mouseleave(e);
@@ -2054,8 +2055,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			this.obj.addEventListener("touchcancel",function(e){
 				e.preventDefault();
 
-				that.mouseleaveDefault();
-
 				try{
 					if(that.mouseleave){
 						that.mouseleave(e);
@@ -2102,6 +2101,9 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		this.textSpace.innerHTML = "";
 		this.frame = 0;
 		this.pushnow = false;
+		this.tag = {};
+		this.tagSpan = false;
+		this.tagRuby = [-1,"","",""];
 
 		if(this.timer){
 			clearInterval(this.timer);
@@ -2110,6 +2112,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 
 		var that = this;
 		if(this.speed > 0){
+			// １文字ずつ表示の場合
+			this.tagDetection(this.texts);
 			this.timer = setInterval(function(){
 				if(that.visible){
 					that.frame++;
@@ -2136,7 +2140,74 @@ class OeMessageHtmlTag extends OeHtmlTag{
 									}
 								}
 							}else{
-								that.textSpace.innerText += that.texts[that.page].charAt(that.count);
+								// 文字追加時
+								if(that.tag["p"+that.page]){
+									// ページ内にタグがある場合
+									if(that.tag["p"+that.page]["c"+that.count]){
+										// 挿入タグがある時
+										var nowtaglist = that.tag["p"+that.page]["c"+that.count];
+										var textplus = false;
+										for(var i=0; i<nowtaglist.length; i++){
+											if(nowtaglist[i][1] == "s"){
+												// <span>タグの場合
+												that.tagSpan = true;
+												that.textSpace.innerHTML += nowtaglist[i][0] + that.texts[that.page].charAt(that.count) + "</span>";
+												textplus = true;
+											}else if(nowtaglist[i][1] == "/s"){
+												// </span>タグの場合
+												that.tagSpan = false;
+												var end = that.textSpace.innerHTML.lastIndexOf("</span>");
+												that.textSpace.innerHTML = that.textSpace.innerHTML.slice(0,end) + "</span>";
+											}else if(nowtaglist[i][1] == "br"){
+												// <br>の場合
+												that.textSpace.innerHTML += "<br>";
+											}else if(nowtaglist[i][1].indexOf("ruby") != -1){
+												// <ruby>の場合
+												that.tagRuby[0] = that.textSpace.innerHTML.length;
+												that.tagRuby[1] = that.texts[that.page].charAt(that.count);
+												that.tagRuby[2] = nowtaglist[i][1].split("_")[1];
+												if(nowtaglist[i][1].split("_")[2]){
+													that.tagRuby[3] = nowtaglist[i][1].split("_")[2];
+												}
+												if(that.tagRuby[3]){
+													that.tagSpan = true;
+													that.textSpace.innerHTML += "<span class='"+that.tagRuby[3]+"'>" + that.texts[that.page].charAt(that.count) + "</span>";
+													textplus = true;
+												}
+											}else if(nowtaglist[i][1] == "/r"){
+												// </ruby>の場合
+												if(that.tagRuby[0]!=-1){
+													if(that.tagRuby[3]){
+														that.textSpace.innerHTML = that.textSpace.innerHTML.slice(0,that.tagRuby[0]) + "<span class='"+that.tagRuby[3]+"'><ruby><rb>" + that.tagRuby[1] + "</rb><rt>" + that.tagRuby[2] + "</rt></ruby></span>";
+														that.tagSpan = false;
+													}else{
+														that.textSpace.innerHTML = that.textSpace.innerHTML.slice(0,that.tagRuby[0]) + "<ruby><rb>" + that.tagRuby[1] + "</rb><rt>" + that.tagRuby[2] + "</rt></ruby>";
+													}
+												}
+												that.tagRuby = [-1,"","",""];
+											}
+										}
+										if(!textplus){
+											that.textSpace.innerHTML += that.texts[that.page].charAt(that.count);
+										}
+									}else{
+										// 挿入タグがない時
+										if(that.tagSpan){
+											var end = that.textSpace.innerHTML.lastIndexOf("</span>");
+											that.textSpace.innerHTML = that.textSpace.innerHTML.slice(0,end) + that.texts[that.page].charAt(that.count) + "</span>";
+										}else{
+											that.textSpace.innerHTML += that.texts[that.page].charAt(that.count);
+										}
+										if(that.tagRuby[0]){
+											that.tagRuby[1] += that.texts[that.page].charAt(that.count);
+										}
+
+									}
+								}else{
+									// ページ内にタグがない場合
+									that.textSpace.innerText += that.texts[that.page].charAt(that.count);
+								}
+								
 								that.waitMark.style.visibility = "hidden";
 							}
 							that.count++;
@@ -2155,7 +2226,14 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				
 			},Math.floor(that.speed/3));
 		}else{
-			this.textSpace.innerText = this.texts[0];
+			// 瞬間表示の場合
+			this.tagSetting();
+			if(this.texts[0].indexOf("<") != -1){
+				this.textSpace.innerHTML = this.texts[0];
+			}else{
+				this.textSpace.innerText = this.texts[0];
+			}
+			
 			if((this.texts.length > 1) || (this.mode != "select")){
 				this.nextpage = true;
 			}
@@ -2205,7 +2283,9 @@ class OeMessageHtmlTag extends OeHtmlTag{
 					if(this.pageChange){
 						this.pageChange();
 					}
-					this.textSpace.innerText = "";
+					this.tagSpan = false;
+					this.tagRuby = [-1,"","",""];
+					this.textSpace.innerHTML = "";
 				}
 			}
 		}else{
@@ -2227,7 +2307,11 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				}
 			}else{
 				if((this.page >= (this.texts.length - 1)) && (this.mode == "select")){
-					this.textSpace.innerText = this.texts[this.page];
+					if(this.texts[this.page].indexOf("<") != -1){
+						this.textSpace.innerHTML = this.texts[this.page];
+					}else{
+						this.textSpace.innerText = this.texts[this.page];
+					}
 					console.log("end");
 					this.waitMark.style.visibility = "hidden";
 					this.nextpage = false;
@@ -2241,7 +2325,11 @@ class OeMessageHtmlTag extends OeHtmlTag{
 					if(this.pageChange){
 						this.pageChange();
 					}
-					this.textSpace.innerText = this.texts[this.page];
+					if(this.texts[this.page].indexOf("<") != -1){
+						this.textSpace.innerHTML = this.texts[this.page];
+					}else{
+						this.textSpace.innerText = this.texts[this.page];
+					}
 					if(isNaN(this.mode)){
 						this.waitMark.style.visibility = "visible";
 					}
@@ -2259,10 +2347,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		}
 	}
 
-	mouseleaveDefault(){
-		this.pushnow = false;
-	}
-
 	del(){
 		document.body.removeChild(this.obj);
 		if(this.timer){
@@ -2270,6 +2354,174 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			this.timer = null;
 		}
 		onien.delObj(this);
+	}
+
+	tagDetection(texts){
+		for(var i=0; i<texts.length; i++){
+			var count = 0;
+			while((texts[i].indexOf("<") != -1) && (texts[i].indexOf(">") != -1) && count<100){
+				var start = texts[i].indexOf("<");
+				var end = texts[i].indexOf(">");
+				var tag = texts[i].slice(start,end+1);
+				var canset = false;
+				var content = "";
+				if(tag == "<br>"){
+					canset = true;
+					content = "br";
+				}
+				if(tag == "</span>"){
+					canset = true;
+					content = "/s";
+				}
+				if(tag == "</ruby>"){
+					canset = true;
+					content = "/r";
+				}
+				var regexp1 = new RegExp(/^<span\ class=\'[A-Za-z1-9_-]+\'>$/);
+				var regexp2 = new RegExp(/^<span\ class=\"[A-Za-z1-9_-]+\">$/);
+				if(regexp1.test(tag)){
+					canset = true;
+					content = "s";
+				} 
+				if(regexp2.test(tag)){
+					canset = true;
+					content = "s";
+				}
+				var regexp3 = new RegExp(/^<ruby\ rb=\'[^<]+\'>$/);
+				var regexp4 = new RegExp(/^<ruby\ rb=\"[^<]+\">$/);
+				var rb = "";
+				if(regexp3.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\'/,"");
+					rb = rb.replace(/\'>$/,"");
+					content = "ruby_" + rb;
+				} 
+				if(regexp4.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\"/,"");
+					rb = rb.replace(/\">$/,"");
+					content = "ruby_" + rb;
+				}
+				var regexp5 = new RegExp(/^<ruby\ rb=\'[^<]+\' class=\'[A-Za-z1-9_-]+\'>$/);
+				var regexp6 = new RegExp(/^<ruby\ rb=\"[^<]+\" class=\"[A-Za-z1-9_-]+\">$/);
+				var rb = "";
+				if(regexp5.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\'/,"");
+					rb = rb.replace(/\' class=\'/,"_");
+					rb = rb.replace(/\'>/,"");
+					content = "ruby_" + rb;
+				} 
+				if(regexp6.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\"/,"");
+					rb = rb.replace(/\" class=\"/,"_");
+					rb = rb.replace(/\">/,"");
+					content = "ruby_" + rb;
+				}
+				if(canset){
+					if(this.tag["p"+i]){
+						if(this.tag["p"+i]["c"+start]){
+							this.tag["p"+i]["c"+start].push([tag,content]);
+						}else{
+							this.tag["p"+i]["c"+start] = [[tag,content]];
+						}
+					}else{
+						this.tag["p"+i] = {};
+						this.tag["p"+i]["c"+start] = [[tag,content]];
+					}
+				}
+				
+				texts[i] = texts[i].replace(tag,"");
+				count++;
+			}
+		}
+	}
+
+	tagSetting(){
+		for(var i=0; i<this.texts.length; i++){
+			var count = 0;
+			var text = this.texts[i];
+			var ngtag = [];
+			var rblist = [];
+			while((text.indexOf("<") != -1) && (text.indexOf(">") != -1) && count<100){
+				var start = text.indexOf("<");
+				var end = text.indexOf(">");
+				var tag = text.slice(start,end+1);
+
+				var canset = false;
+				if((tag == "<br>") || (tag == "</span>") || (tag == "</ruby>")) canset = true;
+
+				var regexp1 = new RegExp(/^<span\ class=\'[A-Za-z1-9_-]+\'>$/);
+				var regexp2 = new RegExp(/^<span\ class=\"[A-Za-z1-9_-]+\">$/);
+				if(regexp1.test(tag)) canset = true;
+				if(regexp2.test(tag)) canset = true;
+
+				var content = ["","",""];
+
+				var regexp3 = new RegExp(/^<ruby\ rb=\'[^<]+\'>$/);
+				var regexp4 = new RegExp(/^<ruby\ rb=\"[^<]+\">$/);
+				if(regexp3.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\'/,"");
+					rb = rb.replace(/\'>$/,"");
+					content = [tag,rb,""];
+				} 
+				if(regexp4.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\"/,"");
+					rb = rb.replace(/\">$/,"");
+					content = [tag,rb,""];
+				}
+
+				var regexp5 = new RegExp(/^<ruby\ rb=\'[^<]+\' class=\'[A-Za-z1-9_-]+\'>$/);
+				var regexp6 = new RegExp(/^<ruby\ rb=\"[^<]+\" class=\"[A-Za-z1-9_-]+\">$/);
+				var rb = "";
+				if(regexp5.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\'/,"");
+					rb = rb.replace(/\' class=\'/,"_");
+					rb = rb.replace(/\'>/,"");
+					content = [tag,rb.split("_")[0],rb.split("_")[1]];
+				} 
+				if(regexp6.test(tag)){
+					canset = true;
+					var rb = tag.replace(/^<ruby\ rb=\"/,"");
+					rb = rb.replace(/\" class=\"/,"_");
+					rb = rb.replace(/\">/,"");
+					content = [tag,rb.split("_")[0],rb.split("_")[1]];
+				}
+				if(!canset){
+					ngtag.push(tag);
+				}
+				if(content[0] != ""){
+					rblist.push(content);
+				}
+
+				text = text.replace(tag,"");
+				count++;
+			}
+			for(var l=0; l<ngtag.length; l++){
+				this.texts[i] = this.texts[i].replace(ngtag[l],"");
+			}
+			while(this.texts[i].indexOf("</ruby>") != -1){
+				this.texts[i] = this.texts[i].replace("</ruby>","@@@");
+			}
+			for(var k=0; k<rblist.length; k++){
+				var text = this.texts[i]
+				if(rblist[k][2] != ""){
+					var alt = "</rb><rt>"+rblist[k][1]+"</rt></ruby></span>";
+					text = text.replace(rblist[k][0],"<span class='"+rblist[k][2]+"'><ruby><rb>");
+					text = text.replace("@@@",alt);
+				}else{
+					var alt = "</rb><rt>"+rblist[k][1]+"</rt></ruby>";
+					text = text.replace(rblist[k][0],"<ruby><rb>");
+					text = text.replace("@@@",alt);
+				}
+				this.texts[i] = text;
+				
+			}
+		}
 	}
 }
 

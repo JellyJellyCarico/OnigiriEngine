@@ -1478,7 +1478,7 @@ class OeHtmlTag{
 			if(!document.getElementById("OnigiriEngineHtmlTagClassStyle")){
 				var styletag = document.createElement("style");
 				styletag.id = "OnigiriEngineHtmlTagClassStyle";
-				styletag.innerHTML = `.OnigiriEngineHtmlTagClass{transform: scale(var(--htmlTagScale));} @keyframe waitMarkAnimation{0%{transform:scale(1,1)}50%{transform:scale(0.9,0.9)}100%{transform:scale(1,1)}}`;
+				styletag.innerHTML = `.OnigiriEngineHtmlTagClass{transform: scale(var(--htmlTagScale));} @keyframes MessageWaitAnimation{0% {transform:scale(1.0,1.0)} 50% {transform:scale(0.9,0.9)} 100% {transform:scale(1.0,1.0)}}`;
 				document.body.appendChild(styletag);
 			}
 			this.obj.classList.add("OnigiriEngineHtmlTagClass");
@@ -1936,10 +1936,13 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		this.textSpace = document.createElement("div");
 		this.obj.appendChild(this.textSpace)
 
-		this.waitMarkColor = "yellow";
+		this.waitMarkColor = "white";
 		this.waitMarkSize = 20;
 		this.waitMarkShape = "●";
 		this.waitMarkPosition = "right";
+		this.waitMarkAnimation = "MessageWaitAnimation";
+		this.waitMarkAnimationSpeed = 500;
+		this.waitMarkImg = null;
 
 		var waitmark = document.createElement("div");
 		waitmark.innerHTML = this.waitMarkShape;
@@ -1951,6 +1954,11 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		waitmark.style.right = "10px";
 		waitmark.style.bottom = "10px";
 		waitmark.style.visibility = "hidden";
+		waitmark.style.animationName = this.waitMarkAnimation;
+		waitmark.style.animationDuration = this.waitMarkAnimationSpeed + "ms";
+		waitmark.style.animationPlayState = "running";
+		waitmark.style.animationIterationCount = "infinite";
+
 		this.obj.appendChild(waitmark);
 		this.waitMark = waitmark;
 
@@ -2521,6 +2529,39 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				this.texts[i] = text;
 				
 			}
+		}
+	}
+
+	waitMarkSetting(){
+		if(this.waitMarkImg != null){
+			this.waitMark.innerHTML = `<img src="${this.waitMarkImg}">`;
+		}else{
+			this.waitMark.innerHTML = this.waitMarkShape;
+		}
+
+		this.waitMark.style.width = (this.waitMarkSize + 4) + "px";
+		this.waitMark.style.height = (this.waitMarkSize + 4) + "px";
+		this.waitMark.style.fontSize = this.waitMarkSize + "px";
+
+		this.waitMark.style.color = this.waitMarkColor;
+
+		this.waitMark.style.position = "absolute";
+
+		if(this.waitMarkPosition == "right"){
+			this.waitMark.style.right = "10px";
+		}else{
+			this.waitMark.style.right = Math.floor(this.w/2) + "px";
+		}
+
+		this.waitMark.style.bottom = "10px";
+
+		this.waitMark.style.animationName = this.waitMarkAnimation;
+		this.waitMark.style.animationDuration = this.waitMarkAnimationSpeed + "ms";
+		this.waitMark.style.animationIterationCount = "infinite";
+		if(this.waitMarkAnimation == "none"){
+			this.waitMark.style.animationPlayState = "paused";
+		}else{
+			this.waitMark.style.animationPlayState = "running";
 		}
 	}
 }

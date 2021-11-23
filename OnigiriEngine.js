@@ -182,6 +182,9 @@ function OnigiriEngine(w,h){
 	
 	//★スプライトなどを追加する関数
 	onien.addObj	= function(ele,layerName){
+		if(typeof(layerName) == "object"){
+			layerName = layerName.name;
+		}
 		ele.layer	= layerName;
 		if(onien.layer[layerName].maplayer){
 			if(ele.type == "S"){

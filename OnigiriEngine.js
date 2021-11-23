@@ -609,6 +609,9 @@ function OnigiriEngine(w,h){
 							
 						}else{
 						//　通常レイヤーの場合
+							if(onien.layer[i].sortType == "ybig"){
+								onien.layer[i].sortStart();
+							}
 							for(var j in onien.layer[i].sortList){
 								//sortListの並び順で描画する
 								var thisid	= onien.layer[i].sortList[j].id;

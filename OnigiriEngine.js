@@ -212,7 +212,7 @@ function OnigiriEngine(w,h){
 			var layerName	= ele.layer;
 			for(var i in onien.layer[layerName].sortList){
 				if(onien.layer[layerName].sortList[i].id == ele.id){
-					delete onien.layer[layerName].sortList[i];
+					onien.layer[layerName].sortList.splice(i,1);
 				}
 			}
 			delete onien.layer[layerName].content[ele.id];

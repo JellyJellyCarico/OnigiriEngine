@@ -188,9 +188,15 @@ function OnigiriEngine(w,h){
 		ele.layer	= layerName;
 		if(onien.layer[layerName].maplayer){
 			if(ele.type == "S"){
-				ele.id		= Math.floor(ele.x/onien.layer[layerName].cw) + "x" + Math.floor(ele.y/onien.layer[layerName].ch);
-				if(onien.layer[layerName].content[ele.id]) console.log(layerName+"にてオブジェクトを上書き追加")
-				onien.layer[layerName].content[ele.id]	= ele;
+				if(ele.id){
+					onien.layer[layerName].content[ele.id]	= ele;
+					onien.layer[layerName].sortList.push({"id":ele.id,"y":ele.y});
+				}else{
+					ele.id		= Math.floor(ele.x/onien.layer[layerName].cw) + "x" + Math.floor(ele.y/onien.layer[layerName].ch);
+					if(onien.layer[layerName].content[ele.id]) console.log(layerName+"にてオブジェクトを上書き追加")
+					onien.layer[layerName].content[ele.id]	= ele;
+				}
+				
 			}else{
 				console.log("オブジェクト追加失敗。マップレイヤーに追加できないオブジェクトでした。")
 			}
@@ -555,8 +561,11 @@ function OnigiriEngine(w,h){
 							var ly = Math.floor(lyy/ch) - 1; //表示領域の左上のチップy座標
 							var wcX = Math.floor(onien.w/cw) + 2;	// 画面に表示する横チップ数
 							var wcY = Math.floor(onien.h/ch) + 2;	// 画面に表示する縦チップ数
-							for(var xx=0; xx<wcX; xx++){
-								for(var yy=0; yy<wcY; yy++){
+							if(onien.layer[i].sortList.length > 0){
+								onien.layer[i].sortStart();
+							}
+							for(var yy=0; yy<wcY; yy++){
+								for(var xx=0; xx<wcX; xx++){
 									if(onien.layer[i].content[(lx + xx)+"x"+(ly + yy)]){
 										var img = onien.layer[i].content[(lx + xx)+"x"+(ly + yy)];
 										if(img.visible==true){
@@ -602,6 +611,56 @@ function OnigiriEngine(w,h){
 												
 											}
 										}
+
+									}
+									if(onien.layer[i].sortList2[(lx + xx)+"x"+(ly + yy)]){
+										for(var o=0; o<onien.layer[i].sortList2[(lx + xx)+"x"+(ly + yy)].length; o++){
+											var img = onien.layer[i].content[onien.layer[i].sortList2[(lx + xx)+"x"+(ly + yy)][o]];
+											if(img.visible==true){
+												if(typeof(img.src) != "object"){
+													img.src = onien.asset[img.src];
+												}
+												var dx = img.x + onien.layer[i].x;
+												var dy = img.y + onien.layer[i].y;
+												var countX = Math.floor(img.src.width/img.w);
+												var cx = img.coma%countX * img.w;
+												var cy = Math.floor(img.coma/countX) * img.h;
+
+												onien.ctx.save();
+												
+												if(img.scaleX!=null || img.scaleY!=null || img.rotate!=null || img.scale!=1){
+													onien.ctx.translate(dx+(img.w/2),dy+(img.h/2));
+													if(img.scaleX!=null && img.scaleY!=null){
+														onien.ctx.scale(img.scaleX,img.scaleY);
+													}else{
+														onien.ctx.scale(img.scale,img.scale);
+													}
+													if(img.rotate!=null){
+														onien.ctx.rotate(img.rotate*(Math.PI/180));
+													}
+													onien.ctx.translate(-(dx+(img.w/2)),-(dy+(img.h/2)));
+												}
+
+												if(img.composite){
+													onien.ctx.globalCompositeOperation = img.composite;
+												}
+
+												onien.ctx.globalAlpha	= img.opacity;
+
+												onien.ctx.drawImage(img.src,cx,cy,img.w,img.h,dx,dy,img.w,img.h);
+												onien.ctx.restore();
+
+												//オブジェクトのenterframe処理
+												try{
+													if(img.enterframe){
+														img.enterframe();
+													}
+												}catch(e){
+													
+												}
+											}
+										}
+										
 
 									}
 								}
@@ -1000,24 +1059,29 @@ function OnigiriEngine(w,h){
 						for(var yy=0; yy<wcY; yy++){
 							if(onien.layer[i].content[(lx + xx)+"x"+(ly + yy)]){
 								eventSort.push((lx + xx)+"x"+(ly + yy));
+								
+							}
+							if(onien.layer[i].sortList2[(lx + xx)+"x"+(ly + yy)]){
+								for(var o in onien.layer[i].sortList2[(lx + xx)+"x"+(ly + yy)]){
+									eventSort.push(onien.layer[i].sortList2[(lx + xx)+"x"+(ly + yy)][o]);
+								}
 							}
 						}
 					}
-
 				}else{
 					//イベントの並び順の逆の順でソートして処理していく
 					for(var k in onien.layer[i].sortList){
 						eventSort.push(onien.layer[i].sortList[k].id);
 					}
-					eventSort = eventSort.reverse();
 				}
+				eventSort = eventSort.reverse();
 				
 				//各オブジェクトの処理
 				for(var j in eventSort){
 					var thisid	= eventSort[j];
 					var obj	= onien.layer[i].content[thisid];
 					//イベントをつける場合は発火確認
-					if(obj.nonEvent == false){
+					if(obj && obj.nonEvent == false){
 						//スプライト・ぷりアニの場合
 						if(obj.type != "X" && obj.type != "H" && obj.visible == true){
 							var objX	= obj.x + onien.layer[obj.layer].x;
@@ -1373,7 +1437,24 @@ class OeMapLayer extends OeLayer{
 		this.cw = cw?cw:80;
 		this.ch = ch?ch:80;
 		this.maplayer = true;
+		this.sortType = "ybig";
+		this.sortList2 = {};
 	}
+
+	sortStart(){
+		this.sortList2 = {};
+		for(var i in this.sortList){
+			this.sortList[i].y	= this.content[this.sortList[i].id].y;
+			var ele = this.content[this.sortList[i].id];
+			var key = Math.floor(ele.x/this.cw) + "x" + Math.floor(ele.y/this.ch);
+			if(this.sortList2[key]){
+				this.sortList2[key].push(ele.id);
+			}else{
+				this.sortList2[key] = [ele.id];
+			}
+		}
+	}
+
 }
 
 //htmlタグクラス

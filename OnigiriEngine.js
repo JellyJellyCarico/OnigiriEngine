@@ -363,9 +363,10 @@ function OnigiriEngine(w,h){
 				onien.mobimg.style.width	= "100%";
 				onien.mobimg.style.height	= "100%";
 				onien.mobimg.style.zIndex	= 0;
-				onien.canvas.style.zIndex	= 1;
 				document.body.appendChild(onien.mobimg);
 			}
+
+			onien.canvas.style.zIndex	= 1;
 			
 			//キャンバスサイズを自動調整する関数を作る
 			onien.setScreen	= function(){
@@ -1467,6 +1468,7 @@ class OeHtmlTag{
 			this.obj.id		= id;
 			document.body.appendChild(this.obj);
 		}
+		this.obj.style.zIndex = 2;
 		this.id			= id;
 		this.visible	= true;
 		this.type		= "H";

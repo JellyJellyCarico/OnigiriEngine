@@ -1869,7 +1869,7 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			var tempmes = document.createElement("div");
 			tempmes.id = id;
 			if(!name){
-				tempmes.style.width = onien.w + "px";
+				tempmes.style.width = "100%";
 				tempmes.style.height = Math.floor(onien.h/3) + "px";
 				tempmes.style.borderRadius = "10px";
 				tempmes.style.backgroundColor = "#333333";

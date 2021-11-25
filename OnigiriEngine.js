@@ -1745,11 +1745,9 @@ class OeImgButtonHtmlTag extends OeHtmlTag{
 //テキストボタンhtmlタグクラス
 class OeTextButtonHtmlTag extends OeHtmlTag{
 	constructor(id,autoPosition,autoScale,text,name){
-		var createnameless = false;
 		if(!document.getElementById(id)){
 			var tempbutton = document.createElement("div");
 			tempbutton.id = id;
-			tempbutton.className = name;
 			if(!name){
 				tempbutton.style.width = "150px";
 				tempbutton.style.height = "40px";
@@ -1758,7 +1756,8 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 				tempbutton.style.backgroundColor = "white";
 				tempbutton.style.fontSize = "26px";
 				tempbutton.style.textAlign = "center";
-				createnameless = true;
+			}else{
+				tempbutton.className = name;
 			}
 			document.body.appendChild(tempbutton);
 		}else{
@@ -1766,16 +1765,11 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 		}
 		super(id,autoPosition,autoScale);
 		this.obj.innerText = text;
-		this.obj.style.zIndex = 3;
 		var that	= this;
 
 		if(onien.platform != "i" && onien.platform != "android"){
 			//PC用
 			this.obj.addEventListener("mousedown",function(e){
-				if(createnameless){
-					that.obj.style.backgroundColor = "gray";
-				}
-
 				try{
 					if(that.mousedown){
 						that.mousedown(e);
@@ -1786,10 +1780,6 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 			});
 
 			this.obj.addEventListener("mouseup",function(e){
-				if(createnameless){
-					that.obj.style.backgroundColor = "white";
-				}
-
 				try{
 					if(that.mouseup){
 						that.mouseup(e);
@@ -1800,10 +1790,6 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 			});
 
 			this.obj.addEventListener("mouseleave",function(e){
-				if(createnameless){
-					that.obj.style.backgroundColor = "white";
-				}
-
 				try{
 					if(that.mouseleave){
 						that.mouseleave(e);
@@ -1822,24 +1808,10 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 
 				}
 			});
-
-			this.obj.addEventListener("click",function(e){
-				try{
-					if(that.click){
-						that.click(e);
-					}
-				}catch(e){
-
-				}
-			});
 		}else{
 			//スマホ用
 			this.obj.addEventListener("touchstart",function(e){
 				e.preventDefault();
-
-				if(createnameless){
-					that.obj.style.backgroundColor = "gray";
-				}
 
 				try{
 					if(that.mousedown){
@@ -1853,10 +1825,6 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 			this.obj.addEventListener("touchend",function(e){
 				e.preventDefault();
 
-				if(createnameless){
-					that.obj.style.backgroundColor = "white";
-				}
-
 				try{
 					if(that.mouseup){
 						that.mouseup(e);
@@ -1868,10 +1836,6 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 
 			this.obj.addEventListener("touchcancel",function(e){
 				e.preventDefault();
-
-				if(createnameless){
-					that.obj.style.backgroundColor = "white";
-				}
 
 				try{
 					if(that.mouseleave){
@@ -1894,17 +1858,6 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 				}
 			});
 
-			this.obj.addEventListener("click",function(e){
-				e.preventDefault();
-
-				try{
-					if(that.click){
-						that.click(e);
-					}
-				}catch(e){
-
-				}
-			});
 		}
 	}
 }
@@ -1935,8 +1888,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			}
 		}
 		super(id,autoPosition,autoScale);
-
-		this.obj.style.zIndex = 3;
 
 		this.speed = 50;
 		this.timer = null;
@@ -2244,6 +2195,7 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			},Math.floor(that.speed/3));
 		}else{
 			// 瞬間表示の場合
+			this.androidTime = 0;
 			this.tagSetting();
 			if(this.texts[0].indexOf("<") != -1){
 				this.textSpace.innerHTML = this.texts[0];
@@ -2310,6 +2262,12 @@ class OeMessageHtmlTag extends OeHtmlTag{
 		}
 		
 		if((this.speed <= 0) && this.nextpage){
+			if(onien.platform == "i" || onien.platform == "android"){
+				if(this.androidTime==0){
+					this.androidTime++;
+					return;
+				}
+			}
 			this.page++;
 			if(this.page >= this.texts.length){
 				console.log("end");

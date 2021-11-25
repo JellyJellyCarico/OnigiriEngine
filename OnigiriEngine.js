@@ -1766,6 +1766,7 @@ class OeTextButtonHtmlTag extends OeHtmlTag{
 		}
 		super(id,autoPosition,autoScale);
 		this.obj.innerText = text;
+		this.obj.style.zIndex = 3;
 		var that	= this;
 
 		if(onien.platform != "i" && onien.platform != "android"){
@@ -1934,6 +1935,8 @@ class OeMessageHtmlTag extends OeHtmlTag{
 			}
 		}
 		super(id,autoPosition,autoScale);
+
+		this.obj.style.zIndex = 3;
 
 		this.speed = 50;
 		this.timer = null;

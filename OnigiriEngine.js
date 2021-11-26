@@ -832,6 +832,41 @@ function OnigiriEngine(w,h){
 										if(img.waitMark){
 											img.waitMark.style.visibility = "hidden";
 										}
+
+										if(img.x != null || img.y != null){
+											img.obj.style.position = "absolute";
+										}
+										if(img.x != null){
+											if(img.autoPosition == true){
+												img.positionSet();
+												img.obj.style.left		= img.autoX+"px";
+											}else{
+												img.obj.style.left		= img.x+"px";
+											}
+										}
+										if(img.y != null){
+											if(img.autoPosition == true){
+												img.positionSet();
+												img.obj.style.top		= img.autoY+"px";
+											}else{
+												img.obj.style.top		= img.y+"px";
+											}
+										}
+										if(img.w != null){
+											img.obj.style.width		= img.w+"px";
+										}
+										if(img.h != null){
+											img.obj.style.height	= img.h+"px";
+										}
+										if(img.autoScale){
+											var scale = img.scaleSet()
+											img.obj.style.setProperty("--htmlTagScale",scale);
+											if(img.autoPosition == true){
+												img.obj.style.left = Math.floor((scale*img.w - img.w)/2) + img.autoX + "px";
+												img.obj.style.top = Math.floor((scale*img.h - img.h)/2) + img.autoY + "px";
+											}
+										}
+										
 									}
 								}
 							}
@@ -1980,16 +2015,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 
 				}
 			});
-
-			this.obj.addEventListener("click",function(e){
-				try{
-					if(that.click){
-						that.click(e);
-					}
-				}catch(e){
-
-				}
-			});
 		}else{
 			//スマホ用
 			this.obj.addEventListener("touchstart",function(e){
@@ -2038,18 +2063,6 @@ class OeMessageHtmlTag extends OeHtmlTag{
 				try{
 					if(that.mousemove){
 						that.mousemove(e);
-					}
-				}catch(e){
-
-				}
-			});
-
-			this.obj.addEventListener("click",function(e){
-				e.preventDefault();
-
-				try{
-					if(that.click){
-						that.click(e);
 					}
 				}catch(e){
 

@@ -132,6 +132,9 @@ window.onload	= function(){
 							}
 							
 						}
+						if(this.x > 770 || this.x < -70 || this.y > 770 || this.y < -70){
+							this.del();
+						}
 					}
 					// 敵のショットをレイヤーに追加する
 					enemyshot.add("layer1");

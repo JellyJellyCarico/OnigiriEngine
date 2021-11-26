@@ -80,14 +80,11 @@ window.onload	= function(){
 		select2.add("uilayer");
 		
 		//--- ★メッセージの設置
-		var mes			= new OeMessage(100,500,500,150,"white","▼","big");
-		mes.opacity		= 0.9;
-		mes.paddingLeft	= 20;
-		mes.paddingTop	= 20;
-		mes.waitX		= 470;
-		mes.waitY		= 120;
-		mes.waitSpeed	= 2;
-		mes.firstColor	= "pink";
+		var mes			= new OeMessageHtmlTag("mesHtml",true,true,"meslayer");
+		mes.x = 100;
+		mes.y = 500;
+		mes.w = 500;
+		mes.h = 150;
 		mes.add("meslayer");
 		
 		//--- ★イベントの設定
@@ -128,13 +125,13 @@ window.onload	= function(){
 				gamedata.count	= 1;	//とりあえず1にしておく
 				
 				// 表示するテキストを配列で設定
-				var text	= ["リッテ/ はじめまして！","リッテ/ メッセージクラスを使うと…","リッテ/ こんなかんじでノベルゲームっぽく/ 作ることもできます！"];
+				var text	= ["はじめまして！","メッセージクラスを使うと…","こんなかんじでノベルゲームっぽく<br>作ることもできます！"];
 				
 				// ページが変更した時のイベント設定
-				mes.pagechange	= function(page){
+				mes.pageChange	= function(){
 					// ページごとにキャラクターの動作を変更する
-					if(page == 1){chara.change("push");}
-					if(page == 2){chara.change("happy");}
+					if(this.page == 1){chara.change("push");}
+					if(this.page == 2){chara.change("happy");}
 				}
 				// 全ての文章の表示が終わった時のイベント設定
 				mes.end			= function(){
@@ -158,13 +155,13 @@ window.onload	= function(){
 				chara.change("push");
 				
 				// 表示するテキストを配列で設定
-				var text	= ["リッテ/ そうなんです！","リッテ/ でもログとかもないし、/ 結構使いにくい感じなので…","リッテ/ あんまりおすすめしません！"];
+				var text	= ["そうなんです！","でもログとかもないし、<br>結構使いにくい感じなので…","あんまりおすすめしません！"];
 				
 				// ページが変更した時のイベント設定
-				mes.pagechange	= function(page){
+				mes.pageChange	= function(page){
 					// ページごとにキャラクターの動作を変更する
-					if(page == 1){chara.change("talk");}
-					if(page == 2){chara.change("push");}
+					if(this.page == 1){chara.change("talk");}
+					if(this.page == 2){chara.change("push");}
 				}
 				// 全ての文章の表示が終わった時のイベント設定
 				mes.end			= function(){
@@ -188,13 +185,13 @@ window.onload	= function(){
 				chara.change("push");
 				
 				// 表示するテキストを配列で設定
-				var text	= ["リッテ/ 大当たりです！！","リッテ/ ログとかもないし、/ 結構使いにくい感じなので…","リッテ/ あんまりおすすめしません！"];
+				var text	= ["大当たりです！！","ログとかもないし、<br>結構使いにくい感じなので…","あんまりおすすめしません！"];
 				
 				// ページが変更した時のイベント設定
-				mes.pagechange	= function(page){
+				mes.pageChange	= function(page){
 					// ページごとにキャラクターの動作を変更する
-					if(page == 1){chara.change("talk");}
-					if(page == 2){chara.change("push");}
+					if(this.page == 1){chara.change("talk");}
+					if(this.page == 2){chara.change("push");}
 				}
 				// 全ての文章の表示が終わった時のイベント設定
 				mes.end			= function(){
@@ -235,11 +232,11 @@ window.onload	= function(){
 					chara.change("talk");
 					
 					// 表示するテキストを配列で設定
-					var text	= ["リッテ/ 夜になったので…","リッテ/ そろそろ帰りますね！","リッテ/ またお会いできる日を/ 楽しみにしてます！"];
+					var text	= ["夜になったので…","そろそろ帰りますね！","またお会いできる日を<br>楽しみにしてます！"];
 					
 					// ページが変更した時のイベント設定
-					mes.pagechange	= function(page){
-						if(page == 2){chara.change("happy");}
+					mes.pageChange	= function(page){
+						if(this.page == 2){chara.change("happy");}
 					}
 					// 全ての文章の表示が終わった時のイベント設定
 					mes.end			= function(){
@@ -248,6 +245,7 @@ window.onload	= function(){
 					}
 					
 					// メッセージレイヤに文章を表示する
+					mes.visible = true;
 					mes.open(text,"end");
 				}
 			}

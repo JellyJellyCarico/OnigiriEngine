@@ -13,7 +13,7 @@ window.onload	= function(){
 	onien.fps		= 30;
 	
 	//使う画像・音声ファイルを全てリストアップ
-	onien.assetList	= ["img/back.png","img/chip.png","se/good.mp3","se/good.ogg","se/bad.mp3","se/bad.ogg"];
+	onien.assetList	= ["img/chip.png","se/good.mp3","se/good.ogg","se/bad.mp3","se/bad.ogg"];
 	
 	//画像・音声ファイルの読み込みを開始する
 	onien.load();
@@ -33,7 +33,7 @@ window.onload	= function(){
 		
 		//--- ★レイヤーの設置
 		//--- 背景レイヤー を用意する
-		var baselayer	= new OeLayer("baselayer");
+		var baselayer	= new OeMapLayer("baselayer",0,0,1400,700,70,70);
 		baselayer.nonEvent	= true;
 		baselayer.addLayer();
 		
@@ -42,7 +42,7 @@ window.onload	= function(){
 		startlayer.addLayer();
 		
 		//--- キャラクター・アイテム等用のレイヤー を用意する
-		var layer1		= new OeLayer("layer1");
+		var layer1		= new OeMapLayer("layer1",0,0,700,700,70,70);
 		layer1.nonEvent	= true;
 		layer1.visible	= false;
 		layer1.addLayer();
@@ -54,23 +54,24 @@ window.onload	= function(){
 		
 		//--- ★画像の設置
 		//--- 背景画像 を用意する
-		//--------- 一時キャンバスに背景を描画していく
-		var tmp			= new OeTmpCanvas(1400,700);
-		//--------- 空を描画する
-		tmp.draw("img/back.png",0,0,700,700,0,0);
-		tmp.draw("img/back.png",0,0,700,700,700,0);
-		//--------- 地面を描画していく
-		for(var i=0; i<2; i++){
-			for(var j=0; j<20; j++){
-				tmp.draw("img/chip.png",140+i*70,70,70,70,j*70,560+i*70);
+		for(var x=0; x<20; x++){
+			for(var y=0; y<10; y++){
+				if(y==8){
+					var chip = new OeSprite("img/chip.png",x*70,y*70,70,70,6);
+					chip.add(baselayer);
+				}else if(y==9){
+					var chip = new OeSprite("img/chip.png",x*70,y*70,70,70,7);
+					chip.add(baselayer);
+				}else{
+					var chip = new OeSprite("img/chip.png",x*70,y*70,70,70,8);
+					chip.add(baselayer);
+				}
 			}
 		}
-		//--------- 背景画像をレイヤーに追加する
-		var baseimg		= new OeSprite(tmp.canvas,0,0,1400,700,0);
-		baseimg.add("baselayer");
 		
 		//--- プレイヤーキャラ を用意する
 		var player		= new OeSprite("img/chip.png",20,490,70,70,0);
+		player.id = "player";
 		player.col		= [33,55,16,51,9,41,19,21,33,13,45,21,54,35,53,50];
 		player.add("layer1");
 		
@@ -106,6 +107,7 @@ window.onload	= function(){
 						//ハート を作成して設置する
 						var y			= Math.floor(Math.random()*350)+70;
 						var item		= new OeSprite("img/chip.png",700,y,70,70,4);
+						item.id = "item" + onien.frame;
 						item.col		= [36,60,11,47,5,25,18,11,35,22,50,10,63,22,57,46];
 						
 						//ハート のイベントを設定する
@@ -133,6 +135,7 @@ window.onload	= function(){
 						//うんち を発生させる
 						var y			= Math.floor(Math.random()*350)+70;
 						var unun		= new OeSprite("img/chip.png",700,y,70,70,5);
+						unun.id = "unun" + onien.frame;
 						unun.col		= [32,62,15,60,6,47,16,37,14,29,28,22,31,15,41,8,42,22,52,32,49,39,58,51,48,63];
 						
 						//うんち のイベントを設定する
@@ -183,12 +186,12 @@ window.onload	= function(){
 		}
 		
 		//--- 背景画像 のイベントを設定する
-		baseimg.enterframe	= function(){
+		baselayer.enterframe	= function(){
 			//ゲームがスタートしていれば処理を実行する
 			if(gamedata.gamestart){
 				//背景画像が左へスクロールする処理
-				baseimg.x	-= 4;
-				if(baseimg.x <= -700){baseimg.x = 0;}
+				baselayer.x	-= 5;
+				if(baselayer.x <= -700){baselayer.x = 0;}
 			}
 		}
 		

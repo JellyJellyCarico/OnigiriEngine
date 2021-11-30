@@ -1,4 +1,4 @@
-﻿おにぎりエンジン(OnigiriEngine)  ver.1.1.0c  (C) かりこ(Carico)
+﻿おにぎりエンジン(OnigiriEngine)  ver.1.2.0  (C) かりこ(Carico)
 https://jellyjelly.site/onien/
 
 ■概要
@@ -7,12 +7,16 @@ https://jellyjelly.site/onien/
 
 ■特徴
 ・ブラウザゲームとして、スマホやPCで動作させることができます。
-・わりと簡素な設計だと思うので、JavaScriptが分かる方は改造が簡単な気がします。
 ・オブジェクトの接触判定の方法は「画像と画像の中心点の距離」と「コリジョン設定」の２つの判定方法が用意してあります。
+・キャンバスのみでなくHTMLタグも併用できます。
 ・ぷりおアニメーカーのアニメーションを表示することが出来ます。
 
+■動作確認環境
+・OS：Windows10、Android10
+・ブラウザ：Google Chrome
+
 ■使い方
-・documentフォルダのHTML、もしくは公式サイトをご覧ください
+・documentフォルダのHTMLファイル、もしくは公式サイトをご覧ください
 https://jellyjelly.site/onien/
 
 ■利用条件（2020/8/23改訂）
@@ -28,6 +32,23 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
+・ver.1.2.0(2021/11/30)　スプライトの設定がscale,scaleX,scaleYが1以下かつrotateが非設定の場合、画面外にいたら描写しないように修正（動作軽減策）
+　一時キャンバスのdrawにputwとputhを追加（どちらも省略可）
+　一時キャンバスにdrawComa関数を追加
+　スプライトクラスにcompositeプロパティを追加
+　BGM、SE再生方法を変更（onien.canplaylistに再生可能と思われる拡張子を追加）
+　マップレイヤークラスを追加（描写時に、画面外にあるスプライトは処理されないので動作が軽くなります。）
+　スプライトのイベント検出、拡縮回転に対応
+　コリジョンによる接触判定（colCheck）の修正
+　各種クラスのaddメソッドでのid自動付与方法変更
+　HTMLタグクラスの大幅仕様変更
+　ImgボタンHTMLタグクラス、テキストボタンHTMLタグクラス、メッセージHTMLクラスを追加
+　各種クラスのdelメソッドでの処理方法修正
+　各種クラスのaddメソッドで、レイヤー名（文字列）だけでなくレイヤーオブジェクト本体で指定可能に変更
+　レイヤークラスのsortTypeが"ybig"のときに画面がチラつかないように修正
+　メッセージクラスの削除
+　onien.loadメソッド実行時、onien.autoScaleがオンの場合はzIndexの自動設定を行なうように変更
+　HTMLタグクラス、およびその子クラスは、visibleがfalseの場合でも、拡縮処理と配置処理は行うように変更
 ・ver.1.1.0c(2021/6/10)　HTMLタグクラスのpositionSet()とscaleSet()の修正（autoPositionとautoScaleがtrueの時に画面外にはみ出る場合があるバグを修正しました）
 　レイヤーのマウスイベント処理順序を修正（重ね順的に上にあるレイヤーのマウスイベントを先に実行するように変更しました）
 　音声再生処理を修正（canPlayTypeがmaybeのものを優先的に再生するようにしました）

@@ -15,6 +15,16 @@
 		th{
 			width: 80px;
 		}
+
+		.summaryMain{
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		.summarySub{
+			font-size: 1.1em;
+			font-weight: bold;
+		}
 	</style>
 </head>
 
@@ -23,1506 +33,2737 @@
 <header>
     <h1 id="up">おにぎりエンジン：関数など一覧</h1>
 </header>
-	
+	<div style="position: fixed;right: 0px;top:0px;background-color: azure;">
+		<details>
+			<summary>MENU</summary>
+			<ul>
+				<li><a href="#OnigiriEngine">OnigiriEngine</a></li>
+				<li><a href="#OeLayer">OeLayer</a></li>
+				<li><a href="#OeMapLayer">OeMapLayer</a></li>
+				<li><a href="#OeSprite">OeSprite</a></li>
+				<li><a href="#OeHtmlTag">OeHtmlTag</a></li>
+				<li><a href="#OeImgButtonHtmlTag">OeImgButtonHtmlTag</a></li>
+				<li><a href="#OeTextButtonHtmlTag">OeTextButtonHtmlTag</a></li>
+				<li><a href="#OeMessageHtmlTag">OeMessageHtmlTag</a></li>
+				<li><a href="#OePriani">OePriani</a></li>
+				<li><a href="#OeText">OeText</a></li>
+				<li><a href="#OeTmpCanvas">OeTmpCanvas</a></li>
+				<li><a href="#OeLoadPlus">OeLoadPlus</a></li>
+				<li><a href="#onien">onien</a></li>
+				<li><a href="#up">一番上に戻る</a></li>
+				<li><a href="index.html">トップページに戻る</a></li>
+			</ul>
+		</details>
+	</div>
 	<div class="box">
 		<ul style="background-color: white;padding-bottom: 30px;">
 			<h2>目次</h2>
 			<li><a href="#OnigiriEngine">OnigiriEngine</a>　おにぎりエンジンのモロモロを読み込む</li>
 			<li><a href="#OeLayer">OeLayer</a>　レイヤークラス</li>
+			<li><a href="#OeMapLayer">OeMapLayer</a>　マップレイヤークラス</li>
 			<li><a href="#OeSprite">OeSprite</a>　スプライトクラス</li>
-			<li><a href="#OeHtemlTag">OeHtmlTag</a>　HTMLタグクラス</li>
+			<li><a href="#OeHtmlTag">OeHtmlTag</a>　HTMLタグクラス</li>
+			<li><a href="#OeImgButtonHtmlTag">OeImgButtonHtmlTag</a>　画像ボタンHTMLタグクラス</li>
+			<li><a href="#OeTextButtonHtmlTag">OeTextButtonHtmlTag</a>　文字ボタンHTMLタグクラス</li>
+			<li><a href="#OeMessageHtmlTag">OeMessageHtmlTag</a>　メッセージHTMLタグクラス</li>
 			<li><a href="#OePriani">OePriani</a>　ぷりアニクラス</li>
 			<li><a href="#OeText">OeText</a>　文字クラス</li>
 			<li><a href="#OeTmpCanvas">OeTmpCanvas</a>　一時キャンバスクラス</li>
-			<li><a href="#OeMessage">OeMessage</a>　メッセージクラス</li>
 			<li><a href="#OeLoadPlus">OeLoadPlus</a>　追加ロードクラス</li>
 			<li><a href="#onien">onien</a>　onienオブジェクト</li>
 		</ul>
+		<p style="text-align: right;"><span style="font-size: 0.7em;">※ver.1.2.0以前の関数一覧は<a href="old_func.html">こちら</a></span></p>
 		
-		<h2 id="OnigiriEngine">OnigiriEngine(w,h)</h2>
-		<div>
-		<p>　・おにぎりエンジンのモロモロを読み込む関数です。<br>
-		　・onienオブジェクトを作成します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>w</th>
-				<td>【数値】キャンバスの大きさ（横）　<span class="sub">省略可（デフォルト：500）</span></td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】キャンバスの大きさ（縦）　<span class="sub">省略可（デフォルト：500）</span></td>
-			</tr>
-		</table>
-		</div>
+		
+		<details open>
+			<summary id="OnigiriEngine" class="summaryMain">OnigiriEngine(w,h)</summary>
+			<div>
+				<p>　・おにぎりエンジンのモロモロを読み込む関数です。<br>
+				　・onienオブジェクトを作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>w</th>
+						<td>【数値】キャンバスの大きさ（横）　<span class="sub">★省略可（デフォルト：500）</span></td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】キャンバスの大きさ（縦）　<span class="sub">★省略可（デフォルト：500）</span></td>
+					</tr>
+				</table>
+			</div>
+			<p class="right"><a href="#up">▲上に戻る</a></p>
 			
-		<p class="right"><a href="#up">▲上に戻る</a></p>
+		</details>
 		<hr>
-		
-		<h2 id="OeLayer">OeLayer(name,x,y,w,h)</h2>
-		<div>
-		<p>　・レイヤークラスです。<strong>new OeLayer(name,x,y,w,h)</strong>で作成します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>name</th>
-				<td>【文字列】レイヤーの名前</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】レイヤーの表示位置（横）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】レイヤーの表示位置（縦）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】レイヤーの大きさ（横）　<span class="sub">省略可（デフォルト：キャンバスサイズ）</span>
-				</td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】レイヤーの大きさ（縦）　<span class="sub">省略可（デフォルト：キャンバスサイズ）</span>
-				</td>
-			</tr>
-		</table>
-		<p>　※w,hはclickイベントなどの判定用のみに使用</p>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>addLayer()</th>
-				<td>【関数】自分をレイヤーをとしてゲームに追加します。</td>
-			</tr>
-			<tr>
-				<th>click</th>
-				<td>【function】レイヤーをクリックした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>delAllObject()</th>
-				<td>【関数】中身のオブジェクトを全て削除します。</td>
-			</tr>
-			<tr>
-				<th>delLayer()</th>
-				<td>【関数】自分を削除します。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】レイヤーの大きさ（縦）
-				</td>
-			</tr>
-			<tr>
-				<th>mousedown</th>
-				<td>【function】レイヤー上でマウスダウンした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseleave</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0a～</span>【function】レイヤー上からマウスリーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mousemove</th>
-				<td>【function】レイヤー上でマウスムーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseup</th>
-				<td>【function】レイヤー上でマウスアップした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>name</th>
-				<td>【文字列】レイヤーの名前</td>
-			</tr>
-			<tr>
-				<th>nonEvent</th>
-				<td>【真偽値】clickなどを使わないならtrueにすると発火確認処理が省略されるので動作が早く…なるかもしれない。　<span class="sub">（デフォルト：false）</span></td>
-			</tr>
-			<tr>
-				<th>sortStart()</th>
-				<td>【関数】sortTypeのソート方法で、レイヤー内オブジェクトの描画順のソートを実行します。</td>
-			</tr>
-			<tr>
-				<th>sortType</th>
-				<td>【文字列】レイヤー内オブジェクトの描画順のソート方法<br>
-					"big"：新しく追加した方が上になる<br>
-					"small"：新しく追加した方が下になる<br>
-					"ybig"：yが大きい方が上になる<br>
-					<span class="sub">（デフォルト："big"）</span>
-				</td>
-			</tr>
-			<tr>
-				<th>visible</th>
-				<td>【真偽値】表示するか否か　<span class="sub">（デフォルト：true）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】レイヤーの大きさ（横）
-				</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】レイヤーの表示位置（横）</td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】レイヤーの表示位置（縦）</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">content</th>
-				<td>【連想配列】レイヤーに入ってる各オブジェクト</td>
-			</tr>
-			<tr>
-				<th class="nouse">sortList</th>
-				<td>【配列】レイヤー内オブジェクトの描画順</td>
-			</tr>
-		</table>
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
-		
-		<h2 id="OeSprite">OeSprite(src,x,y,w,h,coma)</h2>
-		<div>
-		<p>　・スプライト（画像）クラスです。<strong>new OeSprite(src,x,y,w,h,coma)</strong>で作成します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>src</th>
-				<td>【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。pngとjpgが使用可能です。</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】画像の表示位置（横）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】画像の表示位置（縦）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】画像の大きさ（横）　<span class="sub">省略可（デフォルト：画像サイズ）</span>
-				</td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】画像の大きさ（縦）　<span class="sub">省略可（デフォルト：画像サイズ）</span>
-				</td>
-			</tr>
-			<tr>
-				<th>coma</th>
-				<td>【数値】表示するコマの番号。　<span class="sub">省略可（デフォルト：0）</span><br>
-					画像をwとhで割ってコマ番号を振っています。
-					<img src="img/sprite.png" width=105 height=200>
-				</td>
-			</tr>
-		</table>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>add(layerName)</th>
-				<td>【関数】自分をレイヤーに追加します。<br>
-				・layerName：レイヤーの名前（文字列）</td>
-			</tr>
-			<tr>
-				<th>click</th>
-				<td>【function】スプライトをクリックした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>col</th>
-				<td>【配列】コリジョン設定<br>
-				<span class="sub">（デフォルト：[0,0,this.w,0,this.w,this.h,0,this.h]）</span><br>
-				例えば<img src="img/col0.png">に<img src="img/col.png">という感じでコリジョン設定するなら<br>
-				[37,60,7,40,12,13,33,22,55,11,61,40]<br>
-				という感じです。<br>
-				右の画像の黒い部分がコリジョン判定範囲で、各頂点を配列としてコリジョン設定する感じです。CollisionSet.htmを使うと比較的簡単にコリジョン設定を作成できるかと思います。</td>
-			</tr>
-			<tr>
-				<th>colCheck<br>(obj,x,y)</th>
-				<td>【関数】接触判定（コリジョン設定を使用して判定）する。このオブジェクトとobjのコリジョンが接触していれば、trueを返す。それ以外はflaseを返す。<br>
-				・obj：「スプライト」か「ぷりアニ」のオブジェクト<br>
-				・x,y：ここに設定した数値に、このオブジェクトが移動したと仮定して接触判定を行う。省略可。（省略したらこのオブジェクトの現在のx,yが入る。）</td>
-			</tr>
-			<tr>
-				<th>coma</th>
-				<td>【数値】表示するコマの番号。<br>
-					画像をwとhで割ってコマ番号を振っています。
-					<img src="img/sprite.png" width=105 height=200>
-				</td>
-			</tr>
-			<tr>
-				<th>contactCheck<br>(obj,distance)</th>
-				<td>【関数】接触判定（オブジェクトの中心点距離で判定）する。このオブジェクトとobjの中心点の距離がdistance以下なら、接触したと判定してtrueを返す。それ以外はfalseを返す。<br>
-				・obj：「スプライト」か「ぷりアニ」のオブジェクト<br>
-				・distance：中心点の距離がこの数値以下なら接触したと判定する。</td>
-			</tr>
-			<tr>
-				<th>del()</th>
-				<td>【関数】自分を削除する。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】画像の大きさ（縦）
-				</td>
-			</tr>
+		<details open>
+			<summary id="OeLayer" class="summaryMain">OeLayer(name,x,y,w,h)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・レイヤークラスです。<strong>new OeLayer(name,x,y,w,h)</strong>で作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>name</th>
+						<td>【文字列】レイヤーの名前<br>
+							既存のレイヤー名と被ったら上書きされます。<br>
+							作成したレイヤーオブジェクトはonien.layer[name]に格納されます。</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】レイヤーの表示位置（横）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】レイヤーの表示位置（縦）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】レイヤーの大きさ（横）　<span class="sub">★省略可（デフォルト：キャンバスサイズ）</span><br>
+							mousedownなどのイベントメソッドの判定に使用します。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】レイヤーの大きさ（縦）　<span class="sub">★省略可（デフォルト：キャンバスサイズ）</span><br>
+							mousedownなどのイベントメソッドの判定に使用します。
+						</td>
+					</tr>
+				</table><br>
+			</details>
 			
-			<tr>
-				<th>mousedown</th>
-				<td>【function】スプライト上でマウスダウンした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseleave</th>
-				<td>【function】スプライト上からマウスリーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mousemove</th>
-				<td>【function】スプライト上でマウスムーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseup</th>
-				<td>【function】スプライト上でマウスアップした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>nonEvent</th>
-				<td>【真偽値】clickなどを使わないならtrueにすると発火確認処理が省略されるので動作が早く…なるかもしれない。　<span class="sub">（デフォルト：false）</span></td>
-			</tr>
-			<tr>
-				<th>opacity</th>
-				<td>【数値】不透明度　<span class="sub">（デフォルト：1）</span><br>
-				※0～1で設定（0で完全に透明、1で完全に不透明）</td>
-			</tr>
-			<tr>
-				<th>rotate</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.9～</span>【数値】回転角度　<span class="sub">（デフォルト：null）</span><br>
-				※45とか、-90とか、度で設定してください。（ラジアン角では機能しません）<br>
-				※rotateがnull以外の状態では、接触判定は機能しません。</td>
-			</tr>
-			<tr>
-				<th>scale</th>
-				<td>【数値】拡縮率　<span class="sub">（デフォルト：1）</span><br>
-				※scaleが1以外の状態では、接触判定は機能しません。</td>
-			</tr>
-			<tr>
-				<th>scaleX</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.9～</span>【数値】拡縮率X　<span class="sub">（デフォルト：null）</span><br>
-				※scaleYも設定しないと機能しません。<br>
-				※scaleXかscaleYがnull以外の状態では、接触判定は機能しません。</td>
-			</tr>
-			<tr>
-				<th>scaleY</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.9～</span>【数値】拡縮率Y　<span class="sub">（デフォルト：null）</span><br>
-				※scaleXも設定しないと機能しません。<br>
-				※scaleXかscaleYがnull以外の状態では、接触判定は機能しません。</td>
-			</tr>
-			<tr>
-				<th>src</th>
-				<td>【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。pngとjpgが使用可能です。</td>
-			</tr>
-			<tr>
-				<th>visible</th>
-				<td>【真偽値】表示するか否か　<span class="sub">（デフォルト：true）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】画像の大きさ（横）
-				</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】画像の表示位置（横）</td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】画像の表示位置（縦）</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">id</th>
-				<td>【文字列】オブジェクトの固有番号<br>
-				※addした時に付与されます。"S_1"といった「タイプ_固有番号」形式の文字列。</td>
-			</tr>
-			<tr>
-				<th class="nouse" style="background-color: gray;">idNum</th>
-				<td style="background-color: gray">【数値】オブジェクトの固有番号<br>
-				※ver1.1.0a～廃止済み</td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【文字列】所属しているレイヤーの名前</td>
-			</tr>
-			<tr>
-				<th class="nouse">type</th>
-				<td>【文字列】オブジェクトタイプ（"S"）</td>
-			</tr>
-		</table>
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
-		
-		<h2 id="OeHtemlTag">OeHtmlTag(id,buttonOn,buttonOff)</h2>
-		<div>
-		<p>　・HTMLタグクラスです。<strong>new OeHtmlTag(sid,buttonOn,buttonOff)</strong>で作成します。<br>
-			　※注意：buttonOnを設定して作成する場合、該当HTMLタグ要素に各種イベントリスナーがセットされます。スマホの場合はイベント発生時にpreventDefaultを実行するので、inputタグやtextareaタグは入力等が動作しなくなります。buttonOnを設定して作成しない場合は、各種イベントリスナーがセットされないため、特に問題なく動作すると思われます。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>id</th>
-				<td>【文字列】使用するHTML要素のid</td>
-			</tr>
-			<tr>
-				<th>buttonOn</th>
-				<td>【文字列】このオブジェクトを押した時の画像ファイル名を設定する。onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。　<span class="sub">省略可（デフォルト：null）</span><br>
-				idで指定したHTML要素がimgタグの場合のみ使用可能です。</td>
-			</tr>
-			<tr>
-				<th>buttonOff</th>
-				<td>【文字列】このオブジェクトを離した時の画像ファイル名を設定する。onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。　<span class="sub">省略可（デフォルト：null）</span><br>
-				idで指定したHTML要素がimgタグの場合のみ使用可能です。</td>
-			</tr>
-		</table>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>add(layerName)</th>
-				<td>【関数】自分をレイヤーに追加します。<br>
-				・layerName：レイヤーの名前（文字列）</td>
-			</tr>
-			<tr>
-				<th>autoPosition</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【真偽値】自動で位置調整するか否か　<span class="sub">（デフォルト：false）</span><br>
-				trueにするとウィンドウサイズに合わせて自動で位置調整します。xとyの両方のパラメータに数値が入力されている必要があります。</td>
-			</tr>
-			<tr>
-				<th>autoScale</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【真偽値】自動で拡縮するか否か　<span class="sub">（デフォルト：false）</span><br>
-				trueにするとウィンドウサイズに合わせて自動で拡縮します。これをtrueにする場合、wとh（文字を含む場合はfontsizeも）をあらかじめ設定しておくことを推奨します。</td>
-			</tr>
-			<tr>
-				<th>buttonOn</th>
-				<td>【文字列】このオブジェクトを押した時の画像ファイル名を設定する。onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。<br>
-				HTML要素がimgタグの場合のみ使用可能です。また、最初にbuttonOnを設定して作成している場合のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>buttonOff</th>
-				<td>【文字列】このオブジェクトを離した時の画像ファイル名を設定する。onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。<br>
-				HTML要素がimgタグの場合のみ使用可能です。また、最初にbuttonOnを設定して作成している場合のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>del()</th>
-				<td>【関数】自分を削除する。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>fontsize</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【数値】HTML要素内の文字の大きさ（縦）　<span class="sub">（デフォルト：null）</span><br>
-				文字を含むHTML要素でautoScaleをtrueにする場合は設定することを推奨します。また、このパラメータにはnullか数値以外を設定しないでください。</td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【数値】HTML要素の大きさ（縦）　<span class="sub">（デフォルト：null）</span><br>
-				autoScaleをtrueにする場合は設定することを推奨します。また、このパラメータにはnullか数値以外を設定しないでください。</td>
-			</tr>
-			<tr>
-				<th>mousedown</th>
-				<td>【function】マウスダウンした時に実行するfunctionを設定できます。最初にbuttonOnを設定して作成している場合のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>mouseleave</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】マウスリーブした時に実行するfunctionを設定できます。最初にbuttonOnを設定して作成している場合のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>mousemove</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】マウスムーブした時に実行するfunctionを設定できます。最初にbuttonOnを設定して作成している場合のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>mouseup</th>
-				<td>【function】マウスアップした時に実行するfunctionを設定できます。最初にbuttonOnを設定して作成している場合のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>visible</th>
-				<td>【真偽値】表示するか否か　<span class="sub">（デフォルト：true）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【数値】HTML要素の大きさ（横）　<span class="sub">（デフォルト：null）</span><br>
-				autoScaleをtrueにする場合は設定することを推奨します。また、このパラメータにはnullか数値以外を設定しないでください。</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】表示位置のpx（x）　<span class="sub">（デフォルト：null）</span><br>
-				数値を設定すると、HTML要素には自動的にstyleのposition:absoluteが設定されます。また、このパラメータにはnullか数値以外を設定しないでください。</td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】表示位置のpx（y）　<span class="sub">（デフォルト：null）</span><br>
-				数値を設定すると、HTML要素には自動的にstyleのposition:absoluteが設定されます。また、このパラメータにはnullか数値以外を設定しないでください。</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">autoF</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【数値】自動で拡縮した時の要素内の文字の大きさ</td>
-			</tr>
-			<tr>
-				<th class="nouse">autoH</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【数値】自動で拡縮した時の要素の大きさ(縦)</td>
-			</tr>
-			<tr>
-				<th class="nouse">autoW</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【数値】自動で拡縮した時の要素の大きさ(横)</td>
-			</tr>
-			<tr>
-				<th class="nouse">autoX</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】自動で位置調整した時の表示位置(x)</td>
-			</tr>
-			<tr>
-				<th class="nouse">autoY</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】自動で位置調整した時の表示位置(y)</td>
-			</tr>
-			<tr>
-				<th class="nouse">id</th>
-				<td>【文字列】オブジェクトの固有番号<br>
-				※addした時に付与されます。"H_1"といった「タイプ_固有番号」形式の文字列。</td>
-			</tr>
-			<tr>
-				<th class="nouse" style="background-color: gray">idNum</th>
-				<td style="background-color: gray">【数値】オブジェクトの固有番号<br>
-				※ver1.1.0a～廃止済み</td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【文字列】所属しているレイヤーの名前</td>
-			</tr>
-			<tr>
-				<th class="nouse">obj</th>
-				<td>【オブジェクト】HTML要素のオブジェクト</td>
-			</tr>
-			<tr>
-				<th class="nouse">positionSet()</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【関数】自動で位置調整する</td>
-			</tr>
-			<tr>
-				<th class="nouse">scaleSet()</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.4～</span>【関数】自動で拡縮する</td>
-			</tr>
-			<tr>
-				<th class="nouse">type</th>
-				<td>【文字列】オブジェクトタイプ（"H"）</td>
-			</tr>
-		</table>
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
-		
-		<h2 id="OePriani">OePriani(prianiId,chara,x,y,refrain)</h2>
-		<div>
-		<p>　・ぷりアニクラスです。<strong>new OePriani(prianiId,chara,x,y,refrain)</strong>で作成します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>prianiId</th>
-				<td>【文字列】表示するアニメーションのid</td>
-			</tr>
-			<tr>
-				<th>chara</th>
-				<td>【文字列】キャラクター名</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】画像の表示位置（横）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】画像の表示位置（縦）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>refrain</th>
-				<td>【真偽値】繰り返し再生するか否か　<span class="sub">省略可（デフォルト：true）</span>
-				</td>
-			</tr>
-		</table>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>add(layerName)</th>
-				<td>【関数】自分をレイヤーに追加します。<br>
-				・layerName：レイヤーの名前（文字列）</td>
-			</tr>
-			<tr>
-				<th>change<br>(prianiId,refrain)</th>
-				<td>【関数】アニメーションを変更する。<br>
-				・prianiId：変更後のアニメーションID<br>
-				・refrain：繰り返し再生するか否かの真偽値</td>
-			</tr>
-			<tr>
-				<th>chara</th>
-				<td>【文字列】キャラクター名</td>
-			</tr>
-			<tr>
-				<th>click</th>
-				<td>【function】ぷりアニをクリックした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>col</th>
-				<td>【配列】コリジョン設定<br>
-				<span class="sub">（デフォルト：[0,0,this.w,0,this.w,this.h,0,this.h]）</span><br>
-				例えば<img src="img/col0.png">に<img src="img/col.png">という感じでコリジョン設定するなら<br>
-				[37,60,7,40,12,13,33,22,55,11,61,40]<br>
-				という感じです。<br>
-				右の画像の黒い部分がコリジョン判定範囲で、各頂点を配列としてコリジョン設定する感じです。CollisionSet.htmを使うと比較的簡単にコリジョン設定を作成できるかと思います。</td>
-			</tr>
-			<tr>
-				<th>colCheck<br>(obj,x,y)</th>
-				<td>【関数】接触判定（コリジョン設定を使用して判定）する。このオブジェクトとobjのコリジョンが接触していれば、trueを返す。それ以外はflaseを返す。<br>
-				・obj：「スプライト」か「ぷりアニ」のオブジェクト<br>
-				・x,y：ここに設定した数値に、このオブジェクトが移動したと仮定して接触判定を行う。省略可。（省略したらこのオブジェクトの現在のx,yが入る。）</td>
-			</tr>
-			<tr>
-				<th>contactCheck<br>(obj,distance)</th>
-				<td>【関数】接触判定（オブジェクトの中心点距離で判定）する。このオブジェクトとobjの中心点の距離がdistance以下なら、接触したと判定してtrueを返す。それ以外はfalseを返す。<br>
-				・obj：「スプライト」か「ぷりアニ」のオブジェクト<br>
-				・distance：中心点の距離がこの数値以下なら接触したと判定する。</td>
-			</tr>
-			<tr>
-				<th>del()</th>
-				<td>【関数】自分を削除する。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>mousedown</th>
-				<td>【function】ぷりアニ上でマウスダウンした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseleave</th>
-				<td>【function】ぷりアニ上からマウスリーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mousemove</th>
-				<td>【function】ぷりアニ上でマウスムーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseup</th>
-				<td>【function】ぷりアニ上でマウスアップした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>nonEvent</th>
-				<td>【真偽値】clickなどを使わないならtrueにすると発火確認処理が省略されるので動作が早く…なるかもしれない。　<span class="sub">（デフォルト：false）</span></td>
-			</tr>
-			<tr>
-				<th>prianiId</th>
-				<td>【文字列】表示するアニメーションのid</td>
-			</tr>
-			<tr>
-				<th>refrain</th>
-				<td>【真偽値】繰り返し再生するか否か
-				</td>
-			</tr>
-			<tr>
-				<th>visible</th>
-				<td>【真偽値】表示するか否か　<span class="sub">（デフォルト：true）</span></td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】画像の表示位置（横）</td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】画像の表示位置（縦）</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">h</th>
-				<td>【数値】</td>
-			</tr>
-			<tr>
-				<th class="nouse">id</th>
-				<td>【文字列】オブジェクトの固有番号<br>
-				※addした時に付与されます。"P_1"といった「タイプ_固有番号」形式の文字列。</td>
-			</tr>
-			<tr>
-				<th class="nouse" style="background-color: gray;">idNum</th>
-				<td style="background-color: gray;">【数値】オブジェクトの固有番号<br>
-				※ver1.1.0a～廃止済み</td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【文字列】所属しているレイヤーの名前</td>
-			</tr>
-			<tr>
-				<th class="nouse">opacity</th>
-				<td>（未実装）【数値】不透明度</td>
-			</tr>
-			<tr>
-				<th class="nouse">scale</th>
-				<td>（未実装）【数値】拡縮率</td>
-			</tr>
-			<tr>
-				<th class="nouse">type</th>
-				<td>【文字列】オブジェクトタイプ（"P"）</td>
-			</tr>
-			<tr>
-				<th class="nouse">w</th>
-				<td>【数値】</td>
-			</tr>
-		</table>
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
-		
-		<h2 id="OeText">OeText(text,x,y)</h2>
-		<div>
-		<p>　・文字クラスです。<strong>new OeText(text,x,y)</strong>で作成します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>text</th>
-				<td>【文字列】表示する文字列</td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】文字の表示位置（横）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】文字の表示位置（縦）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-		</table>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>add(layerName)</th>
-				<td>【関数】自分をレイヤーに追加します。<br>
-				・layerName：レイヤーの名前（文字列）</td>
-			</tr>
-			<tr>
-				<th>back</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【文字列】背景色　<span class="sub">（デフォルト：null）</span></td>
-			</tr>
-			<tr>
-				<th>borderColor</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span>【文字列】枠の色　<span class="sub">（デフォルト：null）</span></td>
-			</tr>
-			<tr>
-				<th>borderSize</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span>【数値】枠のサイズ　<span class="sub">（デフォルト：null）</span></td>
-			</tr>
-			<tr>
-				<th>click</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】クリックした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>color</th>
-				<td>【文字列】文字の色　<span class="sub">（デフォルト："black"）</span></td>
-			</tr>
-			<tr>
-				<th>del()</th>
-				<td>【関数】自分を削除する。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>family</th>
-				<td>【文字列】フォントファミリー　<span class="sub">（デフォルト："sans-serif"）</span></td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】大きさ（縦）　<span class="sub">（デフォルト：100）</span></td>
-			</tr>
-			<tr>
-				<th>mousedown</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】マウスダウンした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseleave</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】マウスリーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mousemove</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】マウスムーブした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>mouseup</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【function】マウスアップした時に実行するfunctionを設定できます。function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。</td>
-			</tr>
-			<tr>
-				<th>nonEvent</th>
-				<td>【真偽値】clickなどを使わないならtrueにすると発火確認処理が省略されるので動作が早く…なるかもしれない。　<span class="sub">（デフォルト：false）</span></td>
-			</tr>
-			<tr>
-				<th>opacity</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.6～</span>【数字】不透明度　<span class="sub">（デフォルト：1）</span><br>※0～1で設定（0で完全に透明、1で完全に不透明）</td>
-			</tr>
-			<tr>
-				<th>paddingLeft</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】左の空白　<span class="sub">（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>paddingTop</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】上の空白　<span class="sub">（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>rounded</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span>【真偽値】枠の角を丸めるか否か（trueで角を丸める。falseで角を丸めない。）　<span class="sub">（デフォルト：null）</span></td>
-			</tr>
-			<tr>
-				<th>size</th>
-				<td>【数値/文字列】文字サイズ　<span class="sub">（デフォルト："24px"）</span><br>
-				<span class="sub" style="font-size: 0.8em">ver.1.0.5～</span>数値での設定も可能</td>
-			</tr>
-			<tr>
-				<th>src</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【文字列 / Imageオブジェクト】背景画像　<span class="sub">（デフォルト：null）</span><br>
-				onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。</td>
-			</tr>
-			<tr>
-				<th>text</th>
-				<td>【文字列】表示する文字列</td>
-			</tr>
-			<tr>
-				<th>visible</th>
-				<td>【真偽値】表示するか否か　<span class="sub">（デフォルト：true）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.2～</span>【数値】大きさ（横）　<span class="sub">（デフォルト：100）</span></td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】文字の表示位置（横）</td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】文字の表示位置（縦）</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">id</th>
-				<td>【文字列】オブジェクトの固有番号<br>
-				※addした時に付与されます。"T_1"といった「タイプ_固有番号」形式の文字列。</td>
-			</tr>
-			<tr>
-				<th class="nouse" style="background-color: gray;">idNum</th>
-				<td style="background-color: gray;">【数値】オブジェクトの固有番号<br>
-				※ver1.1.0a～廃止済み</td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【文字列】所属しているレイヤーの名前</td>
-			</tr>
-			<tr>
-				<th class="nouse">type</th>
-				<td>【文字列】オブジェクトタイプ（"T"）</td>
-			</tr>
-		</table>
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
-		
-		<h2 id="OeTmpCanvas">OeTmpCanvas(w,h) <span class="sub" style="font-size: 0.8em">ver.1.0.5～</span></h2>
-		<div>
-		<p>　・一時キャンバスクラスです。<strong>new OeTmpCanvas(w,h)</strong>で作成します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>w</th>
-				<td>【数値】一時キャンバスのサイズ（横）　<span class="sub">省略可（デフォルト：100）</span></td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】一時キャンバスのサイズ（縦）　<span class="sub">省略可（デフォルト：100）</span></td>
-			</tr>
-		</table>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>canvas</th>
-				<td>【オブジェクト】一時キャンバスの本体<br>OeSpriteのsrcにパラメータに設定することができる。</td>
-			</tr>
-			<tr>
-				<th>context</th>
-				<td>【オブジェクト】一時キャンバスのコンテクスト</td>
-			</tr>
-			<tr>
-				<th>draw(src,<br>cutx,cuty,<br>cutw,cuth,<br>putx,puty)</th>
-				<td>【関数】一時キャンバスに画像を貼り付ける<br>
-				・src：【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。または、onien.asset["img/xxx.png"]といった形でImageオブジェクトを直接指定することもできます。<br>
-				・cutx：【数値】srcの画像の、切り出す領域のX座標<br>
-				・cuty：【数値】srcの画像の、切り出す領域のY座標<br>
-				・cutw：【数値】srcの画像の、切り出す領域の幅<br>
-				・cuth：【数値】srcの画像の、切り出す領域の高さ<br>
-				・putx：【数値】一時キャンバスの、貼り付ける場所のX座標<br>
-				・puty：【数値】一時キャンバスの、貼り付ける場所のY座標
-				</td>
-			</tr>
-		</table>
-		<p><strong>使い方の例</strong><br>
-			使用する画像：chip.png（1マス70×70）<br>
-			<img src="img/chip.png" style="max-width: 100%">
-		</p>
-		<p class="code">
-			var <span class="c_var">tmp</span> = new <span class="c_class">OeTmpCanvas</span>(70,70);<br>
-			<span class="c_var">tmp</span>.draw("chip.png",0,0,70,70,0,0); <span class="c_com">//草を描く</span><br>
-			<span class="c_var">tmp</span>.draw("chip.png",0,70,70,70,0,0); <span class="c_com">//おにぎりを描く</span><br>
-			<br>
-			var <span class="c_var">sprite</span> = new <span class="c_class">OeSprite</span>(<span class="c_var">tmp</span>.canvas,0,0,70,70,0);<br>
-			<span class="c_var">sprite</span>.add("layer1");
-		</p>
-		<p>この結果layer1に描写される画像<br><img src="img/tmpcanvas.png" style="max-width: 100%"></p>
-		
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
-		
-		<h2 id="OeMessage">OeMessage(x,y,w,h,waitcolor,waitmark,waitsize) <span class="sub" style="font-size: 0.8em">ver.1.0.6～</span></h2>
-		<div>
-		<p>　・メッセージクラスです。<strong>OeMessage(x,y,w,h,waitcolor,waitmark,waitsize)</strong>で作成します。</p>
-		<p>　※所属先のレイヤーのmouseupを自動で変更しますので、メッセージ専用のレイヤーを用意することを推奨します。</p>
-		<table style="width: 100%">
-			<tr>
-				<th>x</th>
-				<td>【数値】文字の表示位置（横）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】文字の表示位置（縦）　<span class="sub">省略可（デフォルト：0）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】サイズ（横）　<span class="sub">省略可（デフォルト：500）</span></td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】サイズ（縦）　<span class="sub">省略可（デフォルト：200）</span></td>
-			</tr>
-			<tr>
-				<th>waitcolor</th>
-				<td>【文字列】クリック待ち画像の色　<span class="sub">省略可（デフォルト："white"）</span><br>
-				※後から変更不可。</td>
-			</tr>
-			<tr>
-				<th>waitmark</th>
-				<td>【文字列】クリック待ち画像の形　<span class="sub">省略可（デフォルト："●"）</span><br>
-				※後から変更不可。</td>
-			</tr>
-			<tr>
-				<th>waitsize</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.7～</span>【文字列】クリック待ち画像の大きさ　<span class="sub">省略可（デフォルト："small"）</span><br>
-				"small","big","verybig"のどれかを指定します。<br>
-				※後から変更不可。</td>
-			</tr>
-		</table>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>add(layerName)</th>
-				<td>【関数】自分をレイヤーに追加します。<br>
-				・layerName：レイヤーの名前（文字列）</td>
-			</tr>
-			<tr>
-				<th>back</th>
-				<td>【文字列】背景色　<span class="sub">（デフォルト："black"）</span></td>
-			</tr>
-			<tr>
-				<th>color</th>
-				<td>【文字列】文字の色　<span class="sub">（デフォルト："white"）</span></td>
-			</tr>
-			<tr>
-				<th>del()</th>
-				<td>【関数】自分を削除する。</td>
-			</tr>
-			<tr>
-				<th>end</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.7～</span>【function】文章の表示が終わった時に実行するfunctionを設定できます。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>family</th>
-				<td>【文字列】フォントファミリー　<span class="sub">（デフォルト："sans-serif"）</span></td>
-			</tr>
-			<tr>
-				<th>firstColor</th>
-				<td>【数値】1行目の文字の色　<span class="sub">（デフォルト："white"）</span></td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】サイズ（縦）</td>
-			</tr>
-			<tr>
-				<th>lineHeight</th>
-				<td>【数値】1行の高さ　<span class="sub">（デフォルト：35）</span></td>
-			</tr>
-			<tr>
-				<th>newLine</th>
-				<td>【文字列】改行を表す文字　<span class="sub">（デフォルト："/"）</span><br>※1文字推奨</td>
-			</tr>
-			<tr>
-				<th>nonEvent</th>
-				<td>【真偽値】clickなどを使わないならtrueにすると発火確認処理が省略されるので動作が早く…なるかもしれない。　<span class="sub">（デフォルト：false）</span></td>
-			</tr>
-			<tr>
-				<th>opacity</th>
-				<td>【数字】不透明度　<span class="sub">（デフォルト：1）</span><br>※0～1で設定（0で完全に透明、1で完全に不透明）</td>
-			</tr>
-			<tr>
-				<th>open(texts,mode)</th>
-				<td>【関数】メッセージウィンドウに文字を表示する<br>
-				・texts：表示する文章リスト（配列）<br>
-				・mode：クリック待ちなどのモード指定<br>
-				　　・"end"にすると、クリック待ちをして、全ての文章を表示し終えたらメッセージウィンドウを閉じる。<br>
-				　　・"select"にすると、クリック待ちをして、全ての文章を表示し終えたらメッセージを表示したまま止まる。<br>
-				　　・1以上の数値にすると、指定した数のフレーム数待ったら、自動でページ送りをし、全ての文章を表示し終わったら、指定した数のフレーム数後に自動でメッセージウィンドウを閉じる。</td>
-			</tr>
-			<tr>
-				<th>paddingLeft</th>
-				<td>【数値】左の空白　<span class="sub">（デフォルト：10）</span></td>
-			</tr>
-			<tr>
-				<th>paddingTop</th>
-				<td>【数値】上の空白　<span class="sub">（デフォルト：10）</span></td>
-			</tr>
-			<tr>
-				<th>pagechange</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.8～</span>【function】文章のページが切り替わった時に実行するfunctionを設定できます。function(page)でページ番号を取得できます。</td>
-			</tr>
-			<tr>
-				<th>radius</th>
-				<td>【数値】角の丸さ　<span class="sub">（デフォルト：20）</span></td>
-			</tr>
-			<tr>
-				<th>size</th>
-				<td>【数値/文字列】文字サイズ　<span class="sub">（デフォルト："24px"）</span></td>
-			</tr>
-			<tr>
-				<th>speed</th>
-				<td>【数値】文字の表示速度　<span class="sub">（デフォルト：1）</span><br>
-				※0で瞬間表示、1～は大きいほど遅い。</td>
-			</tr>
-			<tr>
-				<th>src</th>
-				<td>【文字列 / Imageオブジェクト】背景画像　<span class="sub">（デフォルト：null）</span><br>
-				onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。</td>
-			</tr>
-			<tr>
-				<th>visible</th>
-				<td>【真偽値】表示するか否か　<span class="sub">（デフォルト：true）</span></td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】サイズ（横）</td>
-			</tr>
-			<tr>
-				<th>waitSpeed</th>
-				<td>【数値】クリック待ち画像のアニメーションのスピード　<span class="sub">（デフォルト：1）</span><br>
-				※1以上を指定する。大きい数字ほど遅くなる。</td>
-			</tr>
-			<tr>
-				<th>waitX</th>
-				<td>【数値】クリック待ち画像の位置(横)　<span class="sub">（デフォルト：w-30）</span></td>
-			</tr>
-			<tr>
-				<th>waitY</th>
-				<td>【数値】クリック待ち画像の位置(縦)　<span class="sub">（デフォルト：h-20）</span></td>
-			</tr>
-			<tr>
-				<th>x</th>
-				<td>【数値】文字の表示位置（横）</td>
-			</tr>
-			<tr>
-				<th>y</th>
-				<td>【数値】文字の表示位置（縦）</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">closecount</th>
-				<td>【数値】modeが数値の時のカウント</td>
-			</tr>
-			<tr>
-				<th class="nouse">endcount</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.7～</span>【数値】mode"select"でspeedが0の時に、ちゃんと文章が表示されてからendを実行するためのカウント</td>
-			</tr>
-			<tr>
-				<th class="nouse">id</th>
-				<td>【文字列】オブジェクトの固有番号<br>
-				※addした時に付与されます。"M_1"といった「タイプ_固有番号」形式の文字列。</td>
-			</tr>
-			<tr>
-				<th class="nouse" style="background-color: gray;">idNum</th>
-				<td style="background-color: gray;">【数値】オブジェクトの固有番号<br>
-				※ver1.1.0a～廃止済み</td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【文字列】所属しているレイヤーの名前</td>
-			</tr>
-			<tr>
-				<th class="nouse">mesEnterFrame()</th>
-				<td>【関数】メッセージ表示用のenterframe関数</td>
-			</tr>
-			<tr>
-				<th class="nouse">mode</th>
-				<td>【文字列】現在のモード</td>
-			</tr>
-			<tr>
-				<th class="nouse">page</th>
-				<td>【数値】表示中の文章ページ</td>
-			</tr>
-			<tr>
-				<th class="nouse">text</th>
-				<td>【文字列】表示中のテキスト</td>
-			</tr>
-			<tr>
-				<th class="nouse">textcount</th>
-				<td>【数値】表示中の文字数</td>
-			</tr>
-			<tr>
-				<th class="nouse">textlength</th>
-				<td>【数値】表示中の文章ページの文字数</td>
-			</tr>
-			<tr>
-				<th class="nouse">textlist</th>
-				<td>【配列】表示する文章リスト</td>
-			</tr>
-			<tr>
-				<th class="nouse">textstart</th>
-				<td>【真偽値】speedが1以上の場合、文字の表示中ならtrue</td>
-			</tr>
-			<tr>
-				<th class="nouse">type</th>
-				<td>【文字列】オブジェクトタイプ（"M"）</td>
-			</tr>
-			<tr>
-				<th class="nouse">wait</th>
-				<td>【真偽値】クリック待ち画像の表示オンオフ</td>
-			</tr>
-			<tr>
-				<th class="nouse">waitCanvas</th>
-				<td>【オブジェクト】クリック待ち画像のキャンバス</td>
-			</tr>
-			<tr>
-				<th class="nouse">waitCount</th>
-				<td>【数値】クリック待ち画像のフレームNo</td>
-			</tr>
-			<tr>
-				<th class="nouse">waitCtx</th>
-				<td>【オブジェクト】クリック待ち画像のキャンバスのコンテクスト</td>
-			</tr>
-		</table>
-			
-		<p><strong>使い方の例</strong></p>
-		<p class="code">
-			<span class="c_com">//メッセージ用のレイヤーを用意する</span><br>
-			var <span class="c_var">meslayer</span> = new <span class="c_class">OeLayer</span>("meslayer");<br>
-			<span class="c_var">meslayer</span>.addLayer();<br>
-			<br>
-			<span class="c_com">//メッセージクラスを作成する</span><br>
-			var <span class="c_var">mes</span> = new <span class="c_class">OeMessage</span>(0,300,500,200);<br>
-			<span class="c_var">mes</span>.add("meslayer");<br>
-			<span class="c_var">mes</span>.end = function(){alert("表示がおわったよ！");}<br>
-			<br>
-			<span class="c_com">//メッセージを表示する</span><br>
-			<span class="c_var">mes</span>.open(["花子/元気？","太朗/元気だよ！"],"end");
-		</p>
-			
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
-		<hr>
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>h</th>
+						<td>【数値】レイヤーの大きさ（縦）
+						</td>
+					</tr>
+					<tr>
+						<th>name</th>
+						<td>【文字列】レイヤーの名前<br>
+							作成時に入力したものが格納されています。<br>
+							後から変更しない方が良いと思われます。
+						</td>
+					</tr>
+					<tr>
+						<th>nonEvent</th>
+						<td>【真偽値】<span class="sub">（デフォルト：false）</span><br>
+							mousedownなどのイベントメソッドを使わない場合、このプロパティをtrueにすると発火確認処理が省略されるので動作が早くなる場合があります。trueにしてもenterframeは処理されます。
+						</td>
+					</tr>
+					<tr>
+						<th>sortType</th>
+						<td>【文字列】レイヤー内オブジェクトの描画順のソート方法<span class="sub">（デフォルト："big"）</span><br>
+							以下の３種類を指定可能です。<br>
+							　"big"：新しく追加した方が上になる。<br>
+							　"small"：新しく追加した方が下になる。<br>
+							　"ybig"：yが大きい方が上になる。						
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。					
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】レイヤーの大きさ（横）
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】レイヤーの表示位置（横）	
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】レイヤーの表示位置（縦）
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">content</th>
+						<td>【連想配列】レイヤー内の各オブジェクト本体（OeSpriteなど）<br>
+						通常は触らないプロパティです。</td>
+					</tr>
+					<tr>
+						<th class="nouse">sortList</th>
+						<td>【配列】レイヤー内オブジェクトの描画順<br>
+						通常は触らないプロパティです。</td>
+					</tr>
+				</table><br>
+			</details>
 
-		<h2 id="OeLoadPlus">OeLoadPlus() <span class="sub" style="font-size: 0.8em">ver.1.1.0c～</span></h2>
-		<div>
-		<p>　・追加ロードクラスです。<strong>OeLoadPlus()</strong>で作成します。作成時に引数は設定しません。ゲームをスタートした後に画像・音声ファイルをロードする際に使用します。</p>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>add(layerName)</th>
-				<td>【関数】自分をレイヤーに追加します。<br>
-				・layerName：レイヤーの名前（文字列）</td>
-			</tr>
-			<tr>
-				<th>assetList</th>
-				<td>【配列】読み込むファイルのリスト。<br>
-					["img/chip.png","sound/win.ogg"]といった感じで設定する。</td>
-			</tr>
-			<tr>
-				<th>del()</th>
-				<td>【関数】自分を削除する。</td>
-			</tr>
-			<tr>
-				<th>enterframe</th>
-				<td>【function】毎フレーム時に実行するfunctionを設定できます。visibleがtrueの時のみ機能します。</td>
-			</tr>
-			<tr>
-				<th>load()</th>
-				<td>【関数】ロードを実行する。<br>assetListに設定したファイルの読み込みを開始します。</td>
-			</tr>
-			<tr>
-				<th>progress</th>
-				<td>【数値】ロードの進捗状況。　※0～100</td>
-			</tr>
-			<tr>
-				<th>ready</th>
-				<td>【真偽値】ロードが完了するとtrueになる。</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">assetSet</th>
-				<td>【数値】読み込み済みのファイル数</td>
-			</tr>
-			<tr>
-				<th class="nouse">id</th>
-				<td>【文字列】オブジェクトの固有番号<br>
-				※addした時に付与されます。"X_1"といった「タイプ_固有番号」形式の文字列。</td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【文字列】所属しているレイヤーの名前</td>
-			</tr>
-			<tr>
-				<th class="nouse">loadCheck()</th>
-				<td>【関数】フレーム毎に処理する内容</td>
-			</tr>
-			<tr>
-				<th class="nouse">type</th>
-				<td>【文字列】オブジェクトタイプ（"X"）</td>
-			</tr>
-			<tr>
-				<th class="nouse">visible</th>
-				<td>【真偽値】フレーム毎に処理するために、便宜上必要となる値</td>
-			</tr>
-		</table>
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>addLayer()</th>
+						<td>自分をレイヤーをとしてゲームに追加します。<br>
+							作成したレイヤーオブジェクトはonien.layer[name]に格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>delAllObject()</th>
+						<td>レイヤー内のオブジェクトを全て削除します。
+						</td>
+					</tr>
+					<tr>
+						<th>delLayer()</th>
+						<td>自分を削除します。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">sortStart()</th>
+						<td>sortTypeのソート方法で、レイヤー内オブジェクトの描画順のソートを実行します。通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・layer1.mousedown = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>click</th>
+						<td>クリックした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>マウスダウンした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>マウスリーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>マウスムーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>マウスアップした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+				</table>
+			</details>
 			
-		<p><strong>使い方の例</strong></p>
-		<p class="code">
-			<span class="c_com">//何も表示しないクラスだが、レイヤーに追加することで機能するので、レイヤーを準備する</span><br>
-			var <span class="c_var">layer1</span> = new <span class="c_class">OeLayer</span>("layer1", 0, 0, 700, 420);<br>
-			<span class="c_var">layer1</span>.addLayer();<br>
-			<br>
-			<span class="c_com">//ロード後に実行する処理を実行したらtrueになる変数</span><br>
-			var <span class="c_var">executed</span> = false;<br>
-			<br>
-			<span class="c_com">//追加ロードクラスを作成して、ロードを実行</span><br>
-			var <span class="c_var">loadPlus</span> = new <span class="c_class">OeLoadPlus</span>();<br>
-			<span class="c_var">loadPlus</span>.assetList = ["img/button_a1.png","sound/win.ogg"];<br>
-			<span class="c_var">loadPlus</span>.add("layer1");<br>
-			<span class="c_var">loadPlus</span>.load();<br>
-			<span class="c_com">//ロード完了後の処理をenterframeの関数内に記述</span><br>
-			<span class="c_var">loadPlus</span>.enterframe = function(){<br>
-			&emsp;&emsp;&emsp;&emsp;if(<span class="c_var">loadPlus</span>.ready==true && <span class="c_var">executed</span>==false){<br>
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var <span class="c_var">button</span> = new <span class="c_class">OeSprite</span>("img/button_a1.png",0,0,70,70,0);<br>
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">button</span>.click = function(){<br>
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;onien.se.start("sound/win");<br>
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">button</span>.add("layer1");<br>
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">executed</span> = true;<br>
-			&emsp;&emsp;&emsp;&emsp;}<br>
-			}
-		</p>
+			<p class="right"><a href="#up">▲上に戻る</a></p>
 			
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
+		</details>
 		<hr>
-		
-		<h2 id="onien">onien</h2>
-		<div>
-		<p>　・OnigiriEngineで作成するオブジェクトです。いろんなものが収納されています。</p>
-		<p>　以下、使用可能なパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th>asset</th>
-				<td>【連想配列】画像・音声データの連想配列<br>
-				{"img/xxx.png":imageオブジェクト,"bgm/xxx.mp3":Audioオブジェクト,…}<br>
-				という感じになっています。各ファイル名のパラメータの中に各image・Audioオブジェクトが入っています。</td>
-			</tr>
-			<tr>
-				<th>assetList</th>
-				<td>【配列】画像・音声データのファイル名（参照パス）リスト<br>
-				["img/xxx.png","sound/xxx.mp3",…]という感じに定義していく。<br>
-				これを元にload関数でデータをロードしていきます。<br>
-				対応している拡張子（png、jpg、wav、mp3、ogg、m4a）</td>
-			</tr>
-			<tr>
-				<th>autoScale</th>
-				<td>【真偽値】自動的にキャンバスを拡縮するか否か　<span class="sub">（デフォルト：true）</span><br>
-					<span class="small">※trueだと、onien.load()実行時にonien.setScreen関数の追加と実行、windowにresizeのイベントリスナ―を追加して、onien.setScreen関数を実行する。</span><br>
-					<span class="sub" style="font-size: 0.8em">ver.1.0.4～</span><span class="small">※trueにしてonien.load()を実行後、falseにすると自動拡縮を停止できる。再びtrueにすればまた自動拡縮をするようになる。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>bgm</th>
-				<td>【連想配列】BGM関連<br>
-				・<strong>start(name,buf)</strong>：BGMを再生する関数。nameは拡張子を除いたファイル名（例："sound/bgm1"）の文字列。bufは使用する番号（0～2）の数値。bufは省略可（デフォルト：0）。リピート再生のみ。<br>
-				<span class="small">※ブラウザで再生可能な拡張子か確かめてから再生していく。wav→mp3→ogg→m4aの順で試していく（ファイルがあれば）。<br>
-				※buf[0～2]をすべて使うと3コ同時に再生できます。</span><br>
-				・<strong>stop(buf)</strong>：BGMを停止する関数。bufは再生を止める番号（0～2）bufは省略可（デフォルト：0）。<br>
-				・<strong>vol</strong>：BGMの音量（0～1）の数値。<br>
-				・<strong>buf</strong>：再生するAudioオブジェクトを代入する配列（0～2）。非再生時はそれぞれnullになってる。通常は触らない。
-				</td>
-			</tr>
-			<tr>
-				<th>end()</th>
-				<td>【関数】ゲームの完全終了処理（タイマー切ってonienをリセット）<br>
-				<span class="small">※onien.enterframeTimerをクリア。<br>
-				※bgmとseを止めてnullへ。<br>
-				※onien=null、dataPriani={}にしてすっきり。<br>
-				※キャンバスの表示をクリアする。<br>
-				※各種イベントリスナーを消去する。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>fps</th>
-				<td>【数値】1秒あたりの描画回数<br>
-				<span class="small">※onien.start関数実行後は変更不可。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>frame</th>
-				<td>【数値】現在のフレーム番号<br>
-				<span class="small">※enterframeの発火ごとに+1されていく。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>h</th>
-				<td>【数値】ゲームキャンバスの大きさ（縦）<br>
-				<span class="small">※デフォルトは500。OnigiriEngine(w,h)のh。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>load<br>(color,backcolor)</th>
-				<td>【関数】画像・音声データを読み込んでキャンバスサイズをセットする。<br>
-				・color：「Loading...XX%」の文字色の文字列。　<span class="sub">省略可（デフォルト："white"）</span><br>
-				・backcolor：ローディング画面の背景色の文字列。　<span class="sub">省略可（デフォルト："black"）</span><br>
-				ロードが完了すると、<strong>onienLoadFinish</strong>イベントを発火し、onien.readyをtrueにする。<br>
-				<span class="small">※onien.canvas.width(height)をonien.w(h)に設定する。<br>
-				※onien.autoScaleがtrueなら、onien.setScreen関数をセット・実行。windowにresizeイベントリスナ―を追加して、onien.setScreen関数を実行するようにする。<br>
-				※onien.assetListを1つずつ読み込む。<br>
-				※読み込みチェック用のタイマー（onien.loadTimer）を設置。<br>
-				→完了（onien.assetList.length == onien.assetSet）すると、カスタムイベント（onienLoadFinish）をonien.loadfinishEventに設置。onienLoadFinishイベントを発火。onien.readyはtrueに。onien.loadTimerはクリアして削除。
-				</span>
+		<details open>
+			<summary id="OeMapLayer" class="summaryMain">OeMapLayer(name,x,y,w,h,cw,ch)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>
+				　・マップレイヤークラスです。<strong>OeMapLayer(name,x,y,w,h,cw,ch)</strong>で作成します。<br>
+				　・描画時やイベントチェック時に、画面外にあるオブジェクトは処理されないので、通常のレイヤーよりも動作が軽くなります。idを自動付与させた方が効果が大きいかもしれません。（スプライトオブジェクトのidを特に設定せずにaddした場合、idが自動付与されます。）
+				</p>
+				<table style="width: 100%">
+					<tr>
+						<th>name</th>
+						<td>【文字列】レイヤーの名前<br>
+							既存のレイヤー名と被ったら上書きされます。<br>
+							作成したレイヤーオブジェクトはonien.layer[name]に格納されます。</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】レイヤーの表示位置（横）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】レイヤーの表示位置（縦）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】レイヤーの大きさ（横）　<span class="sub">★省略可（デフォルト：キャンバスサイズ）</span><br>
+							mousedownなどのイベントメソッドの判定に使用します。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】レイヤーの大きさ（縦）　<span class="sub">★省略可（デフォルト：キャンバスサイズ）</span><br>
+							mousedownなどのイベントメソッドの判定に使用します。
+						</td>
+					</tr>
+					<tr>
+						<th>cw</th>
+						<td>【数値】1チップの大きさ（横）　<span class="sub">★省略可（デフォルト：80）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>ch</th>
+						<td>【数値】1チップの大きさ（縦）　<span class="sub">★省略可（デフォルト：80）</span>
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">注意</summary>
+				<p>
+				　・マップレイヤーに追加できるのはOeSpriteクラスのオブジェクトのみです。他のクラスのオブジェクトはaddしても追加されません。<br>
+				　・オブジェクト追加時、idが設定されてない場合のid自動付与方法が通常のレイヤーと異なります。
+				<span style="font-weight: bold">「(スプライトのx座標÷チップの幅)x(スプライトのy座標÷チップの高さ)」</span>がidになり、同じidのスプライトは上書きされます。※小数点以下は切り捨てです。<br>
+				　・画面外にあるオブジェクトはenterframeも実行されない点に注意が必要です。<br>
+				　・イベント発生時（マウスイベント）、画面外のオブジェクトはイベントチェックを行いません。
+				</p>
 				<br>
-				<span class="sub" style="font-size: 0.8em">ver.1.0.5～</span><span class="small">※onien.autoScaleがtrueなら、windowにorientationchangeリスナーも追加して、onien.setScreen関数を実行する。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>platform</th>
-				<td>【文字列】現在起動しているプラットフォーム。<br>
-				"i"、"android"、"win"、"mac"、"nazo"のどれかが入る。
-				</td>
-			</tr>
-			<tr>
-				<th>se</th>
-				<td>【連想配列】SE関連<br>
-				・<strong>start(name,buf)</strong>：SEを再生する関数。nameは拡張子を除いたファイル名（例："sound/ok1"）の文字列。bufは使用する番号（0～2）の数値。bufは省略可（デフォルト：0）。リピート再生はしない。<br>
-				<span class="small">※ブラウザで再生可能な拡張子か確かめてから再生していく。wav→mp3→ogg→m4aの順で試していく（ファイルがあれば）。<br>
-				※buf[0～2]をすべて使うと3コ同時に再生できます。</span><br>
-				・<strong>stop(buf)</strong>：SEを停止する関数。bufは再生を止める番号（0～2）bufは省略可（デフォルト：0）。<br>
-				・<strong>vol</strong>：SEの音量（0～1）の数値。<br>
-				・<strong>buf</strong>：再生するAudioオブジェクトを代入する配列（0～2）。非再生時はそれぞれnullになってる。通常は触らない。
-				</td>
-			</tr>
-			<tr>
-				<th>setCenter</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.0.3～</span>【真偽値】キャンバスをセンター寄せにするか否か　<span class="sub">（デフォルト：false）</span><br>
-				<span class="small">※onien.autoScaleもtrueである必要がある。onien.autoScaleがfalseだとsetCenterは機能しない。onien.setScreen関数内でセンター寄せ処理を実行する。</span>
-				</td>
-			</tr>
-			<tr>
-				<th>start()</th>
-				<td>【関数】ゲームをスタートする（タイマーが動き出す）<br>
-				<span class="small">
-					※onien.enterframeEventを作成、onien.eneterframeTimerが動き出し、enterframeイベントがfpsの間隔で発火するようになる。<br>
-					※onien.canvasにenterframeイベントリスナ―を追加して、以下の処理をする。<br>
-					　→onien.readyがtrueなら処理開始。<br>
-					　→onien.ctxをクリアレクト。<br>
-					　→各レイヤー・オブジェクトが表示ONなら、表示処理を行う。（各レイヤー内はレイヤーのsortListの順で描画していく。）各レイヤー・オブジェクトのenterframeに指定されたfunctionを実行。<br>
-					　→onien.frameを++。<br>
-					※PCかスマホを判別（onien.platformが"i"か"android"ならスマホ）して、PCならonien.canvasにclick、mousedown、mouseup、mousemove、mouseleaveのイベントリスナ―を追加。それぞれonien.eventClickCheckを起動。スマホならonien.canvasにtouchend、touchstart、touchmoveのイベントリスナーを追加。それぞれe.preventDefault()して、それからイベント座標を割り出してからonien.eventClickCheckを起動。<br>
-					　→mousemoveのイベントリスナ―ではmouseleaveも発火確認する。<br>
-					　→touchendのイベントリスナ―にclick,mouseup、touchstartのイベントリスナ―にmousedown、touchmoveのイベントリスナ―にmousemove,mouseleaveのfunctionを実行するようにする。
-				</span>
-				</td>
-			</tr>
-			<tr>
-				<th>w</th>
-				<td>【数値】ゲームキャンバスの大きさ（横）<br>
-				<span class="small">※デフォルトは500。OnigiriEngine(w,h)のw。</span>
-				</td>
-			</tr>
-		</table>
-		<p>　以下、通常は使用しないパラメータ・関数</p>
-		<table style="width: 100%">
-			<tr>
-				<th class="nouse">addLayer<br>(layer)</th>
-				<td>【関数】レイヤーを追加する。<br>
-				・layer：レイヤークラスのオブジェクト（オブジェクト）<br>
-				<span class="small">※onien.layer[layerName]にlayerを代入。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">addObj<br>(ele,layerName)</th>
-				<td>【関数】オブジェクトをレイヤーに追加する。<br>
-				・ele：オブジェクト（スプライト/HTML/ぷりアニ/文字）<br>
-				・layerName：追加先のレイヤーの名前（文字列）<br>
-				<span class="small">※ele.layerにlayerName、ele.idに固有idが代入される。<br>
-				※onien.idcountを++。<br>
-				※onien.layer[layerName].content[ele.id]にeleを代入。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">assetSet</th>
-				<td>【数値】読み込み済みの画像・音楽データの数<br>
-				<span class="small">※これとonien.assetList.lengthが同じになったらロード完了となる。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">canvas</th>
-				<td>【オブジェクト】ゲームを表示するキャンバスオブジェクト<br>
-				※idが「onigiri_canvas」のcanvasタグを読み込む。<br>
-				※HTMLファイルにあらかじめidが「onigiri_canvas」のcanvasタグを設置しておくこと。</td>
-			</tr>
-			<tr>
-				<th class="nouse">colCheck<br>(one,obj,x,y)</th>
-				<td>【関数】接触判定（コリジョン設定を使用して判定）<br>
-				<span class="small">※one(this)のコリジョン範囲内にobjのコリジョン点があったら、trueを返す。それ以外ならfalseを返す。<br>
-				※objとoneはスプライトクラス・ぷりアニクラスのどちらかを。<br>
-				・x,y：ここに設定した数値に、oneのオブジェクトが移動したと仮定して接触判定を行う。省略可。（省略したらoneのオブジェクトの現在のx,yが入る。）<br>
-				※oneとobjのどちらかのscaleが1以外なら必ずfalseを返す。</span>
-				</td>
-			</tr>
-			<tr>
-				<th class="nouse">contactCheck<br>(one,obj,distance)</th>
-				<td>【関数】接触判定（オブジェクト同士の中心距離で判定）<br>
-				<span class="small">※objとone(this)の中心点の距離がdistance以下ならtrueを返す。それ以外ならfalseを返す。<br>
-				※objとoneはスプライトクラス・ぷりアニクラスのどちらかを。<br>
-				※distanceは省略可（デフォルト：one.w）<br>
-				※oneとobjのどちらかのscaleが1以外なら必ずfalseを返す。</span>
-				</td>
-			</tr>
-			<tr>
-				<th class="nouse">ctx</th>
-				<td>【オブジェクト】キャンバスのコンテクスト（canvasのコンテクスト）</td>
-			</tr>
-			<tr>
-				<th class="nouse">delLayer<br>(layerName)</th>
-				<td>【関数】レイヤーを削除する。<br>
-				・layerName：レイヤーの名前（文字列）<br>
-				<span class="small">※onien.layer[layerName]を削除する。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">delObj<br>(ele)</th>
-				<td>【関数】オブジェクトをレイヤーから削除する。<br>
-				・ele：オブジェクト（スプライト/HTML/ぷりアニ/文字）<br>
-				<span class="small">※onien.layer[layerName].content[ele.id]を消す。<br>
-				※onien.layer[layerName].sortListからも消す。<br>
-				※prianiクラスの場合、onien.priani.deletePrianiでキャラデータも削除。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse" style="background-color: gray;">enterframeEvent</th>
-				<td style="background-color: gray;">【カスタムイベント】enterframe<br>
-				<span class="small">※onien.enterframeTimerがonien.fpsのスピード間隔でenterframeイベントを発火する。</span><br>
-				※ver1.1.0b～廃止済み</td>
-			</tr>
-			<tr>
-				<th class="nouse">enterframeFunction()</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】enterframe処理を実行する関数。</td>
-			</tr>
-			<tr>
-				<th class="nouse">enterframeTimer</th>
-				<td>【タイマー】enterframe処理を実行するためのタイマー</td>
-			</tr>
-			<tr>
-				<th class="nouse">eventClickCheck<br>(e,clickX,clickY,mode,mouseleaveMode,touchnum)</th>
-				<td>【関数】クリックなどのイベント処理を行う。<br>
-				・e：イベントオブジェクト<br>
-				・clickX,clickY：イベント発生座標<br>
-				・mode：click、mousedown、mouseup、mousemove、mouseleaveのいずれかの文字列<br>
-				<span class="small">※各レイヤー・各オブジェクトがnonEvent==falseかつvisible==trueの場合、イベント位置をチェックして、イベント位置に該当のレイヤー・オブジェクトがあれば（mouseleaveの場合はイベント位置に該当のオブジェクトがなければ）、そのレイヤー・オブジェクトの"mode"で設定したfunctionを実行する。（レイヤーのsortListの逆の順に発火確認→実行）</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">idcount</th>
-				<td>【数値】レイヤーにオブジェクトを追加するとき、固有の番号を振るためのカウント。<br>
-				<span class="small">※onien.addObj関数を使うたびに+1。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">layer</th>
-				<td>【連想配列】レイヤー関連<br>
-				{レイヤー名:レイヤークラスのオブジェクト,……}</td>
-			</tr>
-			<tr>
-				<th class="nouse">loadfinishEvent</th>
-				<td>【カスタムイベント】onienLoadFinish<br>
-				<span class="small">※onien.load関数でonien.assetListの読み込みが完了したことをお知らせ。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">notpcEvent(e)</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】スマホ用のイベント発生時に実行する関数。<br>
-				・e：イベントオブジェクト</td>
-			</tr>
-			<tr>
-				<th class="nouse">pcEvent(e)</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】パソコン用のイベント発生時に実行する関数。<br>
-				・e：イベントオブジェクト</td>
-			</tr>
-			<tr>
-				<th class="nouse">priani</th>
-				<td>【連想配列】ぷりアニ関連<br>
-				・charaListPriani：キャラクターリスト連想配列（{キャラ名:true,…}みたいな）<br>
-				・charaPriani：キャラのデータ入り連想配列（{キャラ名：{data:{アニメーションデータ},fl:ぷりアニID,opacity:[],refrain:true,x,100,y:100},…}みたいな）<br>
-				・dataPriani：アニメーションデータ入り連想配列（{ぷりアニID:{アニメーションデータ},…}みたいな）<br>
-				・drawPriani：function(charaName,xxx,yyy)キャラを表示する関数。enterframe発生時に実行。<br>
-				・framePriani：各キャラクターのフレーム番号（{キャラ名:4,…}みたいな）<br>
-				・loadPriani：function(fl,charaName,charaX,charaY,refrain)キャラクターをcharaPriani内に作成する関数。ぷりアニクラス作成時に実行。framePriani[キャラ名]もセットし、-1を代入。<br>
-				・setting：ぷりアニを使用するセッティング。dataPriani、charaPriani、framePriani、charaListPrianiを作成する。<br>
-				・changePriani：function(fl,charaName,refrain)アニメーションを変更する関数。loadPrianiを実行する。<br>
-				・deletePriani：function(charaName)キャラデータを削除する関数。
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>h</th>
+						<td>【数値】レイヤーの大きさ（縦）
+						</td>
+					</tr>
+					<tr>
+						<th>name</th>
+						<td>【文字列】レイヤーの名前<br>
+							作成時に入力したものが格納されています。<br>
+							後から変更しない方が良いと思われます。
+						</td>
+					</tr>
+					<tr>
+						<th>nonEvent</th>
+						<td>【真偽値】<span class="sub">（デフォルト：false）</span><br>
+							mousedownなどのイベントメソッドを使わない場合、このプロパティをtrueにすると発火確認処理が省略されるので動作が早くなる場合があります。trueにしてもenterframeは処理されます。
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。					
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】レイヤーの大きさ（横）
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】レイヤーの表示位置（横）	
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】レイヤーの表示位置（縦）
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">content</th>
+						<td>【連想配列】レイヤー内の各オブジェクト本体（OeSprite）<br>
+						通常は触らないプロパティです。</td>
+					</tr>
+					
+					<tr>
+						<th class="nouse">maplayer</th>
+						<td>【真偽値】マップレイヤーであることの証明<br>
+						これがtrueになっていると、マップレイヤーとしての処理がされるようになります。通常は触らないプロパティです。</td>
+					</tr>
+					<tr>
+						<th class="nouse">sortList</th>
+						<td>【配列】idを自動付与しなかったオブジェクトのidリスト<br>
+							通常は触らないプロパティです。</td>
+					</tr>
+					<tr>
+						<th class="nouse">sortList2</th>
+						<td>【連想配列】idを自動付与しなかったオブジェクトの描画順<br>
+							通常は触らないプロパティです。</td>
+					</tr>
+					<tr>
+						<th class="nouse">sortType</th>
+						<td>【文字列】レイヤー内オブジェクトの描画順のソート方法（ybig）<br>
+							便宜上設定はされていますが、マップレイヤーの場合は意味をなしません。
+							通常は触らないプロパティです。</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>addLayer()</th>
+						<td>自分をレイヤーをとしてゲームに追加します。<br>
+							作成したレイヤーオブジェクトはonien.layer[name]に格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>delAllObject()</th>
+						<td>レイヤー内のオブジェクトを全て削除します。
+						</td>
+					</tr>
+					<tr>
+						<th>delLayer()</th>
+						<td>自分を削除します。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">sortStart()</th>
+						<td>sortListがある場合は、enterframeFunction実行時にsortList、sortList2のソートを行います。通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・maplayer1.mousedown = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>click</th>
+						<td>クリックした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>マウスダウンした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>マウスリーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>マウスムーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>マウスアップした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+				</table>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeSprite" class="summaryMain">OeSprite(src,x,y,w,h,coma)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・スプライト（画像）クラスです。<strong>new OeSprite(src,x,y,w,h,coma)</strong>で作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>src</th>
+						<td>【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。<br>
+							pngとjpgが使用可能です。OeTmpCanvasのcanvasを設定することも可能です。</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】画像の表示位置（横）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】画像の表示位置（縦）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】画像の大きさ（横）　<span class="sub">★省略可（デフォルト：画像サイズ）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】画像の大きさ（縦）　<span class="sub">★省略可（デフォルト：画像サイズ）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>coma</th>
+						<td>【数値】表示するコマの番号　<span class="sub">★省略可（デフォルト：0）</span><br>
+							画像をwとhで割ってコマ番号を振っています。<br>
+							<img src="img/sprite.png" width="105" height="200">
+						</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>col</th>
+						<td>【配列】接触判定用のコリジョン設定<br>
+							<span class="sub">（デフォルト：[0,0,this.w,0,this.w,this.h,0,this.h]）</span><br>
+							例えば<img src="img/col0.png">に<img src="img/col.png">という感じでコリジョン設定するなら<br>
+							[37,60,7,40,12,13,33,22,55,11,61,40]<br>
+							という感じです。<br>
+							右の画像の黒い部分がコリジョン判定範囲で、各頂点を配列としてコリジョン設定する感じです。CollisionSet.htmを使うと比較的簡単にコリジョン設定を作成できるかと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>coma</th>
+						<td>【数値】表示するコマの番号<span class="sub">（デフォルト：0）</span><br>
+							画像をwとhで割ってコマ番号を振っています。<br>
+							<img src="img/sprite.png" width="105" height="200">
+						</td>
+					</tr>
+					<tr>
+						<th>composite</th>
+						<td>【文字列】描画時の合成処理<span class="sub">（デフォルトでは未定義）</span><br>
+							通常のCanvasRenderingContext2d.globalCompositeOperationプロパティに使用できる合成処理のうちの、"source-over"、"destination-over"、"destination-out"、"lighter"、"xor"、"multiply"、"screen"、"overlay"、"darken"、"lighten"、"color-dodge"、"color-burn"、"hard-light"、"soft-light"、"difference"、"exclusion"、"hue"、"saturation"、"color"、"luminosity"に対応しています。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】画像の大きさ（縦）
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+						あらかじめidプロパティを設定していなかった場合、addした時に自動でidが付与されます。通常レイヤーの場合は"S_1"といった「タイプ_固有番号」形式の文字列になります。マップレイヤーの場合のid自動付与方法は特殊ですので、マップレイヤーの注意事項をご確認ください。<br>
+						add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>nonEvent</th>
+						<td>【真偽値】<span class="sub">（デフォルト：false）</span><br>
+							mousedownなどのイベントメソッドを使わない場合、このプロパティをtrueにすると発火確認処理が省略されるので動作が早くなる場合があります。trueにしてもenterframeは処理されます。
+						</td>
+					</tr>
+					<tr>
+						<th>opacity</th>
+						<td>【数値】不透明度<span class="sub">（デフォルト：1）</span><br>
+							0～1の実数値で設定します。（0で完全に透明、1で完全に不透明）
+						</td>
+					</tr>
+					<tr>
+						<th>rotate</th>
+						<td>【数値】回転角度<span class="sub">（デフォルト：null）</span><br>
+						45、-90といった度数法の数値で設定してください。（ラジアン角では機能しません）<br>
+						rotateがnull以外の場合、contactCheckメソッドは機能しません（必ずfalseを返します）。colCheckメソッドは機能はしますが、精度は落ちます。
+						</td>
+					</tr>
+					<tr>
+						<th>scale</th>
+						<td>【数値】拡縮率<span class="sub">（デフォルト：1）</span><br>
+						scaleが1以外の場合、contactCheckメソッドは機能しません（必ずfalseを返します）。colCheckメソッドは機能はしますが、精度は落ちます。
+						</td>
+					</tr>
+					<tr>
+						<th>scaleX</th>
+						<td>【数値】拡縮率X<span class="sub">（デフォルト：null）</span><br>
+						scaleYも設定しないと機能しません。<br>
+						scaleXかscaleYがnull以外の場合、contactCheckメソッドは機能しません（必ずfalseを返します）。colCheckメソッドは機能はしますが、精度は落ちます。
+						</td>
+					</tr>
+					<tr>
+						<th>scaleY</th>
+						<td>【数値】拡縮率Y<span class="sub">（デフォルト：null）</span><br>
+						scaleXも設定しないと機能しません。<br>
+						scaleXかscaleYがnull以外の場合、contactCheckメソッドは機能しません（必ずfalseを返します）。colCheckメソッドは機能はしますが、精度は落ちます。
+						</td>
+					</tr>
+					<tr>
+						<th>src</th>
+						<td>【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。<br>
+							pngとjpgが使用可能です。OeTmpCanvasのcanvasを設定することも可能です。
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】画像の大きさ（横）
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】画像の表示位置（横）
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】画像の表示位置（縦）
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"S"）<br>
+						通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						add実行時、あらかじめidプロパティを設定していなかった場合、自動でidが付与されます。通常レイヤーの場合は"S_1"といった「タイプ_固有番号」形式の文字列になります。マップレイヤーの場合のid自動付与方法は特殊ですので、マップレイヤーの注意事項をご確認ください。<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>colCheck
+							(obj,x,y)</th>
+						<td>コリジョン設定（colプロパティ）を使用して接触判定をします。<br>
+						このオブジェクトとobjで指定したオブジェクトのコリジョンが接触していれば、trueを返します。<br>
+						　・obj：【オブジェクト】OeSpriteかOePrianiのオブジェクト<br>
+						　・x,y：【数値】ここに設定した数値に、このオブジェクトが移動したと仮定して接触判定を行います。<span class="sub">★省略可（省略した場合はこのオブジェクトの現在のx,yが入ります。）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>contactCheck
+							(obj,distance)</th>
+						<td>オブジェクトの中心点距離で接触判定をします。<br>
+							このオブジェクトとobjで指定したオブジェクトの中心点の距離がdistance以下なら、接触したと判定してtrueを返します。<br>
+						　・obj：【オブジェクト】OeSpriteかOePrianiのオブジェクト<br>
+						　・distance：【数値】中心点の距離がこの数値以下なら接触したと判定します。<br>
+						※比較するオブジェクトのどちらかのscaleが1以外、またはscaleX・scaleY・rotateの設定がnull以外なら機能しません。（必ずfalseを返します。）
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を所属レイヤーから削除します。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・sprite1.mousedown = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>click</th>
+						<td>クリックした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。<br>
+							マップレイヤーの場合は、画面外にあるときは処理されませんので注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>マウスダウンした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>マウスリーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>マウスムーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>マウスアップした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+				</table>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeHtmlTag" class="summaryMain">OeHtmlTag(id,autoPosition,autoScale)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・HTMLタグクラスです。<strong>new OeHtmlTag(id,autoPosition,autoScale)</strong>で作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>id</th>
+						<td>【文字列】使用するHTML要素のid<br>
+							該当するidをもつDOMオブジェクトがobjプロパティに格納されます。<br>
+							該当するidのDOMオブジェクトが存在しない場合は、該当するidを持つdivタグを自動で作成してbodyに追加します。</td>
+					</tr>
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か　<span class="sub">★省略可（デフォルト：false）</span><br>
+						trueの場合は、作成後、xとyの両方のプロパティに数値を設定する必要があります。</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か　<span class="sub">★省略可（デフォルト：false）</span><br>
+						trueにして作成した場合、DOMオブジェクトにOnigiriEngineHtmlTagClassというクラスを追加します。<br>
+						また、idがOnigiriEngineHtmlTagClassStyleのstyleタグが存在しなければ作成してbodyに追加します。</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か<br>
+							tureの場合、xとyの両方のプロパティに数値が設定しておく必要があります。
+						</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か<br>
+							作成時にtrueにしていなかった場合、後からtrueにしても機能しません。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】DOMオブジェクトの大きさ（縦）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+							作成時に指定したidが格納されます。<br>
+							add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>obj</th>
+						<td>【オブジェクト】DOMオブジェクト<br>
+							該当idのDOMオブジェクトが格納されています。<br>
+							作成時、zIndexが2に設定されます。変更したい場合は「このHTMLタグクラスオブジェクト.obj.style.zIndex」を変更してください。
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】DOMオブジェクトの大きさ（横）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】表示位置のpx（x）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】表示位置のpx（y）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoX</th>
+						<td>【数値】自動で位置調整した時の表示位置(x)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoY</th>
+						<td>【数値】自動で位置調整した時の表示位置(y)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"H"）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を削除します。<br>
+							DOMオブジェクトも削除されます。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">positionSet()</th>
+						<td>位置調整します。autoX、autoYを設定します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">scaleSet()</th>
+						<td>拡縮の比率を返します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・htmltag1.enterframe = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">zIndexについて</summary>
+				<p>
+				　・おにぎりエンジンが自動で設定するDOMオブジェクトのzIndexは下記の通りです。
+				</p>
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.canvas</span>（ゲームを表示するキャンバスオブジェクト）<br>
+				・zIndex：1<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.mobimg</span>（スマホの画面サイズを測定するためのdivタグ）<br>
+				・zIndex：0<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき（プラットフォームが"i"か"android"の場合のみ設置されます。）</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">HTMLタグクラス・画像ボタンHTMLタグクラス・文字ボタンHTMLタグクラス・メッセージHTMLタグクラスのobj</span><br>
+				・zIndex：2<br>
+				・zIndex自動設定タイミング：作成時<br>
+				・変更方法：「該当クラスオブジェクト.obj.style.zIndex」を変更してください。</p>
 				<br>
-				<span class="small">※onien.load関数でonien.assetListの読み込みが完了したことをお知らせ。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">ready</th>
-				<td>【真偽値】ゲームの準備が出来てるか否か<br>
-				<span class="small">※onien.assetListを読み込み済みならtrueになる。<br>
-				※これがtrueだとenterframeの各処理を行う。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">setScreen()</th>
-				<td>【関数】ウィンドウサイズに合わせてキャンバスサイズを自動調整する。<br>
-				<span class="small">※onien.load関数実行時、onien.autoScaleがtrueなら設置される。<br>
-				※onien.load関数実行時と、ウィンドウサイズ変更時に実行される。</span></td>
-			</tr>
-			<tr>
-				<th class="nouse">windowEvent()</th>
-				<td><span class="sub" style="font-size: 0.8em">ver.1.1.0b～</span>【関数】windowのイベント発生時に実行する関数。</td>
-			</tr>
-		</table>
-		</div>
-		
-		<p class="right"><a href="#up">▲上に戻る</a></p>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeImgButtonHtmlTag" class="summaryMain">OeImgButtonHtmlTag(id,autoPosition,autoScale,buttonOn,buttonOff)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・画像ボタンHTMLタグクラスです。<strong>new OeImgButtonHtmlTag(id,autoPosition,autoScale,buttonOn,buttonOff)</strong>で作成します。<br>
+				　・HTMLタグクラスの子クラスで、imgタグでボタンを作るのに楽なクラスとなっています。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>id</th>
+						<td>【文字列】使用するHTML要素のid<br>
+							該当するidをもつDOMオブジェクトがobjプロパティに格納されます。<br>
+							該当するidのDOMオブジェクトが存在しない場合は、該当するidを持つimgタグを自動で作成してbodyに追加します。</td>
+					</tr>
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か　<span class="sub">★省略可（デフォルト：false）</span><br>
+						trueの場合は、作成後、xとyの両方のプロパティに数値を設定する必要があります。</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か　<span class="sub">★省略可（デフォルト：false）</span><br>
+						trueにして作成した場合、DOMオブジェクトにOnigiriEngineHtmlTagClassというクラスを追加します。<br>
+						また、idがOnigiriEngineHtmlTagClassStyleのstyleタグが存在しなければ作成してbodyに追加します。</td>
+					</tr>
+					<tr>
+						<th>buttonOn</th>
+						<td>【文字列】クリック時の画像のパス　<span class="sub">★省略可（デフォルト未定義）</span><br>
+						assetListに無いものでも設定可能です。<br>
+						設定した場合、該当DOMオブジェクトに各種イベントリスナーを追加します。</td>
+					</tr>
+					<tr>
+						<th>buttonOff</th>
+						<td>【文字列】通常時の画像のパス　<span class="sub">★省略可（デフォルト未定義）</span><br>
+						assetListに無いものでも設定可能です。<br>
+						設定した場合、該当DOMオブジェクトに各種イベントリスナーを追加します。</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か<br>
+							tureの場合、xとyの両方のプロパティに数値が設定しておく必要があります。
+						</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か<br>
+							作成時にtrueにしていなかった場合、後からtrueにしても機能しません。
+						</td>
+					</tr>
+					<tr>
+						<th>buttonOff</th>
+						<td>【文字列】通常時の画像のパス<br>
+							assetListに無いものでも設定可能です。
+						</td>
+					</tr>
+					<tr>
+						<th>buttonOn</th>
+						<td>【文字列】クリック時の画像のパス<br>
+							assetListに無いものでも設定可能です。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】DOMオブジェクトの大きさ（縦）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+							作成時に指定したidが格納されます。<br>
+							add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>obj</th>
+						<td>【オブジェクト】DOMオブジェクト<br>
+							該当idのDOMオブジェクトが格納されています。<br>
+							作成時、zIndexが2に設定されます。変更したい場合は「このHTMLタグクラスオブジェクト.obj.style.zIndex」を変更してください。
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】DOMオブジェクトの大きさ（横）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】表示位置のpx（x）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】表示位置のpx（y）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoX</th>
+						<td>【数値】自動で位置調整した時の表示位置(x)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoY</th>
+						<td>【数値】自動で位置調整した時の表示位置(y)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"H"）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を削除します。<br>
+							DOMオブジェクトも削除されます。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">positionSet()</th>
+						<td>位置調整します。autoX、autoYを設定します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">scaleSet()</th>
+						<td>拡縮の比率を返します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・htmltag1.enterframe = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>作成時にbuttonOnやbuttonOffを設定した場合にのみ機能します。<br>
+							PCの場合は、該当DOMオブジェクトのmousedownイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchstartイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>作成時にbuttonOnやbuttonOffを設定した場合にのみ機能します。<br>
+							PCの場合は、該当DOMオブジェクトのmouseleaveイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchcancelイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>作成時にbuttonOnやbuttonOffを設定した場合にのみ機能します。<br>
+							PCの場合は、該当DOMオブジェクトのmousemoveイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchmoveイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>作成時にbuttonOnやbuttonOffを設定した場合にのみ機能します。<br>
+							PCの場合は、該当DOMオブジェクトのmouseupイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchendイベント発生時に実行されます。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">zIndexについて</summary>
+				<p>
+				　・おにぎりエンジンが自動で設定するDOMオブジェクトのzIndexは下記の通りです。
+				</p>
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.canvas</span>（ゲームを表示するキャンバスオブジェクト）<br>
+				・zIndex：1<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.mobimg</span>（スマホの画面サイズを測定するためのdivタグ）<br>
+				・zIndex：0<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき（プラットフォームが"i"か"android"の場合のみ設置されます。）</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">HTMLタグクラス・画像ボタンHTMLタグクラス・文字ボタンHTMLタグクラス・メッセージHTMLタグクラスのobj</span><br>
+				・zIndex：2<br>
+				・zIndex自動設定タイミング：作成時<br>
+				・変更方法：「該当クラスオブジェクト.obj.style.zIndex」を変更してください。</p>
+				<br>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeTextButtonHtmlTag" class="summaryMain">OeTextButtonHtmlTag(id,autoPosition,autoScale,text,name)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・文字ボタンHTMLタグクラスです。<strong>new OeTextButtonHtmlTag(id,autoPosition,autoScale,text,name)</strong>で作成します。<br>
+				　・HTMLタグクラスの子クラスで、divタグでボタンを作るのに楽なクラスとなっています。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>id</th>
+						<td>【文字列】使用するHTML要素のid<br>
+							該当するidをもつDOMオブジェクトがobjプロパティに格納されます。<br>
+							該当するidのDOMオブジェクトが存在しない場合は、該当するidを持つdivタグを自動で作成してbodyに追加します。<br>
+							また、該当DOMオブジェクトに各種イベントリスナーを追加します。</td>
+					</tr>
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か<br>
+						trueの場合は、作成後、xとyの両方のプロパティに数値を設定する必要があります。</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か<br>
+						trueにして作成した場合、DOMオブジェクトにOnigiriEngineHtmlTagClassというクラスを追加します。<br>
+						また、idがOnigiriEngineHtmlTagClassStyleのstyleタグが存在しなければ作成してbodyに追加します。</td>
+					</tr>
+					<tr>
+						<th>text</th>
+						<td>【文字列】表示するテキスト<br>
+							該当idのDOMオブジェクトのinnerTextとして設定されます。</td>
+					</tr>
+					<tr>
+						<th>name</th>
+						<td>【文字列】クラス名　<span class="sub">★省略可（デフォルト未定義）</span><br>
+							作成時、指定しておくと、自動で該当idのDOMオブジェクトに、このクラス名を設定します。</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か<br>
+							tureの場合、xとyの両方のプロパティに数値が設定しておく必要があります。
+						</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か<br>
+							作成時にtrueにしていなかった場合、後からtrueにしても機能しません。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】DOMオブジェクトの大きさ（縦）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+							作成時に指定したidが格納されます。<br>
+							add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>obj</th>
+						<td>【オブジェクト】DOMオブジェクト<br>
+							該当idのDOMオブジェクトが格納されています。<br>
+							作成時、zIndexが2に設定されます。変更したい場合は「このHTMLタグクラスオブジェクト.obj.style.zIndex」を変更してください。
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】DOMオブジェクトの大きさ（横）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】表示位置のpx（x）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】表示位置のpx（y）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoX</th>
+						<td>【数値】自動で位置調整した時の表示位置(x)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoY</th>
+						<td>【数値】自動で位置調整した時の表示位置(y)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"H"）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を削除します。<br>
+							DOMオブジェクトも削除されます。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">positionSet()</th>
+						<td>位置調整します。autoX、autoYを設定します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">scaleSet()</th>
+						<td>拡縮の比率を返します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・htmltag1.enterframe = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>PCの場合は、該当DOMオブジェクトのmousedownイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchstartイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>PCの場合は、該当DOMオブジェクトのmouseleaveイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchcancelイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>PCの場合は、該当DOMオブジェクトのmousemoveイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchmoveイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>PCの場合は、該当DOMオブジェクトのmouseupイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchendイベント発生時に実行されます。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">zIndexについて</summary>
+				<p>
+				　・おにぎりエンジンが自動で設定するDOMオブジェクトのzIndexは下記の通りです。
+				</p>
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.canvas</span>（ゲームを表示するキャンバスオブジェクト）<br>
+				・zIndex：1<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.mobimg</span>（スマホの画面サイズを測定するためのdivタグ）<br>
+				・zIndex：0<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき（プラットフォームが"i"か"android"の場合のみ設置されます。）</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">HTMLタグクラス・画像ボタンHTMLタグクラス・文字ボタンHTMLタグクラス・メッセージHTMLタグクラスのobj</span><br>
+				・zIndex：2<br>
+				・zIndex自動設定タイミング：作成時<br>
+				・変更方法：「該当クラスオブジェクト.obj.style.zIndex」を変更してください。</p>
+				<br>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeMessageHtmlTag" class="summaryMain">OeMessageHtmlTag(id,autoPosition,autoScale,layerName,name)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・メッセージHTMLタグクラスです。<strong>new OeMessageHtmlTag(id,autoPosition,autoScale,layerName,name)</strong>で作成します。<br>
+				　・HTMLタグクラスの子クラスで、メッセージを１文字ずつ表示することが可能なクラスとなっています。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>id</th>
+						<td>【文字列】使用するHTML要素のid<br>
+							該当するidをもつDOMオブジェクトがobjプロパティに格納されます。<br>
+							該当するidのDOMオブジェクトが存在しない場合は、該当するidを持つdivタグを自動で作成してbodyに追加します。<br>
+							また、該当DOMオブジェクトに各種イベントリスナーを追加します。</td>
+					</tr>
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か　<span class="sub">★省略可（デフォルト：false）</span><br>
+						trueの場合は、作成後、xとyの両方のプロパティに数値を設定する必要があります。</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か　<span class="sub">★省略可（デフォルト：false）</span><br>
+						trueにして作成した場合、DOMオブジェクトにOnigiriEngineHtmlTagClassというクラスを追加します。<br>
+						また、idがOnigiriEngineHtmlTagClassStyleのstyleタグが存在しなければ作成してbodyに追加します。</td>
+					</tr>
+					<tr>
+						<th>layerName</th>
+						<td>【文字列】メッセージHTMLタグクラスのページ送り操作を追加するレイヤーの名前　<span class="sub">★省略可（デフォルト未定義）</span><br>
+						作成時設定しておくと、該当レイヤーのmouseupメソッドとmousedownメソッドをメッセージHTMLタグクラスのページ送り等を行うためのメソッドに上書き変更します。</td>
+					</tr>
+					<tr>
+						<th>name</th>
+						<td>【文字列】クラス名　<span class="sub">★省略可（デフォルト未定義）</span><br>
+							作成時、指定しておくと、自動で該当idのDOMオブジェクトに、このクラス名を設定します。</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>autoPosition</th>
+						<td>【真偽値】自動で位置調整するか否か<br>
+							tureの場合、xとyの両方のプロパティに数値が設定しておく必要があります。
+						</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動で拡縮調整するか否か<br>
+							作成時にtrueにしていなかった場合、後からtrueにしても機能しません。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】DOMオブジェクトの大きさ（縦）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+							作成時に指定したidが格納されます。<br>
+							add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>obj</th>
+						<td>【オブジェクト】DOMオブジェクト<br>
+							該当idのDOMオブジェクトが格納されています。<br>
+							作成時、zIndexが2に設定されます。変更したい場合は「このHTMLタグクラスオブジェクト.obj.style.zIndex」を変更してください。
+						</td>
+					</tr>
+					<tr>
+						<th>page</th>
+						<td>【数値】現在表示中のページ番号（open実行時に指定した配列texts内の番号）
+						</td>
+					</tr>
+					<tr>
+						<th>pushSpeedUp</th>
+						<td>【真偽値】マウスダウン時にメッセージの表示スピードをアップするか否か<span class="sub">（デフォルト：true）</span><br>
+							trueにするとマウスダウン時に表示スピードが3倍になります。
+						</td>
+					</tr>
+					<tr>
+						<th>speed</th>
+						<td>【数値】メッセージの表示スピード<span class="sub">（デフォルト：50）</span><br>
+							大きい方が遅くなります。0だと瞬間表示します。
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】DOMオブジェクトの大きさ（横）<span class="sub">（デフォルト：null）</span><br>
+							このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkAnimation</th>
+						<td>【文字列】クリック待ちマークのアニメーション名<span class="sub">（デフォルト："MessageWaitAnimation"）</span><br>
+						クリック待ちマークに適用するアニメーション名（CSSの@keyframesのアニメーション名）を指定します。<br>
+						"none"にすることでアニメが止まります。<br>
+						変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkAnimationSpeed</th>
+						<td>【数値】クリック待ちマークのアニメーションのスピード<span class="sub">（デフォルト：500）</span><br>
+							大きい方が遅くなります。単位はミリ秒で設定されます。<br>
+							変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkColor</th>
+						<td>【文字列】クリック待ちマークの色<span class="sub">（デフォルト："white"）</span><br>
+							変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkImg</th>
+						<td>【文字列】クリック待ちマークの画像のパス<span class="sub">（デフォルト：null）</span><br>
+							指定すると、クリック待ちマークとして画像が表示されます。nullにすると、waitMarkShapeで指定した文字列が表示されます。<br>
+							変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkPosition</th>
+						<td>【文字列】クリック待ちマークの表示位置<span class="sub">（デフォルト："right"）</span><br>
+							"right"か"center"が設定可能です。<br>
+							変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkShape</th>
+						<td>【文字列】クリック待ちマークの形<span class="sub">（デフォルト："●"）</span><br>
+							指定した文字列がクリック待ちマークとして表示されます。<br>
+							変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkSize</th>
+						<td>【数値】クリック待ちマークの大きさ<span class="sub">（デフォルト：20）</span><br>
+							変更したのち、waitMarkSettingメソッドを実行することで反映されます。
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】表示位置のpx（x）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】表示位置のpx（y）<span class="sub">（デフォルト：null）</span><br>
+							数値を設定すると、DOMオブジェクトに自動的にstyleのposition:absoluteが設定されます。<br>また、このパラメータにはnullか数値以外を設定しないでください。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoX</th>
+						<td>【数値】自動で位置調整した時の表示位置(x)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">autoY</th>
+						<td>【数値】自動で位置調整した時の表示位置(y)<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">count</th>
+						<td>【数値】現在表示している文字数<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">doing</th>
+						<td>【真偽値】１文字ずつ表示中か否か<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">frame</th>
+						<td>【数値】フレーム<br>
+							setInterval処理が実行されるたびにframeが＋されます。マウスダウン時の文字表示スピードアップに必須です。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">mode</th>
+						<td>【数値/文字列】open実行時に指定したモード<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">nextpage</th>
+						<td>【真偽値】次のページに行けるか否か<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">pushnow</th>
+						<td>【真偽値】マウスダウン中か否か（文字表示スピードアップ中か）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">tag</th>
+						<td>【連想配列】タグ一覧<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">tagRuby</th>
+						<td>【配列】rubyタグの内部を実行中の際に使用します。<br>
+							[0]が-1以外ならrubyタグの処理中であることを示します。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">tagSpan</th>
+						<td>【真偽値】trueならspanタグの内部を表示中であることを示します。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">texts</th>
+						<td>【配列】表示するテキスト<br>
+							open実行時に設定されます。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">textSpace</th>
+						<td>【DOMオブジェクト】テキスト表示用のdivタグ<br>
+							作成時、自動でobjに追加されるdivタグを格納しています。このdivタグ内にテキストが表示されます。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">timer</th>
+						<td>【タイマー】文字送りなど用のタイマー<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"H"）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">waitcount</th>
+						<td>【数値】自動でページ送りする場合の待つカウント<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">waitMark</th>
+						<td>【DOMオブジェクト】クリック待ちマーク表示用のdivタグ<br>
+							作成時、自動でobjに追加されるdivタグを格納しています。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>タイマーを止めてから、自分を削除します。<br>
+							DOMオブジェクトも削除されます。
+						</td>
+					</tr>
+					<tr>
+						<th>open(texts,mode)</th>
+						<td>メッセージを表示します。<br>
+						　・texts：【配列】表示するテキスト
+						　　<details style="background-color: azure;">
+							<summary>テキスト中で使用できるタグ</summary>
+							　・<span style="font-weight: bold;">&lt;br&gt;</span>：改行します。<br>
+							　・<span style="font-weight: bold;">&lt;span class="***"&gt;～&lt;/span&gt;</span>：クラス設定のみできます。色やサイズ変更等での使用が想定されています。<br>
+							　・<span style="font-weight: bold;">&lt;ruby rb="もじれつ" class="***"&gt;文字列&lt;/ruby&gt;</span>：ルビを振りたいとき、通常のrubyタグは利用できませんので、このようにルビを振りたい文字列をrubyタグで囲って、rbパラメータに読み仮名を設定してください。class設定も可能です。（class設定は省略可です）
+							</details>
+							　・mode：【文字列】テキストの表示モード<br>
+							<details style="background-color: azure;">
+								<summary>モードの種類</summary>
+								　・<span style="font-weight: bold;">"end"</span>：ユーザー操作でページ送りします。全てのテキストを表示したあと、自動でメッセージウィンドウを非表示にします。<br>
+								　・<span style="font-weight: bold;">"select"</span>：ユーザー操作でページ送りします。全てのテキストを表示したあと、メッセージを表示したまま停止します。<br>
+								　・<span style="font-weight: bold;">数値</span>：指定した数をカウントしたのちに自動でページ送りします。全てのテキストを表示したあと、指定した数をカウントしたのちに自動でメッセージウィンドウを非表示にします。（※speedプロパティが0かそれ以外かで、設定する推奨数値が変わります。speedが0の場合は1000で1秒待つことになります。speedが0以外の場合は、speedの数値によってカウントスピードが変わります。5くらいから様子をみて変えていってください。）
+							</details>
+							　　　
+						</td>
+					</tr>
+					<tr>
+						<th>waitMarkSetting()</th>
+						<td>クリック待ちマークに関する設定を表示に反映します。<br>
+							waitMarkAnimationが"none"ならアニメ停止し、"none"以外ならアニメ再生開始します。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">mousedownDefault()</th>
+						<td>マウスダウンイベント時に、mousedownより先に実行されます。<br>pushSpeedUpがtrueの場合に必要な処理を行います。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">mouseupDefault()</th>
+						<td>マウスアップイベント時に、mouseupより先に実行されます。<br>
+							ページ送りなどの処理を行います。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">positionSet()</th>
+						<td>位置調整します。autoX、autoYを設定します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">scaleSet()</th>
+						<td>拡縮の比率を返します。<br>
+							通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">tagDetection(texts)</th>
+						<td>渡されたtexts内にあるタグ記述を削除し、使用可能なタグはtagプロパティに追加します。speedが0じゃない場合に実行されます。通常は触らないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">tagSetting()</th>
+						<td>textsプロパティ内の使用不能なタグ記述を削除し、rubyタグは利用可能な状態に修正します。speedが0の場合に実行されます。通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・message1.end = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>end</th>
+						<td>全てのページの表示が終了した時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>PCの場合は、該当DOMオブジェクトのmousedownイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchstartイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>PCの場合は、該当DOMオブジェクトのmouseleaveイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchcancelイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>PCの場合は、該当DOMオブジェクトのmousemoveイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchmoveイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>PCの場合は、該当DOMオブジェクトのmouseupイベント発生時に実行されます。<br>
+							スマホの場合は、該当DOMオブジェクトのtouchendイベント発生時に実行されます。
+						</td>
+					</tr>
+					<tr>
+						<th>pageChange</th>
+						<td>ページが変わった時に実行されます。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">zIndexについて</summary>
+				<p>
+				　・おにぎりエンジンが自動で設定するDOMオブジェクトのzIndexは下記の通りです。
+				</p>
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.canvas</span>（ゲームを表示するキャンバスオブジェクト）<br>
+				・zIndex：1<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">onien.mobimg</span>（スマホの画面サイズを測定するためのdivタグ）<br>
+				・zIndex：0<br>
+				・zIndex自動設定タイミング：onien.autoScaleがtrueの状態でonien.loadを実行したとき（プラットフォームが"i"か"android"の場合のみ設置されます。）</p>
+
+				<p style="border: gray solid 1px; background-color: white;padding: 5px;">
+				<span style="font-weight: bold;">HTMLタグクラス・画像ボタンHTMLタグクラス・文字ボタンHTMLタグクラス・メッセージHTMLタグクラスのobj</span><br>
+				・zIndex：2<br>
+				・zIndex自動設定タイミング：作成時<br>
+				・変更方法：「該当クラスオブジェクト.obj.style.zIndex」を変更してください。</p>
+				<br>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OePriani" class="summaryMain">OePriani(prianiId,chara,x,y,refrain)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・ぷりアニクラスです。<strong>new OePriani(prianiId,chara,x,y,refrain)</strong>で作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>prianiId</th>
+						<td>【文字列】表示するアニメーションのid</td>
+					</tr>
+					<tr>
+						<th>chara</th>
+						<td>【文字列】キャラクター名</span></td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】画像の表示位置（横）　<span class="sub">★省略可（デフォルト：0）</span></span></td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】画像の表示位置（縦）　<span class="sub">★省略可（デフォルト：0）</span></span></td>
+					</tr>
+					<tr>
+						<th>refrain</th>
+						<td>【真偽値】繰り返し再生するか否か　<span class="sub">★省略可（デフォルト：true）</span>
+						</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>chara</th>
+						<td>【文字列】キャラクター名
+						</td>
+					</tr>
+					<tr>
+						<th>col</th>
+						<td>【配列】接触判定用のコリジョン設定<br>
+							<span class="sub">（デフォルト：[0,0,this.w,0,this.w,this.h,0,this.h]）</span><br>
+							例えば<img src="img/col0.png">に<img src="img/col.png">という感じでコリジョン設定するなら<br>
+							[37,60,7,40,12,13,33,22,55,11,61,40]<br>
+							という感じです。<br>
+							右の画像の黒い部分がコリジョン判定範囲で、各頂点を配列としてコリジョン設定する感じです。CollisionSet.htmを使うと比較的簡単にコリジョン設定を作成できるかと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+						あらかじめidプロパティを設定していなかった場合、addした時に自動でidが付与されます。通常レイヤーの場合は"P_1"といった「タイプ_固有番号」形式の文字列になります。<br>
+						add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>nonEvent</th>
+						<td>【真偽値】<span class="sub">（デフォルト：false）</span><br>
+							mousedownなどのイベントメソッドを使わない場合、このプロパティをtrueにすると発火確認処理が省略されるので動作が早くなる場合があります。trueにしてもenterframeは処理されます。
+						</td>
+					</tr>
+					<tr>
+						<th>prianiId</th>
+						<td>【文字列】表示するアニメーションのid
+						</td>
+					</tr>
+					<tr>
+						<th>refrain</th>
+						<td>【真偽値】繰り返し再生するか否か
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】画像の表示位置（横）
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】画像の表示位置（縦）
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">h</th>
+						<td>【数値】該当アニメーションidの大きさ（縦）（自動で設定されます）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">opacity</th>
+						<td>【数値】不透明度（未実装）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">scale</th>
+						<td>【数値】拡縮率（未実装）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"P"）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">w</th>
+						<td>【数値】該当アニメーションidの大きさ（横）（自動で設定されます）<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						add実行時、あらかじめidプロパティを設定していなかった場合、自動でidが付与されます。通常レイヤーの場合は"S_1"といった「タイプ_固有番号」形式の文字列になります。<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>change(prianiId,refrain)</th>
+						<td>アニメーションを変更します。<br>
+							　・prianiId：【文字列】変更後のアニメーションID<br>
+							　・refrain：【真偽値】繰り返し再生するか否かの真偽値
+						</td>
+					</tr>
+					<tr>
+						<th>colCheck
+							(obj,x,y)</th>
+						<td>コリジョン設定（colプロパティ）を使用して接触判定をします。<br>
+						このオブジェクトとobjで指定したオブジェクトのコリジョンが接触していれば、trueを返します。<br>
+						　・obj：【オブジェクト】OeSpriteかOePrianiのオブジェクト<br>
+						　・x,y：【数値】ここに設定した数値に、このオブジェクトが移動したと仮定して接触判定を行います。<span class="sub">★省略可（省略した場合はこのオブジェクトの現在のx,yが入ります。）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>contactCheck
+							(obj,distance)</th>
+						<td>オブジェクトの中心点距離で接触判定をします。<br>
+							このオブジェクトとobjで指定したオブジェクトの中心点の距離がdistance以下なら、接触したと判定してtrueを返します。<br>
+						　・obj：【オブジェクト】OeSpriteかOePrianiのオブジェクト<br>
+						　・distance：【数値】中心点の距離がこの数値以下なら接触したと判定します。<br>
+						※比較するオブジェクトのどちらかのscaleが1以外、またはscaleX・scaleY・rotateの設定がnull以外なら機能しません。（必ずfalseを返します。）
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を所属レイヤーから削除します。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・sprite1.mousedown = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>click</th>
+						<td>クリックした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>マウスダウンした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>マウスリーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>マウスムーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>マウスアップした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+				</table>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeText" class="summaryMain">OeText(text,x,y)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・文字クラスです。<strong>new OeText(text,x,y)</strong>で作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>text</th>
+						<td>【文字列】表示する文字列</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】文字の表示位置（横）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】文字の表示位置（縦）　<span class="sub">★省略可（デフォルト：0）</span></td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>back</th>
+						<td>【文字列】背景色<span class="sub">（デフォルト：null）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>borderColor</th>
+						<td>【文字列】枠の色<span class="sub">（デフォルト：null）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>borderSize</th>
+						<td>【数値】枠のサイズ<span class="sub">（デフォルト：null）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>color</th>
+						<td>【文字列】文字の色<span class="sub">（デフォルト："black"）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>family</th>
+						<td>【文字列】フォントファミリー<span class="sub">（デフォルト："sans-serif"）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】大きさ（縦）<span class="sub">（デフォルト：100）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+						あらかじめidプロパティを設定していなかった場合、addした時に自動でidが付与されます。通常レイヤーの場合は"T_1"といった「タイプ_固有番号」形式の文字列になります。<br>
+						add後はidプロパティを変更しない方が良いと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+						add時に指定したレイヤーの名前が格納されます。<br>
+						add後には変更しないほうがよいと思います。
+						</td>
+					</tr>
+					<tr>
+						<th>nonEvent</th>
+						<td>【真偽値】<span class="sub">（デフォルト：false）</span><br>
+							mousedownなどのイベントメソッドを使わない場合、このプロパティをtrueにすると発火確認処理が省略されるので動作が早くなる場合があります。trueにしてもenterframeは処理されます。
+						</td>
+					</tr>
+					<tr>
+						<th>opacity</th>
+						<td>【数値】不透明度<span class="sub">（デフォルト：1）</span><br>
+							0～1の実数値で設定します。（0で完全に透明、1で完全に不透明）
+						</td>
+					</tr>
+					<tr>
+						<th>paddingLeft</th>
+						<td>【数値】左の空白<span class="sub">（デフォルト：0）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>paddingTop</th>
+						<td>【数値】上の空白<span class="sub">（デフォルト：0）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>rounded</th>
+						<td>【真偽値】枠の角を丸めるか否か<span class="sub">（デフォルト：null）</span><br>
+							trueで角を丸めます。
+						</td>
+					</tr>
+					<tr>
+						<th>size</th>
+						<td>【数値/文字列】文字サイズ<span class="sub">（デフォルト："24px"）</span><br>
+							数値での設定も可能です。
+						</td>
+					</tr>
+					<tr>
+						<th>src</th>
+						<td>【文字列 / Imageオブジェクト】背景画像<span class="sub">（デフォルト：null）</span><br>
+							onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。もしくは、onien.asset["img/xxx.png"]などといった形でImageオブジェクトを直接指定することもできます。
+						</td>
+					</tr>
+					<tr>
+						<th>text</th>
+						<td>【文字列】表示する文字列
+						</td>
+					</tr>
+					<tr>
+						<th>visible</th>
+						<td>【真偽値】表示するか否か<span class="sub">（デフォルト：true）</span><br>
+							falseにするとenterframeも実行されなくなる点に注意してください。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】大きさ（横）<span class="sub">（デフォルト：100）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>x</th>
+						<td>【数値】文字の表示位置（横）
+						</td>
+					</tr>
+					<tr>
+						<th>y</th>
+						<td>【数値】文字の表示位置（縦）
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"T"）<br>
+						通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						add実行時、あらかじめidプロパティを設定していなかった場合、自動でidが付与されます。通常レイヤーの場合は"T_1"といった「タイプ_固有番号」形式の文字列になります。<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を所属レイヤーから削除します。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">イベントメソッド</summary>
+				<p>　・text1.mousedown = function(){...}という感じで、イベント発生時などの処理を設定できます。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>click</th>
+						<td>クリックした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>enterframe</th>
+						<td>毎フレーム時に実行するfunctionを設定できます。<br>
+							visibleがtrueの時のみ機能します。
+						</td>
+					</tr>
+					<tr>
+						<th>mousedown</th>
+						<td>マウスダウンした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseleave</th>
+						<td>マウスリーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mousemove</th>
+						<td>マウスムーブした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+					<tr>
+						<th>mouseup</th>
+						<td>マウスアップした時に実行するfunctionを設定できます。<br>
+							function(e,clickX,clickY)でイベントオブジェクトとイベント座標を取得できます。
+						</td>
+					</tr>
+				</table>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeTmpCanvas" class="summaryMain">OeTmpCanvas(w,h)</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・一時キャンバスクラスです。<strong>new OeTmpCanvas(w,h)</strong>で作成します。</p>
+				<table style="width: 100%">
+					<tr>
+						<th>w</th>
+						<td>【数値】一時キャンバスのサイズ（横）　<span class="sub">★省略可（デフォルト：100）</span></td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】一時キャンバスのサイズ（縦）　<span class="sub">★省略可（デフォルト：100）</span></td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>canvas</th>
+						<td>【オブジェクト】一時キャンバスの本体<br>
+							OeSpriteのsrcにパラメータに設定することができます。</span>
+						</td>
+					</tr>
+					<tr>
+						<th>context</th>
+						<td>【オブジェクト】一時キャンバスのコンテクスト</span>
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>draw(src,
+							cutx,cuty,
+							cutw,cuth,
+							putx,puty,putw,puth)</th>
+						<td>一時キャンバスに画像を貼り付けます。<br>
+							　・src：【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。または、onien.asset["img/xxx.png"]といった形でImageオブジェクトを直接指定することもできます。<br>
+							　・cutx：【数値】srcの画像の、切り出す領域のX座標<br>
+							　・cuty：【数値】srcの画像の、切り出す領域のY座標<br>
+							　・cutw：【数値】srcの画像の、切り出す領域の幅<br>
+							　・cuth：【数値】srcの画像の、切り出す領域の高さ<br>
+							　・putx：【数値】一時キャンバスの、貼り付ける場所のX座標<br>
+							　・puty：【数値】一時キャンバスの、貼り付ける場所のY座標<br>
+							　・putw：【数値】一時キャンバスの、貼り付ける幅　<span class="sub">★省略可（デフォルト：cutwと同値）</span><br>
+							　・puth：【数値】一時キャンバスの、貼り付ける高さ　<span class="sub">★省略可（デフォルト：cuthと同値）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>drawComa(src,coma,w,h,putx,puty,putw,puth)</th>
+						<td>一時キャンバスに画像を貼り付けます<br>
+							　・src：【文字列 / Imageオブジェクト】onien.assetListに登録した画像ファイル名（"img/xxx.png"）を指定します。または、onien.asset["img/xxx.png"]といった形でImageオブジェクトを直接指定することもできます。<br>
+							　・coma：【数値】srcの画像の、切り出すコマ番号<br>
+							　・w：【数値】srcの画像の1コマの幅<br>
+							　・h：【数値】srcの画像の1コマの高さ<br>
+							　・putx：【数値】一時キャンバスの、貼り付ける場所のX座標<br>
+							　・puty：【数値】一時キャンバスの、貼り付ける場所のY座標<br>
+							　・putw：【数値】一時キャンバスの、貼り付ける幅　<span class="sub">★省略可（デフォルト：cutwと同値）</span><br>
+							　・puth：【数値】一時キャンバスの、貼り付ける高さ　<span class="sub">★省略可（デフォルト：cuthと同値）</span>
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">使い方の例</summary>
+				使用する画像：chip.png（1マス70×70）<br>
+				<img src="img/chip.png" style="max-width: 100%">
+				</p>
+				<p class="code">
+					var <span class="c_var">tmp</span> = new <span class="c_class">OeTmpCanvas</span>(70,70);<br>
+					<span class="c_var">tmp</span>.draw("chip.png",0,0,70,70,0,0); <span class="c_com">//草を描く</span><br>
+					<span class="c_var">tmp</span>.draw("chip.png",0,70,70,70,0,0); <span class="c_com">//おにぎりを描く</span><br>
+					<br>
+					var <span class="c_var">sprite</span> = new <span class="c_class">OeSprite</span>(<span class="c_var">tmp</span>.canvas,0,0,70,70,0);<br>
+					<span class="c_var">sprite</span>.add("layer1");
+				</p>
+				<p>この結果layer1に描写される画像<br><img src="img/tmpcanvas.png" style="max-width: 100%"></p>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="OeLoadPlus" class="summaryMain">OeLoadPlus()</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・追加ロードクラスです。<strong>OeLoadPlus()</strong>で作成します。作成時に引数は設定しません。ゲームをスタートした後に画像・音声ファイルをロードする際に使用します。</p><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>assetList</th>
+						<td>【配列】読み込むファイルのリスト<br>
+							["img/chip.png","sound/win.ogg",...]といった感じで読み込むファイルのパスを設定してください。</span>
+						</td>
+					</tr>
+					<tr>
+						<th>id</th>
+						<td>【文字列】オブジェクトの固有番号<br>
+							あらかじめidプロパティを設定していなかった場合、addした時に自動でidが付与されます。通常レイヤーの場合は"X_1"といった「タイプ_固有番号」形式の文字列になります。
+							add後はidプロパティを変更しない方が良いと思います。</span>
+						</td>
+					</tr>
+					<tr>
+						<th>layer</th>
+						<td>【文字列】所属しているレイヤーの名前<br>
+							add時に指定したレイヤーの名前が格納されます。<br>
+							add後には変更しないほうがよいと思います。</span>
+						</td>
+					</tr>
+					<tr>
+						<th>progress</th>
+						<td>【数値】ロードの進捗状況<br>
+							0～100の値が自動で入ります。
+						</td>
+					</tr>
+					<tr>
+						<th>ready</th>
+						<td>【真偽値】ロードが完了するとtrueになります。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">assetSet</th>
+						<td>【数値】読み込み済みのファイル数<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">type</th>
+						<td>【文字列】オブジェクトタイプ（"X"）<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">visible</th>
+						<td>【真偽値】フレーム毎に処理するために、便宜上必要となる値<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>add(layerName)</th>
+						<td>自分をレイヤーに追加します。<br>
+						　・layerName：【文字列/レイヤーオブジェクト】レイヤーの名前<br>
+						add実行時、あらかじめidプロパティを設定していなかった場合、自動でidが付与されます。通常レイヤーの場合は"X_1"といった「タイプ_固有番号」形式の文字列になります。<br>
+						onien.layer[layerName].content[このオブジェクトのid]にこのオブジェクトが格納されます。
+						</td>
+					</tr>
+					<tr>
+						<th>del()</th>
+						<td>自分を所属レイヤーから削除します。
+						</td>
+					</tr>
+					<tr>
+						<th>load()</th>
+						<td>ロードを実行します。<br>
+							assetListに設定したファイルの読み込みを開始します。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">loadCheck()	</th>
+						<td>フレーム毎に処理する内容です。通常は触らないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">使い方の例</summary>
+				<p class="code">
+					<span class="c_com">//何も表示しないクラスだが、レイヤーに追加することで機能するので、レイヤーを準備する</span><br>
+					var <span class="c_var">layer1</span> = new <span class="c_class">OeLayer</span>("layer1", 0, 0, 700, 420);<br>
+					<span class="c_var">layer1</span>.addLayer();<br>
+					<br>
+					<span class="c_com">//ロード後に実行する処理を実行したらtrueになる変数</span><br>
+					var <span class="c_var">executed</span> = false;<br>
+					<br>
+					<span class="c_com">//追加ロードクラスを作成して、ロードを実行</span><br>
+					var <span class="c_var">loadPlus</span> = new <span class="c_class">OeLoadPlus</span>();<br>
+					<span class="c_var">loadPlus</span>.assetList = ["img/button_a1.png","sound/win.ogg"];<br>
+					<span class="c_var">loadPlus</span>.add("layer1");<br>
+					<span class="c_var">loadPlus</span>.load();<br>
+					<span class="c_com">//ロード完了後の処理をenterframeの関数内に記述</span><br>
+					<span class="c_var">loadPlus</span>.enterframe = function(){<br>
+					&emsp;&emsp;&emsp;&emsp;if(<span class="c_var">loadPlus</span>.ready==true && <span class="c_var">executed</span>==false){<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var <span class="c_var">button</span> = new <span class="c_class">OeSprite</span>("img/button_a1.png",0,0,70,70,0);<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">button</span>.click = function(){<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;onien.se.start("sound/win");<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">button</span>.add("layer1");<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="c_var">executed</span> = true;<br>
+					&emsp;&emsp;&emsp;&emsp;}<br>
+					}
+				</p>
+			</details>
+			
+		</details>
+		<hr>
+		<details open>
+			<summary id="onien" class="summaryMain">onien</summary>
+			<details open>
+				<summary class="summarySub">概要</summary>
+				<p>　・OnigiriEngineで作成するオブジェクトです。いろんなものが収納されています。</p><br>
+			</details>
+			
+			<details open>
+				<summary class="summarySub">プロパティ</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>asset</th>
+						<td>【連想配列】画像・音声データの連想配列<br>
+							{"img/xxx.png":imageオブジェクト,"bgm/xxx.mp3":Audioオブジェクト,…}<br>
+							という感じになっています。各ファイル名のプロパティの中に各image・Audioオブジェクトが入っています。
+						</td>
+					</tr>
+					<tr>
+						<th>assetList</th>
+						<td>【配列】画像・音声データのファイル名（参照パス）リスト<br>
+							["img/xxx.png","sound/xxx.mp3",…]という感じで定義してください。<br>
+							これを元にload関数でデータをロードしていきます。<br>
+							※対応している拡張子（png、jpg、wav、mp3、ogg、m4a）
+						</td>
+					</tr>
+					<tr>
+						<th>autoScale</th>
+						<td>【真偽値】自動的にキャンバスを拡縮するか否か<span class="sub">（デフォルト：true）</span><br>
+						※trueにすると、onien.load()実行時にonien.setScreen()の追加と実行、windowにresizeのイベントリスナ―を追加して、onien.setScreen()を実行します。<br>
+						※trueにしてonien.load()を実行後、falseにすると自動拡縮を停止できます。再びtrueにすればまた自動拡縮をするようになります。
+						</td>
+					</tr>
+					<tr>
+						<th>fps</th>
+						<td>【数値】1秒あたりの描画回数<br>
+							onien.start関数実行後は変更不可です。
+						</td>
+					</tr>
+					<tr>
+						<th>frame</th>
+						<td>【数値】現在のフレーム番号<br>
+							enterframeの発火ごとに+1されていきます。
+						</td>
+					</tr>
+					<tr>
+						<th>h</th>
+						<td>【数値】ゲームキャンバスの大きさ（縦）<span class="sub">（デフォルト：500）</span><br>
+							OnigiriEngine(w,h)のhです。
+						</td>
+					</tr>
+					<tr>
+						<th>platform</th>
+						<td>【文字列】現在起動しているプラットフォームの種類<br>
+							"i"、"android"、"win"、"mac"、"nazo"のどれかが入ります。
+						</td>
+					</tr>
+					<tr>
+						<th>setCenter</th>
+						<td>【真偽値】キャンバスをセンター寄せにするか否か<span class="sub">（デフォルト：false）</span><br>
+							これが機能するには、onien.autoScaleもtrueである必要があります。<br>onien.setScreen()でセンター寄せ処理を実行します。
+						</td>
+					</tr>
+					<tr>
+						<th>w</th>
+						<td>【数値】ゲームキャンバスの大きさ（横）<span class="sub">（デフォルト：500）</span><br>
+							OnigiriEngine(w,h)のwです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">assetSet</th>
+						<td>【数値】読み込み済みの画像・音楽データの数<br>
+							これとonien.assetList.lengthが同じになったらロード完了となります。<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">canplaylist</th>
+						<td>【配列】再生可能拡張子のリスト<br>
+							再生確認をする拡張子はwav、mp3、ogg、m4aの４つです。<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">canvas</th>
+						<td>【DOMオブジェクト】ゲームを表示するキャンバスオブジェクト<br>
+							※idが「onigiri_canvas」のcanvasタグを読み込みます。<br>
+							※HTMLファイルにあらかじめidが「onigiri_canvas」のcanvasタグを設置しておいてください。<br>
+							※onien.autoScaleがtrueの状態でonien.loadを実行すると、zIndexは自動で1に設定されます。<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">ctx</th>
+						<td>【オブジェクト】キャンバスのコンテクスト（canvasのコンテクスト）<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">enterframeTimer</th>
+						<td>【タイマー】enterframe処理を実行するためのタイマー<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">idcount</th>
+						<td>【数値】レイヤーにオブジェクトを追加するとき、固有の番号を振るためのカウント。onien.addObj関数でidを自動付与するたびに+1します。<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">layer</th>
+						<td>【連想配列】レイヤー関連<br>
+							{レイヤー名:レイヤークラスのオブジェクト,……}
+							<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">loadfinishEvent</th>
+						<td>【カスタムイベント】onienLoadFinish<br>
+							onien.load関数でonien.assetListの読み込みが完了したことをお知らせします。<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">mobimg</th>
+						<td>【DOMオブジェクト】スマホの画面サイズを測定するためのdivタグ<br>
+							onien.autoScaleをtrueにしてonien.loadが実行された場合にbodyに追加されます。zIndexは0に設定されています。<br>通常は触らないプロパティです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">ready</th>
+						<td>【真偽値】ゲームの準備が出来てるか否か<br>
+							※onien.assetListを読み込み済みならtrueになります。<br>
+							※これがtrueだとenterframeの各処理を行います。<br>
+							通常は触らないプロパティです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+
+			<details open>
+				<summary class="summarySub">メソッド</summary>
+				<table style="width: 100%">
+					<tr>
+						<th>bgm</th>
+						<td>【連想配列】BGM関連<br>
+							・<span style="font-weight: bold">start(name,buf)</span>：【メソッド】BGMを再生する。<br>
+							　　・<span style="font-weight: bold">name</span>：【文字列】拡張子を除いたファイル名（例："sound/bgm1"）<br>
+							　　・<span style="font-weight: bold">buf</span>：【数値】使用する番号（0～2）。<span class="sub">★省略可（デフォルト：0）</span><br>
+							　　※bgm.startではリピート再生のみ行います。<br>
+							　　※ブラウザで再生可能な拡張子のものを再生します。（再生確認をする拡張子はwav、mp3、ogg、m4aの４つです。）<br>
+							　　※buf[0～2]をすべて使うと3ファイル同時に再生できます。<br>
+							・<span style="font-weight: bold">stop(buf)</span>：【メソッド】BGMを停止する。<br>
+							　　・<span style="font-weight: bold">buf</span>：【数値】再生を止める番号（0～2）<span class="sub">★省略可（デフォルト：0）</span><br>
+							・<span style="font-weight: bold">vol</span>：【数値】BGMの音量（0～1）<br>
+							・<span style="font-weight: bold">buf</span>：【配列】再生するAudioオブジェクトを代入する配列（0～2）※非再生時はそれぞれnullになっています。通常は触らない部分です。
+						</td>
+					</tr>
+					<tr>
+						<th>end()</th>
+						<td>ゲームの完全終了処理（タイマー切ってonienをリセット）を行います。<br>
+							※onien.enterframeTimerをクリアします。<br>
+							※bgmとseを止めてnullにします。<br>
+							※onien=null、dataPriani={}にします。<br>
+							※キャンバスの表示をクリアします。<br>
+							※各種イベントリスナーを消去します。<br>
+						</td>
+					</tr>
+					<tr>
+						<th>load
+							(color,backcolor)</th>
+						<td>画像・音声データを読み込んでキャンバスサイズをセットします。<br>
+							・<span style="font-weight: bold">color</span>：【文字列】「Loading...XX%」の文字色。<span class="sub">★省略可（デフォルト："white"）</span><br>
+							・<span style="font-weight: bold">backcolor</span>：【文字列】ローディング画面の背景色。<span class="sub">★省略可（デフォルト："black"）</span><br>
+							ロードが完了すると、onienLoadFinishイベントを発火し、onien.readyをtrueにします。<br>
+							※onien.canvas.width(height)をonien.w(h)に設定します。<br>
+							※onien.autoScaleがtrueなら、onien.canvasのzIndexを1に設定します。スマホの場合はonien.mobimgが追加され、zIndexは0に設定されます。<br>
+							※onien.autoScaleがtrueなら、onien.setScreen()をセット・実行します。windowにresizeイベントリスナ―を追加して、onien.setScreen()を実行するようにします。<br>
+							※onien.assetListを1つずつ読み込みます。<br>
+							※読み込みチェック用のタイマー（onien.loadTimer）を設置します。→完了（onien.assetList.length == onien.assetSet）すると、カスタムイベント（onienLoadFinish）をonien.loadfinishEventに設置、onienLoadFinishイベントを発火、onien.readyはtrueにし、onien.loadTimerはクリアして削除します。<br>
+							※onien.autoScaleがtrueなら、windowにorientationchangeリスナーも追加して、onien.setScreen()を実行します。
+						</td>
+					</tr>
+					<tr>
+						<th>se</th>
+						<td>【連想配列】SE関連<br>
+							・<span style="font-weight: bold">start(name,buf)</span>：【メソッド】SEを再生する。<br>
+							　　・<span style="font-weight: bold">name</span>：【文字列】拡張子を除いたファイル名（例："sound/ok1"）。<br>
+							　　・<span style="font-weight: bold">buf</span>：【数値】使用する番号（0～2）。<span class="sub">★省略可（デフォルト：0）</span><br>
+							　　※リピート再生はしません。<br>
+							　　※ブラウザで再生可能な拡張子を再生します。（再生確認をする拡張子はwav、mp3、ogg、m4aの４つです。）<br>
+							　　※buf[0～2]をすべて使うと3コ同時に再生できます。<br>
+							・<span style="font-weight: bold">stop(buf)</span>：【メソッド】SEを停止する。<br>
+							　　・<span style="font-weight: bold">buf</span>：【数値】再生を止める番号（0～2）<span class="sub">★省略可（デフォルト：0）</span><br>
+							・<span style="font-weight: bold">vol</span>：【数値】SEの音量（0～1）<br>
+							・<span style="font-weight: bold">buf</span>：【配列】再生するAudioオブジェクトを代入する配列（0～2）※非再生時はそれぞれnullになってます。通常は触らない部分です。
+						</td>
+					</tr>
+					<tr>
+						<th>start()</th>
+						<td>ゲームをスタートします。（タイマーが動き出します）<br>
+							※onien.eneterframeTimerが動き出し、onien.enterframeFunctionがfpsの間隔で実行されるようになります。<br>
+							※onien.enterframeFunctionでは以下の処理を行います。<br>
+							　→onien.readyがtrueなら処理開始します。<br>
+							　→onien.ctxをクリアレクトします。<br>
+							　→各レイヤー・オブジェクトが表示ONなら、表示処理を行います。各レイヤー・オブジェクトのenterframeに指定されたfunctionを実行します。<br>
+							　→onien.frameを++します。<br>
+							※PCかスマホを判別（onien.platformが"i"か"android"ならスマホ）して、PCならonien.canvasにclick、mousedown、mouseup、mousemove、mouseleaveのイベントリスナ―を追加します。スマホならonien.canvasにtouchend、touchstart、touchmoveのイベントリスナーを追加します。<br>
+							　→mousemoveのイベントリスナ―ではmouseleaveも発火確認します。<br>
+							　→touchendのイベントリスナ―にclick,mouseup、touchstartのイベントリスナ―にmousedown、touchmoveのイベントリスナ―にmousemove,mouseleaveのfunctionを実行するようにします。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">addLayer
+							(layer)</th>
+						<td>レイヤーを追加します。<br>
+							・layer：【オブジェクト】レイヤークラスのオブジェクト<br>
+							※onien.layer[layerName]にlayerを代入します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">addObj
+							(ele,layerName)</th>
+						<td>オブジェクトをレイヤーに追加します。<br>
+							・ele：【オブジェクト】（OeSprite、OeTextなどのクラスのオブジェクト）<br>
+							・layerName：【文字列、またはレイヤーオブジェクト】追加先のレイヤーの名前<br>
+							※ele.layerにlayerNameが代入されます。<br>
+							※あらかじめeleにidが設定されている場合はそのまま。設定されていない場合は自動で付与し、onien.idcountを++します。<br>
+							※onien.layer[layerName].content[ele.id]にeleを代入します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">colCheck
+							(one,obj,x,y)</th>
+						<td>接触判定（コリジョン設定を使用して判定）します。<br>
+							oneのコリジョン範囲内にobjのコリジョン点があったら、trueを返し、それ以外ならfalseを返します。oneかobjのscale,scaleX,scaleY,rotateの状態によっては判定精度が落ちます。<br>
+							・objとone：【オブジェクト】スプライトクラス・ぷりアニクラスのどちらかを設定します。<br>
+							・xとy：【数値】ここに設定した数値に、oneのオブジェクトが移動したと仮定して接触判定を行います。★省略可（省略したらoneのオブジェクトの現在のx,yが入ります。）<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">contactCheck
+							(one,obj,distance)</th>
+						<td>接触判定（オブジェクト同士の中心距離で判定）します。<br>
+							objとoneの中心点の距離がdistance以下ならtrueを返し、それ以外ならfalseを返します。<br>
+							※oneとobjのどちらかのscaleが1以外、またはscaleX・scaleY・rotateの設定がnull以外なら必ずfalseを返します。<br>
+							・objとone：【オブジェクト】スプライトクラス・ぷりアニクラスのどちらかを設定します。<br>
+							・distance：【数値】中心点の距離★省略可（デフォルト：one.w）<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">delLayer
+							(layerName)</th>
+						<td>レイヤーを削除します。<br>
+							・layerName：【文字列】レイヤーの名前<br>
+							※onien.layer[layerName]を削除します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">delObj
+							(ele)</th>
+						<td>オブジェクトをレイヤーから削除します。<br>
+							・ele：【オブジェクト】（OeSprite等）<br>
+							※onien.layer[layerName].content[ele.id]を消します。<br>
+							※onien.layer[layerName].sortListからも消します。<br>
+							※prianiクラスの場合、onien.priani.deletePrianiでキャラデータも削除します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">enterframeFunction()</th>
+						<td>enterframe処理を実行します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">eventClickCheck
+							(e,clickX,clickY,mode,mouseleaveMode,touchnum)</th>
+						<td>クリックなどのイベント処理を行います。<br>
+							・e：【イベントオブジェクト】<br>
+							・clickX,clickY：【数値】イベント発生座標<br>
+							・mode：【文字列】click、mousedown、mouseup、mousemove、mouseleaveのいずれか<br>
+							※各レイヤー・各オブジェクトがnonEvent==falseかつvisible==trueの場合、イベント位置をチェックして、イベント位置に該当のレイヤー・オブジェクトがあれば（mouseleaveの場合はイベント位置に該当のオブジェクトがなければ）、そのレイヤー・オブジェクトの"mode"で設定したfunctionを実行します。（レイヤーのsortListの逆の順に発火確認→実行）<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">notpcEvent(e)</th>
+						<td>スマホ用のイベント発生時に実行されます。<br>
+							・e：【イベントオブジェクト】<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">pcEvent(e)</th>
+						<td>パソコン用のイベント発生時に実行されます。<br>
+							・e：【イベントオブジェクト】<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">priani</th>
+						<td>【連想配列】ぷりアニ関連<br>
+							・charaListPriani：【連想配列】キャラクターリスト{キャラ名:true,…}<br>
+							・charaPriani：【連想配列】キャラのデータ{キャラ名：{data:{アニメーションデータ},fl:ぷりアニID,opacity:[],refrain:true,x,100,y:100},…}<br>
+							・dataPriani：【連想配列】アニメーションデータ{ぷりアニID:{アニメーションデータ},…}<br>
+							・drawPrian(charaName,xxx,yyy)i：【メソッド】キャラを表示します。enterframe発生時に実行します。<br>
+							・framePriani：【連想配列】各キャラクターのフレーム番号{キャラ名:4,…}<br>
+							・loadPriani(fl,charaName,charaX,charaY,refrain)：【メソッド】キャラクターをcharaPriani内に作成します。ぷりアニクラス作成時に実行します。framePriani[キャラ名]もセットし、-1を代入します。<br>
+							・setting：【メソッド】ぷりアニを使用する準備を行います。dataPriani、charaPriani、framePriani、charaListPrianiを作成します。<br>
+							・changePriani(fl,charaName,refrain)：【メソッド】アニメーションを変更します。loadPrianiを実行します。<br>
+							・deletePriani(charaName)：【メソッド】キャラデータを削除します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">setScreen()</th>
+						<td>ウィンドウサイズに合わせてキャンバスサイズを自動調整します。<br>
+							※onien.load()実行時、onien.autoScaleがtrueなら設置されます。<br>
+							※onien.load()実行時と、ウィンドウサイズ変更時に実行されます。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+					<tr>
+						<th class="nouse">windowEvent()</th>
+						<td>windowのイベント発生時に実行します。<br>
+							通常は使用しないメソッドです。
+						</td>
+					</tr>
+				</table><br>
+			</details>
+			
+			<p class="right"><a href="#up">▲上に戻る</a></p>
+			
+		</details>
 		<hr>
 	</div>
 

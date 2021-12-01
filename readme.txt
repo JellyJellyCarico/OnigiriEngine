@@ -32,6 +32,7 @@ https://jellyjelly.site/onien/
 ・nasuislove餅yahoo.co.jp（餅→@）
 
 ■更新履歴
+・ver.1.2.1a(2021/12/1)　onien.endメソッドと、OeLayerクラスのdelAllObjectメソッドで、ちゃんと各オブジェクトを削除するように修正
 ・ver.1.2.0(2021/11/30)　スプライトの設定がscale,scaleX,scaleYが1以下かつrotateが非設定の場合、画面外にいたら描写しないように修正（動作軽減策）
 　一時キャンバスのdrawにputwとputhを追加（どちらも省略可）
 　一時キャンバスにdrawComa関数を追加

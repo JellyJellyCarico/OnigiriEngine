@@ -1,6 +1,6 @@
 /*
 
-OnigiriEngine Ver1.2.0
+OnigiriEngine Ver1.2.1a
 
 https://jellyjelly.site/onien/
 Copyright Carico
@@ -1062,6 +1062,10 @@ function OnigiriEngine(w,h){
 		onien.canvas.removeEventListener("touchend",onien.notpcEvent);
 		onien.canvas.removeEventListener("touchstart",onien.notpcEvent);
 		onien.canvas.removeEventListener("touchmove",onien.notpcEvent);
+
+		for(var l in onien.layer){
+			onien.layer[l].delAllObject();
+		}
 		
 		onien = null;
 		dataPriani	= {};
@@ -1461,6 +1465,9 @@ class OeLayer{
 	
 	//自分の中身のオブジェクトを全て削除
 	delAllObject(){
+		for(var key in onien.layer[this.name].content){
+			onien.layer[this.name].content[key].del();
+		}
 		onien.layer[this.name].content	= {};
 		onien.layer[this.name].sortList	= [];
 	}
